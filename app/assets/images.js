@@ -1,0 +1,1 @@
+export const testImg = require('./images/test.png');
