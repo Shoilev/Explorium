@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "785767965213",
+    "firebase_url": "https://explorium-3dde2.firebaseio.com",
+    "project_id": "explorium-3dde2",
+    "storage_bucket": "explorium-3dde2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785767965213:android:45a4821fef2a6ac5",
+        "android_client_info": {
+          "package_name": "com.exploriumapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785767965213-h80caqmaa7ibv6qqd07gbi6dsbver2cd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.exploriumapp",
+            "certificate_hash": "49414b35c0180d2e94ce6118911eaaad53f26479"
+          }
+        },
+        {
+          "client_id": "785767965213-bc4ji0b8fdgbq13tobegnrbcoc7st3gs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDLLNnRZEsr0BUSnb8aGVKpU6yKRgGNKc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785767965213-bc4ji0b8fdgbq13tobegnrbcoc7st3gs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
