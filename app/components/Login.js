@@ -1,49 +1,52 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button } from 'react-native';
-import firebase from 'react-native-firebase';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { styles } from '../assets/styles';
+import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { connect } from 'react-redux';
 
-export default class Login extends Component {
-  state = { email: '', password: '', errorMessage: null }
-  handleLogin = () => {
-    // TODO firebase logic
-    const { email, password } = this.state
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Main'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+class Login extends Component {
+  onButtonPress() {
+    const { email, password } = this.props;
+    this.props.loginUser({ email, password });
+  }
+
+  onEmailChange(text) {
+    this.props.emailChanged(text);
+  }
+
+  onPasswordChange(text) {
+    this.props.passwordChanged(text);
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Login into the application</Text>
-        {this.state.errorMessage &&
+
+        {this.props.errorMessage &&
         <Text style={{ color: 'red' }}>
-          {this.state.errorMessage}
+          {this.props.errorMessage}
         </Text>}
 
         <TextInput
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Email"
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
+          onChangeText={this.onEmailChange.bind(this)}
+          value={this.props.email}
         />
         <TextInput
           secureTextEntry
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Password"
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
+          onChangeText={this.onPasswordChange.bind(this)}
+          value={this.props.password}
         />
-
 
         <TouchableOpacity
           style={styles.button}
-          onPress={this.handleLogin}
+          onPress={this.onButtonPress.bind(this)}
         >
           <Text> Login </Text>
         </TouchableOpacity>
@@ -58,3 +61,15 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  const { email, password, errorMessage, loading } = auth;
+
+  return { email, password, errorMessage, loading };
+};
+
+export default connect(mapStateToProps, {
+  emailChanged,
+  passwordChanged,
+  loginUser
+})(Login);

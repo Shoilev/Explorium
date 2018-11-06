@@ -93,15 +93,21 @@ const AuthStack = createStackNavigator(
   }
 );
 
-export const createRootNavigator = () => {
-  return createSwitchNavigator(
-    {
-      AuthLoading: AuthLoading,
-      App: AppStack,
-      Auth: AuthStack,
-    },
-    {
-      initialRouteName: 'AuthLoading',
-    }
-  );
-};
+export const RootNavigation = new createSwitchNavigator(
+  {
+    AuthLoading: AuthLoading,
+    App: AppStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+);
+
+export default class RootNavigator extends Component {
+  render() {
+    return (
+      <RootNavigation/>
+    )
+  }
+}

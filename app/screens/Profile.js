@@ -1,34 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import firebase from 'react-native-firebase';
+import { logOutUser, getUser } from '../actions';
+import { connect } from 'react-redux';
 import { styles } from '../assets/styles';
 
-export default class Profile extends Component {
-  state = { currentUser: null }
+class Profile extends Component {
 
   handleLogOut = () => {
-    // TODO: Firebase stuff...
-    firebase.auth()
-      .signOut()
-      .then(() => {
-        this.setState({ email: '', password: '', errorMessage: null })
-        this.props.navigator.navigate(Router.getRoute('Auth'))
-      })
-      .catch(error => this.setState({ errorMessage: error.message }));
+    this.props.logOutUser()
   }
 
   componentWillMount() {
-    const { currentUser } = firebase.auth()
-    this.setState({ currentUser })
+    this.props.getUser();
   }
 
   render() {
-    const { currentUser } = this.state
-
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          Hi {currentUser.email}!
+          Hi {this.props.userEmail}
         </Text>
 
         <TouchableOpacity
@@ -41,3 +31,14 @@ export default class Profile extends Component {
     );
   }
 }
+
+const mapStateToProps = ({user}) => {
+  const { userEmail } = user;
+
+  return { userEmail };
+};
+
+export default connect(mapStateToProps, {
+  logOutUser,
+  getUser
+})(Profile);

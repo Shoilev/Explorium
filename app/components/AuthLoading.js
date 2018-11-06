@@ -12,7 +12,6 @@ import { styles } from '../assets/styles';
 export default class AuthLoading extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      console.log(user);
       this.props.navigation.navigate(user ? 'App' : 'Auth')
     })
   }
