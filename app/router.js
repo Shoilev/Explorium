@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
+import { styles } from './assets/styles';
 import { testImg } from './assets/images';
 
 // components
@@ -20,31 +22,35 @@ export const Tabs = createBottomTabNavigator({
     screen: Explore,
     navigationOptions: {
       tabBarLabel: 'Explore',
-      tabBarIcon: <Image style={{ width: 50, height: 50 }} source={testImg}/>,
-    },
-  },
-  'Profile': {
-    screen: Profile,
-    navigationOptions: {
-      tabBarLabel: 'Profile',
-    },
-  },
-  'Friends': {
-    screen: Friends,
-    navigationOptions: {
-      tabBarLabel: 'Friends',
+      tabBarIcon: <Icon style={styles.menuTab} name="ios-compass"/>,
     },
   },
   'Countries': {
     screen: Countries,
     navigationOptions: {
       tabBarLabel: 'Countries',
+      tabBarIcon: <Icon style={styles.menuTab} name="md-globe"/>
     },
   },
   'Achivements': {
     screen: Achivements,
     navigationOptions: {
       tabBarLabel: 'Achivements',
+      tabBarIcon: <Icon style={styles.menuTab} name="md-ribbon"/>
+    },
+  },
+  'Friends': {
+    screen: Friends,
+    navigationOptions: {
+      tabBarLabel: 'Friends',
+      tabBarIcon: <Icon style={styles.menuTab} name="ios-people"/>
+    },
+  },
+  'Profile': {
+    screen: Profile,
+    navigationOptions: {
+      tabBarLabel: 'Profile',
+      tabBarIcon: <Icon style={styles.menuTab} name="md-person"/>
     },
   },
 },{
@@ -53,7 +59,10 @@ export const Tabs = createBottomTabNavigator({
     activeTintColor: 'tomato',
     inactiveTintColor: 'gray',
     style : {
-      height: 100
+      height: 80,
+      borderTopWidth: 1,
+      borderTopColor: '#1a4e6c',
+      color: '#1a4e6c'
     }
   },
   headerMode: "none",
