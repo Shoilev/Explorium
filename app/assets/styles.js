@@ -97,5 +97,19 @@ export const styles = StyleSheet.create({
   menuTab: {
     fontSize: 50,
     color: '#1a4e6c'
+  },
+  explore: {
+
+  },
+  exploreTextBtn: {
+    color: '#ffffff'
+  },
+  exploreBtnStyle: {
+    backgroundColor: '#1e324d',
+    borderWidth: 2,
+    borderColor: '#ffffff',
+    borderRadius: 15,
+    paddingTop: 5,
+    paddingBottom: 5
   }
 });

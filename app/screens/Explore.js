@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import firebase from 'react-native-firebase';
+import { Text, ImageBackground, Image } from 'react-native';
 import { styles } from '../assets/styles';
+import { Section, Button } from '../components/common';
+
+const exploreumSrc = require('../assets/images/exploreum_background.jpg');
+const exploreEarth = require('../assets/images/earth.png');
 
 export default class Explore extends Component {
-  state = { currentUser: null }
 
-  componentDidMount() {
-    const { currentUser } = firebase.auth();
-
-    this.setState({ currentUser })
+  onButtonPress() {
+    console.log('TODO');
   }
 
   render() {
-    const { currentUser } = this.state
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Explore Screen
-        </Text>
-      </View>
+      <ImageBackground source={exploreumSrc} style={styles.backgroundImage}>
+        <Section>
+          <Image source={exploreEarth} />
+          <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>Go Explore!</Button>
+        </Section>
+      </ImageBackground>
     );
   }
 }

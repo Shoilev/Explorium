@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icon2 from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
 import { styles } from './assets/styles';
 import { testImg } from './assets/images';
@@ -22,7 +23,7 @@ export const Tabs = createBottomTabNavigator({
     screen: Explore,
     navigationOptions: {
       tabBarLabel: 'Explore',
-      tabBarIcon: <Icon style={styles.menuTab} name="ios-compass"/>,
+      tabBarIcon: <Icon2 style={styles.menuTab} name="envelope"/>,
     },
   },
   'Countries': {

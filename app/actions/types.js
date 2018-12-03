@@ -6,5 +6,6 @@ export const LOGIN_USER = 'login_user';
 export const LOGOUT_USER = 'logout_user';
 export const LOGOUT_USER_SUCCESS = 'logout_user_success';
 export const LOGOUT_USER_FAIL = 'logout_user_fail';
+export const COUNTRIES_FETCH_SUCCESS = 'countries_fetch_success';
 
 export const GET_USER = 'get_user';

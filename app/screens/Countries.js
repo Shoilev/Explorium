@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { styles } from '../assets/styles';
+import { FlatList } from 'react-native';
+import { connect } from 'react-redux';
+import CountryList from '../components/CountryList';
+import { getCountries } from '../actions';
 
-export default class Countries extends Component {
+class Countries extends Component {
+  componentWillMount() {
+    this.props.getCountries();
+  }
+
+  renderItem({item}) {
+    return <CountryList country={item.countryName}/>
+  }
+
   render() {
+    const { countries } = this.props;
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Countries
-        </Text>
-      </View>
+      <FlatList
+        data={countries}
+        renderItem={this.renderItem}
+        keyExtractor={(country)=> country.countryName}
+      />
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  const { countries } = state;
+  return {countries};
+};
+
+export default connect(mapStateToProps, { getCountries })(Countries);
