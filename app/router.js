@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Icon2 from 'react-native-vector-icons/FontAwesome';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
 import { styles } from './assets/styles';
 import { testImg } from './assets/images';
@@ -23,7 +22,7 @@ export const Tabs = createBottomTabNavigator({
     screen: Explore,
     navigationOptions: {
       tabBarLabel: 'Explore',
-      tabBarIcon: <Icon2 style={styles.menuTab} name="envelope"/>,
+      tabBarIcon: <Icon style={styles.menuTab} name="ios-compass"/>,
     },
   },
   'Countries': {
@@ -56,14 +55,21 @@ export const Tabs = createBottomTabNavigator({
   },
 },{
   initialRouteName: 'Explore',
+  animationEnabled: true,
   tabBarOptions: {
     activeTintColor: 'tomato',
     inactiveTintColor: 'gray',
+    labelStyle: {
+      fontSize: 12,
+      paddingTop: 10
+    },
     style : {
-      height: 80,
+      height: 65,
       borderTopWidth: 1,
       borderTopColor: '#1a4e6c',
-      color: '#1a4e6c'
+      color: '#1a4e6c',
+      paddingBottom: 5,
+      paddingTop: 15
     }
   },
   headerMode: "none",
@@ -82,6 +88,7 @@ const AppStack = createStackNavigator(
   {
     headerMode: "none",
     mode: "modal",
+    cardStyle: {backgroundColor: '#ffffff'}
   }
 );
 

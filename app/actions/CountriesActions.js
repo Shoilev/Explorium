@@ -1,6 +1,7 @@
 import firebase from 'react-native-firebase';
 import {
   COUNTRIES_FETCH_SUCCESS,
+  COUNTRIES_UPDATE
 } from './types';
 
 export const getCountries = () => {
@@ -11,14 +12,23 @@ export const getCountries = () => {
         const countries = [];
         querySnapshot.forEach(doc => {
           countries.push({
-            countryName: doc.data().name
+            countryName: doc.data().name,
+            countryImage: doc.data().image
           })
+        })
+
+        countries.sort(function(a, b) {
+          return a.countryName.localeCompare(b.countryName);
         })
 
         dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: countries })
       })
-      .catch(err => {
-        console.log('Error getting countries', err);
-      });
   }
 }
+
+export const updateCountries = (countriesData) => {
+  return {
+    type: COUNTRIES_UPDATE,
+    payload: countriesData
+  };
+};
