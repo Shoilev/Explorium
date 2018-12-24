@@ -1,6 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { styles } from '../../assets/styles';
+import { createStyles } from '../../assets/styles';
+
+const styles = createStyles();
+
 
 const Section = (props) => {
   return (

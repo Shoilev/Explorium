@@ -6,7 +6,10 @@ import {
   LOGIN_USER,
   LOGOUT_USER_FAIL,
   LOGOUT_USER_SUCCESS,
-  LOGOUT_USER
+  LOGOUT_USER,
+  SIGN_UP_USER,
+  SIGN_UP_USER_SUCCESS,
+  SIGN_UP_USER_FAIL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -34,6 +37,10 @@ export default (state = INITIAL_STATE, action) => {
     case LOGOUT_USER_SUCCESS:
       return { ...state, ...INITIAL_STATE };
     case LOGOUT_USER_FAIL:
+      return { ...state, errorMessage: action.payload, loading: false };
+    case SIGN_UP_USER:
+      return { ...state, loading: true, errorMessage: null };
+    case SIGN_UP_USER_FAIL:
       return { ...state, errorMessage: action.payload, loading: false };
     default:
       return state;

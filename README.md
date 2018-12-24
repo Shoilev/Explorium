@@ -3,6 +3,10 @@ Travel &amp; Game App
 
 Run the app:
 npm install
+
+for virtual debug use:
+react-native start --reset-cache
+or
 react-native run-android
 
 for physical debug use:

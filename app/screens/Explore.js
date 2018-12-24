@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { Text, ImageBackground, Image } from 'react-native';
-import { styles } from '../assets/styles';
+import { ImageBackground, Image } from 'react-native';
+import { createStyles } from '../assets/styles';
+import { images } from '../assets/images';
+import { ExploreStyle } from '../assets/styles/explore';
 import { Section, Button } from '../components/common';
+import { Screens } from '../resources/labels.json';
 
-const exploreumSrc = require('../assets/images/exploreum_background.jpg');
-const exploreEarth = require('../assets/images/earth.png');
+const styles = createStyles(ExploreStyle);
+const exploreumSrc = images.exploreumBackground;
+const exploreEarth = images.earth;
 
 export default class Explore extends Component {
 
@@ -17,7 +21,7 @@ export default class Explore extends Component {
       <ImageBackground source={exploreumSrc} style={styles.backgroundImage}>
         <Section>
           <Image source={exploreEarth} />
-          <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>Go Explore!</Button>
+          <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
         </Section>
       </ImageBackground>
     );

@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import CountryList from '../components/CountryList';
 import HeaderSearch from '../components/HeaderSearch';
 import { getCountries } from '../actions';
-import { styles } from '../assets/styles';
+import { createStyles } from '../assets/styles';
+import { CountriesStyles } from '../assets/styles/countries';
+
+const styles = createStyles(CountriesStyles);
 
 class Countries extends Component {
   componentWillMount() {

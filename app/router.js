@@ -1,60 +1,61 @@
 import React, { Component } from 'react';
-import { TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
-import { styles } from './assets/styles';
-import { testImg } from './assets/images';
+import { createStyles } from './assets/styles';
+import { Screens } from './resources/labels.json';
 
 // components
 import Login from './components/Login';
 import Register from './components/Register';
 import AuthLoading from './components/AuthLoading';
 
-// TODO refactor screens
+// Screens
 import Explore from './screens/Explore';
 import Profile from './screens/Profile';
 import Friends from './screens/Friends';
 import Countries from './screens/Countries';
 import Achivements from './screens/Achivements';
 
+const styles = createStyles();
+
 export const Tabs = createBottomTabNavigator({
   'Explore': {
     screen: Explore,
     navigationOptions: {
-      tabBarLabel: 'Explore',
+      tabBarLabel: Screens.Explore.title,
       tabBarIcon: <Icon style={styles.menuTab} name="ios-compass"/>,
     },
   },
   'Countries': {
     screen: Countries,
     navigationOptions: {
-      tabBarLabel: 'Countries',
+      tabBarLabel: Screens.Countries.title,
       tabBarIcon: <Icon style={styles.menuTab} name="md-globe"/>
     },
   },
   'Achivements': {
     screen: Achivements,
     navigationOptions: {
-      tabBarLabel: 'Achivements',
+      tabBarLabel: Screens.Achivements.title,
       tabBarIcon: <Icon style={styles.menuTab} name="md-ribbon"/>
     },
   },
   'Friends': {
     screen: Friends,
     navigationOptions: {
-      tabBarLabel: 'Friends',
+      tabBarLabel: Screens.Friends.title,
       tabBarIcon: <Icon style={styles.menuTab} name="ios-people"/>
     },
   },
   'Profile': {
     screen: Profile,
     navigationOptions: {
-      tabBarLabel: 'Profile',
+      tabBarLabel: Screens.Profile.title,
       tabBarIcon: <Icon style={styles.menuTab} name="md-person"/>
     },
   },
 },{
-  initialRouteName: 'Explore',
+  initialRouteName: Screens.Explore.title,
   animationEnabled: true,
   tabBarOptions: {
     activeTintColor: 'tomato',

@@ -2,16 +2,26 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, ImageBackground, Image } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { emailChanged, passwordChanged, loginUser, emptyUserOrPassword } from '../actions';
 import { Section, Button } from './common';
-import { styles } from '../assets/styles';
+import { createStyles } from '../assets/styles';
+import { images } from '../assets/images';
+import { Auth } from '../assets/styles/auth';
+import { App, Authentication } from '../resources/labels.json';
 
-const loginBackgroundSrc = require('../assets/images/login_background.jpg');
-const logoSrc = require('../assets/images/logo.png');
+const styles = createStyles(Auth);
+const loginBackgroundSrc = images.loginBackground;
+const logoSrc = images.logo;
 
 class Login extends Component {
   onButtonPress() {
     const { email, password } = this.props;
+
+    if(!email || !password) {
+      this.props.emptyUserOrPassword();
+      return;
+    }
+
     this.props.loginUser({ email, password });
   }
 
@@ -28,7 +38,7 @@ class Login extends Component {
       <ImageBackground source={loginBackgroundSrc} style={styles.backgroundImage}>
         <Section style={styles.login}>
           <Image source={logoSrc} style={styles.loginLogo}/>
-          <Text style={styles.introText}>Inspired exploration!</Text>
+          <Text style={styles.introText}>{App.description}</Text>
 
 
           {this.props.errorMessage &&
@@ -62,11 +72,11 @@ class Login extends Component {
           </View>
 
           <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
-            LOG IN
+            {Authentication.LogIn.buttonTitle}
           </Button>
 
           <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Register')}>
-            Don't have an account? Sign Up
+            {Authentication.LogIn.additionalLinkTitle}
           </Button>
         </Section>
       </ImageBackground>
@@ -83,5 +93,6 @@ const mapStateToProps = ({ auth }) => {
 export default connect(mapStateToProps, {
   emailChanged,
   passwordChanged,
-  loginUser
+  loginUser,
+  emptyUserOrPassword
 })(Login);

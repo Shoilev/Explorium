@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Text, ImageBackground, View, TouchableNativeFeedback } from 'react-native';
 import { Section } from './common';
-import { styles } from '../assets/styles';
+import { createStyles } from '../assets/styles';
+import { CountriesStyles } from '../assets/styles/countries';
+import { countryColors } from '../settings/global.json';
 
-// TODO move to settings
-const colors = ['orange', 'yellow', 'lightBlue', 'darkBlue', 'purple'];
+const styles = createStyles(CountriesStyles);
 
 export default class CountryList extends Component {
   render() {
     const { countryImage, country, countryIndex } = this.props;
-    const color = colors[countryIndex % colors.length];
+    const color = countryColors[countryIndex % countryColors.length];
     const backgroundColor = color + 'Background';
     const backgroundWithOpacityColor = color + 'BackgroundOpacity';
 

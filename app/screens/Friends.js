@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { styles } from '../assets/styles';
+import { Text, View } from 'react-native';
+import { createStyles } from '../assets/styles';
+
+const styles = createStyles();
 
 export default class Friends extends Component {
   render() {

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
-import { styles } from '../assets/styles';
+import { createStyles } from '../assets/styles';
 import { connect } from 'react-redux';
 import { updateCountries } from '../actions';
+
+const styles = createStyles();
 
 class HeaderSearch extends Component {
   handleSearch(text, totalResults) {

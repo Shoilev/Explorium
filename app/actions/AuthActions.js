@@ -1,4 +1,5 @@
 import firebase from 'react-native-firebase';
+import { Authentication } from '../resources/labels.json';
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
@@ -7,7 +8,10 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAIL
+  LOGOUT_USER_FAIL,
+  SIGN_UP_USER,
+  SIGN_UP_USER_SUCCESS,
+  SIGN_UP_USER_FAIL
 } from './types';
 
 export const emailChanged = (text) => {
@@ -45,6 +49,24 @@ export const loginUser = ({ email, password }) => {
   }
 };
 
+export const signUpUser = ({ email, password }) => {
+  return (dispatch) => {
+    dispatch({ type: SIGN_UP_USER });
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => this.props.navigation.navigate('App'))
+      .catch(error => signUpUserFail(dispatch, error))
+  }
+}
+
+export const emptyUserOrPassword = () => {
+  return {
+    type: LOGIN_USER_FAIL,
+    payload: Authentication.errorMessage
+  }
+}
+
 const logoutUserSuccess = (dispatch) => {
   dispatch({ 
     type: LOGOUT_USER_SUCCESS,
@@ -69,5 +91,12 @@ const loginUserSuccess = (dispatch, user) => {
   dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
+  });
+};
+
+const signUpUserFail = (dispatch, error) => {
+  dispatch({ 
+    type: SIGN_UP_USER_FAIL,
+    payload: error.message
   });
 };

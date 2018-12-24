@@ -1,33 +1,46 @@
 import React from 'react';
 import { Text, TextInput, View, ImageBackground } from 'react-native';
-import firebase from 'react-native-firebase';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { styles } from '../assets/styles';
+import { emailChanged, passwordChanged, signUpUser, emptyUserOrPassword } from '../actions';
+import { createStyles } from '../assets/styles';
+import { images } from '../assets/images';
+import { Auth } from '../assets/styles/auth';
 import { Section, Button } from './common';
+import { Authentication } from '../resources/labels.json';
 
-const registerBackgroundSrc = require('../assets/images/register_background.jpg');
+const styles = createStyles(Auth);
+const registerBackgroundSrc = images.registerBackground;
 
-export default class Register extends React.Component {
-  state = { email: '', password: '', errorMessage: null }
+class Register extends React.Component {
+  onButtonPress() {
+    const { email, password } = this.props;
+    if(!email || !password) {
+      this.props.emptyUserOrPassword();
+      return;
+    }
 
-  handleSignUp = () => {
-    // TODO: Firebase stuff...
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('App'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+    this.props.signUpUser({ email, password });
+  }
+
+  onEmailChange(text) {
+    this.props.emailChanged(text);
+  }
+
+  onPasswordChange(text) {
+    this.props.passwordChanged(text);
   }
 
   render() {
     return (
       <ImageBackground source={registerBackgroundSrc} style={styles.backgroundImage}>
         <Section style={styles.register}>
-          <Text style={styles.registerTitle}>Create Your Account</Text>
-          {this.state.errorMessage &&
-            <Text style={{ color: 'red' }}>
-              {this.state.errorMessage}
-            </Text>}
+          <Text style={styles.registerTitle}>{Authentication.SignIn.title}</Text>
+
+          {this.props.errorMessage &&
+          <Text style={{ color: 'red' }}>
+            {this.props.errorMessage}
+          </Text>}
 
           <View style={styles.loginInput}>
             <Icon style={styles.emailIcon} name="ios-mail"/>
@@ -36,8 +49,8 @@ export default class Register extends React.Component {
               placeholderTextColor="#ffffff"
               autoCapitalize="none"
               style={styles.textInput}
-              onChangeText={email => this.setState({ email })}
-              value={this.state.email}
+              onChangeText={this.onEmailChange.bind(this)}
+              value={this.props.email}
             />
           </View>
 
@@ -49,20 +62,33 @@ export default class Register extends React.Component {
               placeholderTextColor="#ffffff"
               autoCapitalize="none"
               style={styles.textInput}
-              onChangeText={password => this.setState({ password })}
-              value={this.state.password}
+              onChangeText={this.onPasswordChange.bind(this)}
+              value={this.props.password}
             />
           </View>
 
-          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.handleSignUp}>
-            Sign Up
+          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
+            {Authentication.SignIn.buttonTittle}
           </Button>
 
           <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Login')}>
-            Already have an account? Login
+            {Authentication.SignIn.additionalLinkTitle}
           </Button>
         </Section>
       </ImageBackground>
     )
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  const { email, password, errorMessage, loading } = auth;
+
+  return { email, password, errorMessage, loading };
+};
+
+export default connect(mapStateToProps, {
+  emailChanged,
+  passwordChanged,
+  signUpUser,
+  emptyUserOrPassword
+})(Register);

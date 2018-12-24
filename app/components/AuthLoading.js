@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
-  StyleSheet,
   View,
 } from 'react-native';
 import firebase from 'react-native-firebase';
-import { styles } from '../assets/styles';
+import { createStyles } from '../assets/styles';
+
+const styles = createStyles();
 
 export default class AuthLoading extends Component {
   componentDidMount() {

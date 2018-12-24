@@ -1,0 +1,38 @@
+{
+  "App": {
+    "description": "Inspired exploration!"
+  },
+  "Authentication": {
+    "LogIn": {
+      "buttonTitle": "Log in",
+      "additionalLinkTitle": "Don't have an account? Sign Up"
+    },
+    "SignIn": {
+      "title": "Create Your Account",
+      "buttonTittle": "Sign Up",
+      "additionalLinkTitle": "Already have an account? Login"
+    },
+    "LogOut": {
+      "buttonTitle": "Log out"
+    },
+    "errorMessage": "Please enter your email and password"
+  },
+  "Screens": {
+    "Explore": {
+      "title": "Explore",
+      "buttonTitle": "Go Explore!"
+    },
+    "Countries": {
+      "title": "Countries"
+    },
+    "Achivements": {
+      "title": "Achivements"
+    },
+    "Friends": {
+      "title": "Friends"
+    },
+    "Profile": {
+      "title": "Profile"
+    }
+  }
+}

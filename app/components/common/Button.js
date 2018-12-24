@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { styles } from '../../assets/styles';
+import { createStyles } from '../../assets/styles';
+
+const styles = createStyles();
 
 const Button = ({ onPress, children, textStyle, buttonStyle }) => {
   const { button } = styles;

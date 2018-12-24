@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { logOutUser, getUser } from '../actions';
 import { connect } from 'react-redux';
-import { styles } from '../assets/styles';
+import { createStyles } from '../assets/styles';
+import { Authentication } from '../resources/labels.json';
+
+const styles = createStyles();
 
 class Profile extends Component {
 
@@ -25,7 +28,7 @@ class Profile extends Component {
           style={styles.button}
           onPress={this.handleLogOut}
         >
-          <Text> Log out </Text>
+          <Text> {Authentication.LogOut.buttonTitle} </Text>
         </TouchableOpacity>
       </View>
     );
