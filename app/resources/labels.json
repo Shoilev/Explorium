@@ -1,5 +1,6 @@
 {
   "App": {
+    "explore": "Explore",
     "description": "Inspired exploration!"
   },
   "Authentication": {

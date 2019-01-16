@@ -9,7 +9,7 @@ const styles = createStyles(CountriesStyles);
 
 export default class CountryList extends Component {
   render() {
-    const { countryImage, country, countryIndex } = this.props;
+    const { countryImage, country, countryIndex, appNavigation } = this.props;
     const color = countryColors[countryIndex % countryColors.length];
     const backgroundColor = color + 'Background';
     const backgroundWithOpacityColor = color + 'BackgroundOpacity';
@@ -18,7 +18,7 @@ export default class CountryList extends Component {
       <Section style={styles.countryListCard}>
         <ImageBackground source={{uri: countryImage}} style={[styles.backgroundImage, styles.countryCardBackground]}>
         </ImageBackground>
-        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple(styles[color])}>
+        <TouchableNativeFeedback onPress={()=>appNavigation.navigate('CitiesList',{country:country})} background={TouchableNativeFeedback.Ripple(styles[color])}>
           <View style={[styles.overlay, styles[backgroundWithOpacityColor]]}>
             <Text style={styles.countryListTitle}>{country.toUpperCase()}</Text>
             <Text style={[styles.countryListPoints, styles[backgroundColor]]}>{'Up to 500 pts'}</Text>

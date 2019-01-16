@@ -14,18 +14,19 @@ class Countries extends Component {
     this.props.getCountries();
   }
 
-  renderItem({item, index}) {
-    return <CountryList country={item.countryName} countryImage={item.countryImage} countryIndex={index} />
+  renderItem(item, index, navigation) {
+    return <CountryList country={item.countryName} appNavigation={navigation} countryImage={item.countryImage} countryIndex={index} />
   }
 
   renderState() {
     const { countriesData, activeCountries } = this.props.countries;
+    const { navigation } = this.props;
 
     if(countriesData && countriesData.length) {
       return (
         <FlatList
           data={activeCountries}
-          renderItem={this.renderItem}
+          renderItem={({item, index}) => this.renderItem(item,index,navigation)}
           keyExtractor={(country, index)=> index}
           ListHeaderComponent={<HeaderSearch title={"Countries"} data={countriesData} />}
           stickyHeaderIndices={[0]}

@@ -11,6 +11,7 @@ export const getCountries = () => {
         console.log('firebase');
         const countries = [];
         querySnapshot.forEach(doc => {
+          console.log(doc)
           countries.push({
             countryName: doc.data().name,
             countryImage: doc.data().image

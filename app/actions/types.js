@@ -11,5 +11,7 @@ export const SIGN_UP_USER_SUCCESS = 'sign_up_success';
 export const SIGN_UP_USER_FAIL = 'sign_up_fail';
 export const COUNTRIES_FETCH_SUCCESS = 'countries_fetch_success';
 export const COUNTRIES_UPDATE = 'countries_update';
+export const CITIES_PER_COUNTRY_FETCH_SUCCESS = 'cities_per_country_fetch_success';
+export const LANDMARKS_FETCH_SUCCESS = 'landmarks_fetch_success';
 
 export const GET_USER = 'get_user';

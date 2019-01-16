@@ -11,6 +11,7 @@
     "react-native": "0.57.3",
     "react-native-firebase": "^5.0.0",
     "react-native-paper": "^2.2.8",
+    "react-native-snap-carousel": "^3.7.5",
     "react-navigation": "^2.18.0",
     "react-navigation-material-bottom-tabs": "^1.0.0",
     "react-redux": "^5.0.7",

@@ -16,6 +16,11 @@ import Friends from './screens/Friends';
 import Countries from './screens/Countries';
 import Achivements from './screens/Achivements';
 
+//Inner screens
+import CitiesList from './components/CitiesList';
+import LandmarksList from './components/LandmarksList';
+import LandmarkDetails from './components/LandmarkDetails';
+
 const styles = createStyles();
 
 export const Tabs = createBottomTabNavigator({
@@ -83,11 +88,56 @@ const AppStack = createStackNavigator(
       screen: Tabs,
       navigationOptions: ({navigation}) => ({
         gesturesEnabled: false,
+        header: null
       }),
+    },
+    CitiesList: {
+      screen: CitiesList,
+      navigationOptions: ({navigation}) => ({
+        title: `Cities`,
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: '#1a4e6c',
+        headerTitleStyle: { color: '#1a4e6c' },
+      }),
+      headerMode: 'screen',
+    },
+    LandmarksList: {
+      screen: LandmarksList,
+      navigationOptions: ({navigation}) => ({
+        title: navigation.getParam('city', 'Landmarks'),
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: '#1a4e6c',
+        headerTitleStyle: { color: '#1a4e6c' },
+      }),
+      headerMode: 'screen',
+    },
+    LandmarkDetails: {
+      screen: LandmarkDetails,
+      navigationOptions: ({navigation}) => ({
+        title: navigation.getParam('landmark') ? navigation.getParam('landmark').landmarkName : 'Landmark',
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: '#1a4e6c',
+        headerTitleStyle: { color: '#1a4e6c' },
+      }),
+      headerMode: 'screen',
     }
   },
   {
-    headerMode: "none",
     mode: "modal",
     cardStyle: {backgroundColor: '#ffffff'}
   }
