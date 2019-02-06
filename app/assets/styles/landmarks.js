@@ -85,5 +85,13 @@ export const LandmarksStyles = {
     color: colors.white,
     fontWeight: 'bold',
     fontSize: fonts.baseSize * 3
+  },
+  landmarkDetailsBtn: {
+    backgroundColor: colors.orange,
+    borderRadius: 5,
+    marginTop: spacing.large
+  },
+  landmarkDetailsBtnText: {
+    color: colors.white
   }
 }

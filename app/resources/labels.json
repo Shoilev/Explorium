@@ -35,5 +35,10 @@
     "Profile": {
       "title": "Profile"
     }
+  },
+  "Components": {
+    "LandmarkDetails": {
+      "buttonTitle": "Get direction"
+    }
   }
 }

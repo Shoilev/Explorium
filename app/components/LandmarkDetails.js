@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, ActivityIndicator } from 'react-native';
 import { createStyles } from '../assets/styles';
-import { Section } from '../components/common';
+import { Section, Button } from '../components/common';
 import { LandmarksStyles } from '../assets/styles/landmarks';
+import { Components } from '../resources/labels.json';
 
 const styles = createStyles(LandmarksStyles);
 
@@ -21,6 +22,7 @@ export default class LandmarkDetails extends Component {
           <View>
             <Text style={styles.landmarksText}>{landmark.landmarkDescription}</Text>
           </View>
+          <Button textStyle={styles.landmarkDetailsBtnText} buttonStyle={styles.landmarkDetailsBtn} onPress={() => this.props.navigation.navigate('BaseMap', {coordinate: landmark.coordinate})} >{Components.LandmarkDetails.buttonTitle}</Button>
         </Section>
       );
     } else {

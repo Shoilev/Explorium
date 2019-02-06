@@ -3,6 +3,10 @@ import {
   LANDMARKS_FETCH_SUCCESS,
 } from './types';
 
+// SOFIA
+const LATITUDE = 42.684617;
+const LONGITUDE = 23.318993;
+
 export const getLandmarks = (country, city) => {
   return (dispatch) => {
     firebase.firestore().collection('countries').doc(country).collection('cities').doc(city).collection('landmarks')
@@ -14,7 +18,11 @@ export const getLandmarks = (country, city) => {
           landmarks.push({
             landmarkName: doc.data().name,
             landmarkImage: doc.data().image,
-            landmarkDescription: doc.data().description
+            landmarkDescription: doc.data().description,
+            coordinate: {
+              latitude: doc.data().latitude || LATITUDE,
+              longitude: doc.data().longitude || LONGITUDE
+            }
           })
         })
 

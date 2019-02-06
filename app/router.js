@@ -20,6 +20,8 @@ import Achivements from './screens/Achivements';
 import CitiesList from './components/CitiesList';
 import LandmarksList from './components/LandmarksList';
 import LandmarkDetails from './components/LandmarkDetails';
+import BaseMap from './components/BaseMap';
+import ExploreMap from './components/ExploreMap';
 
 const styles = createStyles();
 
@@ -133,6 +135,26 @@ const AppStack = createStackNavigator(
         },
         headerTintColor: '#1a4e6c',
         headerTitleStyle: { color: '#1a4e6c' },
+      }),
+      headerMode: 'screen',
+    },
+    BaseMap: {
+      screen: BaseMap,
+      navigationOptions: ({navigation}) => ({
+        title: '',
+        headerTransparent: true,
+        headerTintColor: '#1a4e6c',
+        headerTitleStyle: { color: '#1a4e6c' }
+      }),
+      headerMode: 'screen',
+    },
+    ExploreMap: {
+      screen: ExploreMap,
+      navigationOptions: ({navigation}) => ({
+        title: '',
+        headerTransparent: true,
+        headerTintColor: '#1a4e6c',
+        headerTitleStyle: { color: '#1a4e6c' }
       }),
       headerMode: 'screen',
     }

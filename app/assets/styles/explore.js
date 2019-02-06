@@ -11,5 +11,12 @@ export const ExploreStyle = {
     borderRadius: 15,
     paddingTop: spacing.small,
     paddingBottom: spacing.small
+  },
+  exploreBaseMap: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   }
 }
