@@ -138,6 +138,10 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-3d-model-view')
+    compile project(':react-native-fs')
+    implementation project(':rn-fetch-blob')
+    implementation project(':react-native-zip-archive')
     implementation project(':react-native-firebase')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"

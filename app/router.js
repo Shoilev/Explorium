@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Image } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
 import { createStyles } from './assets/styles';
 import { Screens } from './resources/labels.json';
@@ -14,7 +15,7 @@ import Explore from './screens/Explore';
 import Profile from './screens/Profile';
 import Friends from './screens/Friends';
 import Countries from './screens/Countries';
-import Achivements from './screens/Achivements';
+import Achievements from './screens/Achievements';
 
 //Inner screens
 import CitiesList from './components/CitiesList';
@@ -30,35 +31,35 @@ export const Tabs = createBottomTabNavigator({
     screen: Explore,
     navigationOptions: {
       tabBarLabel: Screens.Explore.title,
-      tabBarIcon: <Icon style={styles.menuTab} name="ios-compass"/>,
+      tabBarIcon: <Image style={{width: 40, height: 40}} source={require("./assets/images/explore.png")}/>
     },
   },
   'Countries': {
     screen: Countries,
     navigationOptions: {
       tabBarLabel: Screens.Countries.title,
-      tabBarIcon: <Icon style={styles.menuTab} name="md-globe"/>
+      tabBarIcon: <Image style={{width: 35, height: 35}} source={require("./assets/images/countries.png")}/>
     },
   },
-  'Achivements': {
-    screen: Achivements,
+  'Achievements': {
+    screen: Achievements,
     navigationOptions: {
-      tabBarLabel: Screens.Achivements.title,
-      tabBarIcon: <Icon style={styles.menuTab} name="md-ribbon"/>
+      tabBarLabel: Screens.Achievements.title,
+      tabBarIcon: <Image style={{width: 35, height: 35}} source={require("./assets/images/achievements.png")}/>
     },
   },
   'Friends': {
     screen: Friends,
     navigationOptions: {
       tabBarLabel: Screens.Friends.title,
-      tabBarIcon: <Icon style={styles.menuTab} name="ios-people"/>
+      tabBarIcon: <Image style={{width: 40, height: 40}} source={require("./assets/images/friends.png")}/>
     },
   },
   'Profile': {
     screen: Profile,
     navigationOptions: {
       tabBarLabel: Screens.Profile.title,
-      tabBarIcon: <Icon style={styles.menuTab} name="md-person"/>
+      tabBarIcon: <Image style={{width: 35, height: 35}} source={require("./assets/images/profile.png")}/>
     },
   },
 },{
@@ -66,10 +67,10 @@ export const Tabs = createBottomTabNavigator({
   animationEnabled: true,
   tabBarOptions: {
     activeTintColor: 'tomato',
-    inactiveTintColor: 'gray',
+    inactiveTintColor: '#1c4f6d',
     labelStyle: {
-      fontSize: 12,
-      paddingTop: 10
+      fontSize: 11,
+      paddingTop: 12
     },
     style : {
       height: 65,

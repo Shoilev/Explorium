@@ -10,7 +10,8 @@ export const ExploreStyle = {
     borderColor: colors.white,
     borderRadius: 15,
     paddingTop: spacing.small,
-    paddingBottom: spacing.small
+    paddingBottom: spacing.small,
+    marginTop: spacing.medium
   },
   exploreBaseMap: {
     position: 'absolute',
@@ -18,5 +19,28 @@ export const ExploreStyle = {
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  exploreModel: {
+    width: 230,
+    height: 230,
+    borderRadius: 230,
+    backgroundColor: '#314367',
+    overflow: 'hidden',
+    opacity: 0
+  },
+  exploreModelLoaded: {
+    width: 230,
+    height: 230,
+    borderRadius: 230,
+    backgroundColor: '#314367',
+    overflow: 'hidden',
+    opacity: 1
+  },
+  exploreLoadingWrapper: {
+    position:'absolute',
+    top: '40%'
+  },
+  exploreLoadingMsg: {
+    color: colors.white
   }
 }

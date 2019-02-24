@@ -1,7 +1,16 @@
 {
   "App": {
     "explore": "Explore",
-    "description": "Inspired exploration!"
+    "description": "Inspired exploration!",
+    "Premissions": {
+      "Location": {
+        "title": "Exploreum App Location Premission",
+        "message": "Exploreum App needs access to your location",
+        "buttonNeutral": "Ask Me Later",
+        "buttonNegative": "Cancel",
+        "buttonPositive": "OK"
+      }
+    }
   },
   "Authentication": {
     "LogIn": {
@@ -26,8 +35,8 @@
     "Countries": {
       "title": "Countries"
     },
-    "Achivements": {
-      "title": "Achivements"
+    "Achievements": {
+      "title": "Achievements"
     },
     "Friends": {
       "title": "Friends"

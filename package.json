@@ -10,16 +10,20 @@
     "prop-types": "^15.6.2",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.3",
+    "react-native-3d-model-view": "^1.2.0",
     "react-native-firebase": "^5.0.0",
+    "react-native-fs": "^2.13.3",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-maps": "^0.23.0",
     "react-native-paper": "^2.2.8",
     "react-native-snap-carousel": "^3.7.5",
+    "react-native-zip-archive": "^3.0.1",
     "react-navigation": "^2.18.0",
     "react-navigation-material-bottom-tabs": "^1.0.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "rn-fetch-blob": "^0.10.15"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
