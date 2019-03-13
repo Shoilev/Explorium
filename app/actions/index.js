@@ -3,3 +3,4 @@ export * from './UserActions';
 export * from './CountriesActions';
 export * from './CitiesActions';
 export * from './LandmarksActions';
+export * from './FriendsActions';

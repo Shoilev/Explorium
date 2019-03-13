@@ -13,5 +13,7 @@ export const COUNTRIES_FETCH_SUCCESS = 'countries_fetch_success';
 export const COUNTRIES_UPDATE = 'countries_update';
 export const CITIES_PER_COUNTRY_FETCH_SUCCESS = 'cities_per_country_fetch_success';
 export const LANDMARKS_FETCH_SUCCESS = 'landmarks_fetch_success';
+export const FRIENDS_FETCH_SUCCESS = 'friends_fetch_success';
+export const FRIENDS_UPDATE = 'friends_update';
 
 export const GET_USER = 'get_user';

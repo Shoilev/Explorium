@@ -19,6 +19,7 @@ import Achievements from './screens/Achievements';
 
 //Inner screens
 import CitiesList from './components/CitiesList';
+import FriendList from './components/FriendList';
 import LandmarksList from './components/LandmarksList';
 import LandmarkDetails from './components/LandmarkDetails';
 import BaseMap from './components/BaseMap';
@@ -98,6 +99,21 @@ const AppStack = createStackNavigator(
       screen: CitiesList,
       navigationOptions: ({navigation}) => ({
         title: `Cities`,
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: '#1a4e6c',
+        headerTitleStyle: { color: '#1a4e6c' },
+      }),
+      headerMode: 'screen',
+    },
+    FriendList: {
+      screen: FriendList,
+      navigationOptions: ({navigation}) => ({
+        title: `Friends`,
         headerStyle: {
           borderBottomColor: '#1a4e6c',
           borderBottomWidth: 1,

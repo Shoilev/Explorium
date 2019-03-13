@@ -8,6 +8,7 @@ export const Colors = {
   transparent: 'transparent',
   white: '#ffffff',
   gray: '#DDDDDD',
+  darkGray: 'rgb(20, 22, 54)',
   black: '#000000',
   yellow: 'rgb(246, 202, 23)',
   orange: 'rgb(253, 129, 2)',
