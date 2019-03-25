@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { ImageBackground, Image, View, ActivityIndicator, PermissionsAndroid } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import { ImageBackground, Image, View, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 import { ModelView } from 'react-native-3d-model-view';
+import { requestLocationPermission } from '../actions';
 import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
 import { ExploreStyle } from '../assets/styles/explore';
@@ -13,7 +14,7 @@ const exploreumSrc = images.exploreumBackground;
 const exploreumSecondSrc = images.exploreumSecondBackground;
 const exploreEarth = images.earth;
 
-export default class Explore extends Component {
+class Explore extends Component {
   state = {
     modelLoaded: false,
     reloadScreen: false
@@ -36,52 +37,18 @@ export default class Explore extends Component {
 
   onButtonPress() {
     const { navigation } = this.props;
-    // TODO: move to state
-    let latitude = 42.684617;
-    let longitude = 23.318993;
-    navigation.navigate('ExploreMap',{ latitude, longitude });
-  }
+    const { userLocation } = this.props.userGeoLocation;
 
-  async requestLocationPermission() {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: App.Premissions.Location.title,
-          message: App.Premissions.Location.title.message,
-          buttonNeutral: App.Premissions.Location.buttonNeutral,
-          buttonNegative: App.Premissions.Location.buttonNegative,
-          buttonPositive: App.Premissions.Location.buttonPositive
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        // Instead of navigator.geolocation, just use Geolocation.
-        Geolocation.getCurrentPosition( (position) => {
-          console.log(position);
-        },
-        (error) => {
-          // See error code charts below.
-          console.log(error.code, error.message);
-        },
-        { 
-          enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 
-        });
-        console.log('You can use the Location');
-      } else {
-        console.log('Location permission denied');
-      }
-    } catch (err) {
-      console.warn(err);
-    }
+    navigation.navigate('ExploreMap',{ latitude: userLocation.latitude, longitude: userLocation.longitude });
   }
 
   componentWillMount() {
-    this.requestLocationPermission();
+    // this.load() // only first time
+    this.props.navigation.addListener('willFocus', this.load);
+    this.props.requestLocationPermission();
   }
   
   componentDidMount(){
-    // this.load() // only first time
-    this.props.navigation.addListener('willFocus', this.load);
   }
 
   load = () => {
@@ -139,3 +106,9 @@ export default class Explore extends Component {
     }
   }
 }
+
+const mapStateToProps = ({userGeoLocation}) => {
+  return { userGeoLocation };
+};
+
+export default connect(mapStateToProps, { requestLocationPermission })(Explore);

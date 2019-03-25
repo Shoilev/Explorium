@@ -5,6 +5,7 @@ import CountriesReducer from './CountriesReducer';
 import CitiesReducer from './CitiesReducer';
 import LandmarksReducer from './LandmarksReducer';
 import FriendsReducer from './FriendsReducer';
+import GeoLocationReducer from './GeoLocationReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   countries: CountriesReducer,
   cities: CitiesReducer,
   landmarks: LandmarksReducer,
-  friends: FriendsReducer
+  friends: FriendsReducer,
+  userGeoLocation: GeoLocationReducer
 });

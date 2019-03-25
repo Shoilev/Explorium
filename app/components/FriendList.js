@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Text, ImageBackground, Image, View, Linking, TouchableNativeFeedback } from 'react-native';
+import { Text, View, Linking, TouchableNativeFeedback } from 'react-native';
 import { Section, Button } from './common';
 import { createStyles } from '../assets/styles';
 import { FriendsStyle } from '../assets/styles/friends';
 import { countryColors } from '../settings/global.json';
-import { Components } from '../resources/labels.json';
 
 const styles = createStyles(FriendsStyle);
 

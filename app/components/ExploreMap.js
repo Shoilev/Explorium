@@ -5,7 +5,6 @@ import {
   Dimensions,
   Animated,
   Text,
-  ImageBackground,
   Image
 } from 'react-native';
 
@@ -25,8 +24,8 @@ const landmarkTestImage = images.landmarkTest;
 const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
-const LATITUDE = 42.684617; // Sofia
-const LONGITUDE = 23.318993;
+const DEFAULT_LATITUDE = 42.684617;
+const DEFAULT_LONGITUDE = 23.318993;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
@@ -40,11 +39,14 @@ const BREAKPOINT1 = 246;
 const BREAKPOINT2 = 350;
 const ONE = new Animated.Value(1);
 
+let LATITUDE;
+let LONGITUDE;
+
 function getMarkerState(panX, panY, scrollY, i) {
   const xLeft = (-SNAP_WIDTH * i) + (SNAP_WIDTH / 2);
   const xRight = (-SNAP_WIDTH * i) - (SNAP_WIDTH / 2);
   const xPos = -SNAP_WIDTH * i;
-
+  
   const isIndex = panX.interpolate({
     inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
     outputRange: [0, 1, 1, 0],
@@ -135,13 +137,8 @@ function getMarkerState(panX, panY, scrollY, i) {
 
 class ExploreMap extends React.Component {
   componentWillMount() {
-    // TODO: move to settings the default possition and get it from state
-    // LATITUDE = this.props.navigation.getParam('latitude', LATITUDE);
-    // LONGITUDE = this.props.navigation.getParam('longitude', LONGITUDE);
-  }
-
-  constructor(props) {
-    super(props);
+    LATITUDE = this.props.navigation.getParam('latitude', DEFAULT_LATITUDE);
+    LONGITUDE = this.props.navigation.getParam('longitude', DEFAULT_LONGITUDE);
 
     const panX = new Animated.Value(0);
     const panY = new Animated.Value(0);
@@ -204,7 +201,7 @@ class ExploreMap extends React.Component {
     const animations = markers.map((m, i) =>
       getMarkerState(panX, panY, scrollY, i));
 
-    this.state = {
+    this.setState({
       panX,
       panY,
       animations,
@@ -221,7 +218,7 @@ class ExploreMap extends React.Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       }),
-    };
+    });
   }
 
   componentDidMount() {
@@ -353,6 +350,7 @@ class ExploreMap extends React.Component {
             style={styles.exploreAnimatedMap}
             region={region}
             onRegionChange={this.onRegionChange}
+            showsUserLocation={true}
           >
             {markers.map((marker, i) => {
               const {
@@ -366,7 +364,7 @@ class ExploreMap extends React.Component {
                   key={marker.id}
                   coordinate={marker.coordinate}
                 >
-                  <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin.png')} />
+                  <Image style={{ width: 25, height: 25 }} source={require('../assets/images/pin.png')} />
                 </Marker>
               );
             })}
@@ -424,8 +422,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: (ITEM_SPACING / 2) + ITEM_PREVIEW,
     position: 'absolute',
+    left: 0,
+    bottom: 50
     // top: screen.height - ITEM_PREVIEW_HEIGHT - 64,
-    paddingTop: screen.height - ITEM_PREVIEW_HEIGHT - 64,
+    // paddingTop: screen.height - ITEM_PREVIEW_HEIGHT - 64,
     // paddingTop: !ANDROID ? 0 : screen.height - ITEM_PREVIEW_HEIGHT - 64,
   },
   exploreAnimatedMap: {

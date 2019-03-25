@@ -15,5 +15,7 @@ export const CITIES_PER_COUNTRY_FETCH_SUCCESS = 'cities_per_country_fetch_succes
 export const LANDMARKS_FETCH_SUCCESS = 'landmarks_fetch_success';
 export const FRIENDS_FETCH_SUCCESS = 'friends_fetch_success';
 export const FRIENDS_UPDATE = 'friends_update';
+export const GEO_LOCATION_FETCH_SUCCESS = 'geo_location_fetch_success';
+export const GEO_LOCATION_USER_FAIL = 'geo_location_fail';
 
 export const GET_USER = 'get_user';

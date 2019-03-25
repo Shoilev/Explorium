@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, PermissionsAndroid, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import Contacts from 'react-native-contacts'
 import HeaderSearch from '../components/HeaderSearch';
 import { getFriends } from '../actions';
 import FriendList from '../components/FriendList';
 import { createStyles } from '../assets/styles';
-import { FriendsStyle } from '../assets/styles/friends';
 
 const styles = createStyles();
 
