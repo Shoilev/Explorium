@@ -17,5 +17,7 @@ export const FRIENDS_FETCH_SUCCESS = 'friends_fetch_success';
 export const FRIENDS_UPDATE = 'friends_update';
 export const GEO_LOCATION_FETCH_SUCCESS = 'geo_location_fetch_success';
 export const GEO_LOCATION_USER_FAIL = 'geo_location_fail';
+export const GEO_LOCATION_COUNTRY_CITY_SUCCESS = 'geo_location_country_city_success';
+export const GEO_LOCATION_COUNTRY_CITY_FAIL = 'geo_location_country_city_fail';
 
 export const GET_USER = 'get_user';

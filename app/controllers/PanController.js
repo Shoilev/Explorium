@@ -154,7 +154,6 @@ class PanController extends React.Component{
             } = this.props;
 
         let cancel = false;
-        console.log(vertical)
 
         const dir = this._direction;
 
@@ -348,6 +347,7 @@ class PanController extends React.Component{
 
     this._listener = anim.addListener(({ value }) => {
       if (value > bounds[0] && value < bounds[1]) {
+        console.log('test')
         Animated.spring(anim, {
           toValue: endX,
           velocity: endV,

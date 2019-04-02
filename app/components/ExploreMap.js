@@ -5,7 +5,8 @@ import {
   Dimensions,
   Animated,
   Text,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native';
 
 import {
@@ -14,9 +15,11 @@ import {
   AnimatedRegion,
   Marker,
 } from 'react-native-maps';
+import { connect } from 'react-redux';
 import PanController from '../controllers/PanController';
-import { Section } from './common';
+import { Section, Button } from './common';
 import { images } from '../assets/images';
+import { getLandmarksByLocation } from '../actions';
 
 // TODO: This needs to be removed
 const landmarkTestImage = images.landmarkTest;
@@ -140,6 +143,23 @@ class ExploreMap extends React.Component {
     LATITUDE = this.props.navigation.getParam('latitude', DEFAULT_LATITUDE);
     LONGITUDE = this.props.navigation.getParam('longitude', DEFAULT_LONGITUDE);
 
+    //at least two elements to init the slider;
+    let markers = [
+      {
+        coordinate: {
+          latitude: LATITUDE,
+          longitude: LONGITUDE,
+        }
+      },
+      {
+        coordinate: {
+          latitude: LATITUDE,
+          longitude: LONGITUDE
+        }
+      }
+    ];
+
+
     const panX = new Animated.Value(0);
     const panY = new Animated.Value(0);
 
@@ -165,41 +185,8 @@ class ExploreMap extends React.Component {
       extrapolate: 'clamp',
     });
 
-    const markers = [
-      {
-        id: 0,
-        title: "National Palace of Culture (NDK)",
-        image: landmarkTestImage,
-        points: '50pt',
-        coordinate: {
-          latitude: LATITUDE,
-          longitude: LONGITUDE,
-        },
-      },
-      {
-        id: 1,
-        title: "Alexander Nevski Cathedral",
-        image: landmarkTestImage,
-        points: '50pt',
-        coordinate: {
-          latitude: LATITUDE + 0.004,
-          longitude: LONGITUDE - 0.004,
-        },
-      },
-      {
-        id: 2,
-        title: "test",
-        image: landmarkTestImage,
-        points: '50pt',
-        coordinate: {
-          latitude: LATITUDE - 0.004,
-          longitude: LONGITUDE - 0.004,
-        },
-      },
-    ];
-
-    const animations = markers.map((m, i) =>
-      getMarkerState(panX, panY, scrollY, i));
+    let animations = markers.map((m, i) =>
+    getMarkerState(panX, panY, scrollY, i));
 
     this.setState({
       panX,
@@ -219,26 +206,38 @@ class ExploreMap extends React.Component {
         longitudeDelta: LONGITUDE_DELTA,
       }),
     });
+
+    this.props.getLandmarksByLocation(LATITUDE, LONGITUDE).then((landmarkResult)=>{
+      markers = landmarkResult;
+
+      animations = markers.map((m, i) =>
+      getMarkerState(panX, panY, scrollY, i));
+
+      this.setState({
+        panX,
+        panY,
+        animations,
+        index: 0,
+        canMoveHorizontal: true,
+        scrollY,
+        scrollX,
+        scale,
+        translateY,
+        markers,
+        region: new AnimatedRegion({
+          latitude: LATITUDE,
+          longitude: LONGITUDE,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
+        }),
+      });
+    })
   }
 
-  componentDidMount() {
-    const { region, panX, panY, scrollX, markers } = this.state;
+  goToLandmark(landmarkData) {
+    const { navigation } = this.props;
 
-    panX.addListener(this.onPanXChange);
-    panY.addListener(this.onPanYChange);
-
-    region.stopAnimation();
-    region.timing({
-      latitude: scrollX.interpolate({
-        inputRange: markers.map((m, i) => i * SNAP_WIDTH),
-        outputRange: markers.map(m => m.coordinate.latitude),
-      }),
-      longitude: scrollX.interpolate({
-        inputRange: markers.map((m, i) => i * SNAP_WIDTH),
-        outputRange: markers.map(m => m.coordinate.longitude),
-      }),
-      duration: 0,
-    }).start();
+    navigation.navigate('LandmarkDetails',{landmark: landmarkData})
   }
 
   onStartShouldSetPanResponder = (e) => {
@@ -321,17 +320,35 @@ class ExploreMap extends React.Component {
   }
 
   render() {
-    const {
-      panX,
-      panY,
-      animations,
-      canMoveHorizontal,
-      markers,
-      region,
-    } = this.state;
+    const { landmarksData } = this.props.landmarks;
+    
+    if(!landmarksData || landmarksData.length <1) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+        </View>
+      )
+    } else {
+      const { region, panX, panY, scrollX, markers, canMoveHorizontal, animations } = this.state;
+
+      panX.addListener(this.onPanXChange);
+      panY.addListener(this.onPanYChange);
+  
+      region.stopAnimation();
+      region.timing({
+        latitude: scrollX.interpolate({
+          inputRange: markers.map((m, i) => i * SNAP_WIDTH),
+          outputRange: markers.map(m => m.coordinate.latitude),
+        }),
+        longitude: scrollX.interpolate({
+          inputRange: markers.map((m, i) => i * SNAP_WIDTH),
+          outputRange: markers.map(m => m.coordinate.longitude),
+        }),
+        duration: 0,
+      }).start();
+
 
     return (
-      <View style={styles.exploreMap}>
         <PanController
           style={styles.exploreMap}
           vertical={false}
@@ -361,7 +378,7 @@ class ExploreMap extends React.Component {
 
               return (
                 <Marker
-                  key={marker.id}
+                  key={i}
                   coordinate={marker.coordinate}
                 >
                   <Image style={{ width: 25, height: 25 }} source={require('../assets/images/pin.png')} />
@@ -380,7 +397,7 @@ class ExploreMap extends React.Component {
 
               return (
                 <Animated.View
-                  key={marker.id}
+                  key={i}
                   style={[styles.exploreMapItem, {
                     opacity,
                     transform: [
@@ -391,20 +408,23 @@ class ExploreMap extends React.Component {
                   }]}
                 >
                   <Section style={styles.exploreItemWrapper}>
-                    <Image style={styles.exploreMapItemImage} source={marker.image}/>
+                    <Image style={styles.exploreMapItemImage} source={{uri:marker.landmarkImage}}/>
                     <View style={styles.exploreMapTitle}>
-                      <Text style={styles.exploreMapTitleText}>{marker.title}</Text>
+                      <Text style={styles.exploreMapTitleText}>{marker.landmarkName}</Text>
                     </View>
-                    <Text style={styles.exploreMapPoints}>{marker.points}</Text>
+                    <Text style={styles.exploreMapPoints}>{50 + 'pt'}</Text>
                     
                   </Section>
+                  <Button onPress={this.goToLandmark.bind(this,marker)} buttonStyle={{position:'absolute',top: 4, zIndex:12}}>
+                    {'BUTTON'}
+                  </Button>
                 </Animated.View>
               );
             })}
           </View>
         </PanController>
-      </View>
     );
+  }
   }
 }
 
@@ -415,7 +435,12 @@ ExploreMap.propTypes = {
 //TODO: move the styles in the styles folder
 const styles = StyleSheet.create({
   exploreMap: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   exploreContainer: {
     backgroundColor: 'transparent',
@@ -423,7 +448,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: (ITEM_SPACING / 2) + ITEM_PREVIEW,
     position: 'absolute',
     left: 0,
-    bottom: 50
+    bottom: 50,
+    zIndex: 10
     // top: screen.height - ITEM_PREVIEW_HEIGHT - 64,
     // paddingTop: screen.height - ITEM_PREVIEW_HEIGHT - 64,
     // paddingTop: !ANDROID ? 0 : screen.height - ITEM_PREVIEW_HEIGHT - 64,
@@ -439,7 +465,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 3,
     borderColor: '#000',
-    position:'relative'
+    position:'relative',
+    zIndex: 10
   },
   exploreItemWrapper: {
     position:'relative'
@@ -476,4 +503,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ExploreMap;
+const mapStateToProps = ({landmarks}) => {
+  return { landmarks };
+};
+
+export default connect(mapStateToProps, { getLandmarksByLocation })(ExploreMap);
