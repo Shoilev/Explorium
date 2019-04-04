@@ -140,8 +140,8 @@ function getMarkerState(panX, panY, scrollY, i) {
 
 class ExploreMap extends React.Component {
   componentWillMount() {
-    LATITUDE = this.props.navigation.getParam('latitude', DEFAULT_LATITUDE);
-    LONGITUDE = this.props.navigation.getParam('longitude', DEFAULT_LONGITUDE);
+    LATITUDE = LATITUDE ? LATITUDE : this.props.navigation.getParam('latitude', DEFAULT_LATITUDE);
+    LONGITUDE = LONGITUDE ? LONGITUDE : this.props.navigation.getParam('longitude', DEFAULT_LONGITUDE);
 
     //at least two elements to init the slider;
     let markers = [
@@ -412,7 +412,7 @@ class ExploreMap extends React.Component {
                     <View style={styles.exploreMapTitle}>
                       <Text style={styles.exploreMapTitleText}>{marker.landmarkName}</Text>
                     </View>
-                    <Text style={styles.exploreMapPoints}>{50 + 'pt'}</Text>
+                    <Text style={styles.exploreMapPoints}>{marker.landmarkPoints + 'pt'}</Text>
                     
                   </Section>
                   <Button onPress={this.goToLandmark.bind(this,marker)} buttonStyle={{position:'absolute',top: 4, zIndex:12}}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, ImageBackground, View, TouchableNativeFeedback } from 'react-native';
+import { Text, ImageBackground, View, TouchableNativeFeedback, ActivityIndicator } from 'react-native';
 import { Section } from './common';
 import { createStyles } from '../assets/styles';
 import { CountriesStyles } from '../assets/styles/countries';
@@ -9,7 +9,7 @@ const styles = createStyles(CountriesStyles);
 
 export default class CountryList extends Component {
   render() {
-    const { countryImage, country, countryIndex, appNavigation } = this.props;
+    const { countryImage, country, countryIndex, countryPoints, appNavigation } = this.props;
     const color = countryColors[countryIndex % countryColors.length];
     const backgroundColor = color + 'Background';
     const backgroundWithOpacityColor = color + 'BackgroundOpacity';
@@ -21,7 +21,11 @@ export default class CountryList extends Component {
         <TouchableNativeFeedback onPress={()=>appNavigation.navigate('CitiesList',{country:country})} background={TouchableNativeFeedback.Ripple(styles[color])}>
           <View style={[styles.overlay, styles[backgroundWithOpacityColor]]}>
             <Text style={styles.countryListTitle}>{country.toUpperCase()}</Text>
-            <Text style={[styles.countryListPoints, styles[backgroundColor]]}>{'Up to 500 pts'}</Text>
+            {countryPoints || countryPoints === 0 ? 
+              <Text style={[styles.countryListPoints, styles[backgroundColor]]}>{'Up to ' + countryPoints + ' pts'}</Text>
+              :
+              <ActivityIndicator color="#ffffff" />
+            }
           </View>
         </TouchableNativeFeedback>
       </Section>

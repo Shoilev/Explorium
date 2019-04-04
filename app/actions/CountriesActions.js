@@ -18,11 +18,18 @@ export const getCountries = () => {
           })
         })
 
+        // TODO waiting for an update from firestore to make possible to get
+        // child collections.
+        getCitiesName(countries).then(dataWithCities => {
+          console.log(dataWithCities)
+          return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: dataWithCities })
+        }).catch(err=>{console.log(err)});
+
         countries.sort(function(a, b) {
           return a.countryName.localeCompare(b.countryName);
         })
 
-        dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: countries })
+        return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: countries })
       })
   }
 }
@@ -33,3 +40,56 @@ export const updateCountries = (countriesData) => {
     payload: countriesData
   };
 };
+
+function getCitiesName(countriesArr) {
+  let index = 0;
+
+  function request() {
+    return firebase.firestore().collection('countries').doc(countriesArr[index].countryName).collection('cities')
+    .get().then(cityQuerySnapshot => {
+      let cities = [];
+      cityQuerySnapshot.forEach(cityDoc => {
+        cities.push(cityDoc.data().name);
+      })
+
+      countriesArr[index] = {...countriesArr[index], ...{ countryCities: cities} };
+      return getLandmarkPoints(countriesArr, index).then(countryPointsResult => {
+        index++;
+
+        if(index >= countriesArr.length) {
+          return countryPointsResult;
+        }
+  
+        return request();
+      }).catch(err=>{console.log(err)});
+    })
+  }
+
+  return request();
+}
+
+function getLandmarkPoints(countriesArr, countryIndex) {
+  let index = 0;
+  let countrySumPoints = 0;
+
+  function request() {
+    return firebase.firestore().collection('countries').doc(countriesArr[countryIndex].countryName).collection('cities').doc(countriesArr[countryIndex].countryCities[index]).collection('landmarks')
+    .get().then(landmarkQuery => {
+
+      landmarkQuery.forEach(landmarkDoc => {
+        countrySumPoints += landmarkDoc.data().points || 0;
+      });
+
+      index++;
+
+      if (index >= countriesArr[countryIndex].countryCities.length) {
+        countriesArr[countryIndex] = {...countriesArr[countryIndex], ...{ countryPoints: countrySumPoints } };
+        return countriesArr;
+      }
+
+      return request();
+    });
+
+  }
+  return request();
+}

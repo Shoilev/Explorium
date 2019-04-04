@@ -23,7 +23,7 @@ class CitiesList extends Component {
       <Section style={styles.citiesSlide}>
         <View style={styles.citiesImageWrap}>
           <ImageBackground source={{uri: item.cityImage}} style={styles.backgroundImage}></ImageBackground>
-          <Text style={styles.citiesPoints}>{'400 points'}</Text>
+          <Text style={styles.citiesPoints}>{item.cityPoints + ' points'}</Text>
         </View>
         <View style={styles.citiesDetails}>
           <Text style={styles.cititesTitle}>{ item.cityName }</Text>

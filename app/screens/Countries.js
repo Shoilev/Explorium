@@ -15,7 +15,7 @@ class Countries extends Component {
   }
 
   renderItem(item, index, navigation) {
-    return <CountryList country={item.countryName} appNavigation={navigation} countryImage={item.countryImage} countryIndex={index} />
+    return <CountryList country={item.countryName} appNavigation={navigation} countryImage={item.countryImage} countryPoints={item.countryPoints} countryIndex={index} />
   }
 
   renderState() {
@@ -27,7 +27,7 @@ class Countries extends Component {
         <FlatList
           data={activeCountries}
           renderItem={({item, index}) => this.renderItem(item,index,navigation)}
-          keyExtractor={(country, index)=> index}
+          keyExtractor={(country, index)=> index.toString()}
           ListHeaderComponent={<HeaderSearch title={"Countries"} data={countriesData} />}
           stickyHeaderIndices={[0]}
         />

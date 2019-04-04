@@ -16,7 +16,7 @@ export default class LandmarkDetails extends Component {
       return (
         <Section style={styles.landmarksDetails}>
           <ImageBackground source={{uri: landmark.landmarkImage}} style={[styles.backgroundImage, styles.landmarkDetailsImage]}>
-            <View style={styles.landmarksDetailsPointsWrap}><Text style={styles.landmarkDetailsPoints}>50 points</Text></View>
+            <View style={styles.landmarksDetailsPointsWrap}><Text style={styles.landmarkDetailsPoints}>{landmark.landmarkPoints} points</Text></View>
           </ImageBackground>
           <Text style={styles.landmarksText}>{landmark.landmarkName}</Text>
           <View>

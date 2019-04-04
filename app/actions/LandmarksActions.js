@@ -21,6 +21,7 @@ export const getLandmarks = (country, city) => {
             landmarkName: doc.data().name,
             landmarkImage: doc.data().image,
             landmarkDescription: doc.data().description,
+            landmarkPoints: doc.data().points,
             coordinate: {
               latitude: doc.data().latitude || LATITUDE,
               longitude: doc.data().longitude || LONGITUDE

@@ -19,7 +19,7 @@ class LandmarksList extends Component {
     return (
       <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item})}>
           <ImageBackground source={{uri: item.landmarkImage}} style={[styles.backgroundImage, styles.landmarkImage]}>
-            <View style={styles.landmarksPointsWrap}><Text style={styles.landmarkPoints}>50pt</Text></View>
+            <View style={styles.landmarksPointsWrap}><Text style={styles.landmarkPoints}>{item.landmarkPoints} pt</Text></View>
           </ImageBackground>
           <Text style={styles.landmarksText}>{item.landmarkName}</Text>
       </TouchableOpacity>
