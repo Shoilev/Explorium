@@ -65,6 +65,11 @@ export const ExploreStyle = {
     width: '80%',
     backgroundColor: colors.primeryBlue,
   },
+  exploreCheckInDisabledBtn: {
+    flex: 1,
+    width: '80%',
+    backgroundColor: colors.gray,
+  },
   exploreCheckInTextBtn: {
     color: colors.white,
     fontSize: fonts.baseSize * 4

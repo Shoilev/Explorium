@@ -12,7 +12,7 @@
     "react-native": "0.57.3",
     "react-native-3d-model-view": "^1.2.0",
     "react-native-contacts": "^3.1.4",
-    "react-native-firebase": "^5.0.0",
+    "react-native-firebase": "^5.2.3",
     "react-native-fs": "^2.13.3",
     "react-native-geolocation-service": "^2.0.0",
     "react-native-maps": "^0.23.0",

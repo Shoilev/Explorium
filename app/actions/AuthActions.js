@@ -55,7 +55,14 @@ export const signUpUser = ({ email, password }) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('App'))
+      .then(cred => {
+        return firebase.firestore().collection('users').doc(cred.user.uid).set({
+          allPoints: 0,
+          level: 0,
+          achievements: []
+        });
+      })
+      .then(()=>this.props.navigation.navigate('App'))
       .catch(error => signUpUserFail(dispatch, error))
   }
 }

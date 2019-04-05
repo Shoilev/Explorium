@@ -22,7 +22,7 @@ export default class LandmarkDetails extends Component {
           <View>
             <Text style={styles.landmarksText}>{landmark.landmarkDescription}</Text>
           </View>
-          <Button textStyle={styles.landmarkDetailsBtnText} buttonStyle={styles.landmarkDetailsBtn} onPress={() => this.props.navigation.navigate('BaseMap', {coordinate: landmark.coordinate})} >{Components.LandmarkDetails.buttonTitle}</Button>
+          <Button textStyle={styles.landmarkDetailsBtnText} buttonStyle={styles.landmarkDetailsBtn} onPress={() => this.props.navigation.navigate('BaseMap', {landmark})} >{Components.LandmarkDetails.buttonTitle}</Button>
         </Section>
       );
     } else {
