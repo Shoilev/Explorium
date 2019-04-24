@@ -58,7 +58,8 @@ class BaseMap extends Component {
       const db = firebase.firestore().collection('users').doc(userUID);
       console.log(firebase.firestore.FieldValue);
       db.update({
-        achievements: firebase.firestore.FieldValue.arrayUnion(landmark)
+        achievements: firebase.firestore.FieldValue.arrayUnion(landmark),
+        allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints)
       })
     } else {
       // do nothing ???

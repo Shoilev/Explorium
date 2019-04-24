@@ -28,7 +28,8 @@ export const CitiesStyles = {
     paddingTop: spacing.extraLarge,
     maxHeight: '60%',
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.white
   },
   cititesTitle: {
     fontSize: fonts.baseSize * 4,

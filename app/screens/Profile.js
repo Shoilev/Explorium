@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { logOutUser, getUser } from '../actions';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { logOutUser, getUser, getAchievementsPerUser } from '../actions';
 import { connect } from 'react-redux';
 import { createStyles } from '../assets/styles';
+import { ProfileStyle } from '../assets/styles/profile';
 import { Authentication } from '../resources/labels.json';
 
-const styles = createStyles();
+const styles = createStyles(ProfileStyle);
 
 class Profile extends Component {
 
@@ -15,17 +16,24 @@ class Profile extends Component {
 
   componentWillMount() {
     this.props.getUser();
+    this.props.getAchievementsPerUser();
   }
 
   render() {
+    const { achievementsData } = this.props.achievements;
+
     return (
       <View style={styles.container}>
+        <Image style={{ width: 200, height: 200 }} source={require('../assets/images/user_profile.png')} />
         <Text style={styles.title}>
           Hi {this.props.userEmail}
         </Text>
 
+        <Text>Level: {achievementsData.level}</Text>
+        <Text>Points: {achievementsData.allPoints}</Text>
+
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, styles.profileBtn]}
           onPress={this.handleLogOut}
         >
           <Text> {Authentication.LogOut.buttonTitle} </Text>
@@ -35,13 +43,14 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user, achievements}) => {
   const { userEmail } = user;
 
-  return { userEmail };
+  return { userEmail, achievements };
 };
 
 export default connect(mapStateToProps, {
   logOutUser,
-  getUser
+  getUser,
+  getAchievementsPerUser
 })(Profile);

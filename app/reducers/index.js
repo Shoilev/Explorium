@@ -6,6 +6,7 @@ import CitiesReducer from './CitiesReducer';
 import LandmarksReducer from './LandmarksReducer';
 import FriendsReducer from './FriendsReducer';
 import GeoLocationReducer from './GeoLocationReducer';
+import AchievementsReducer from './AchievementsReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   cities: CitiesReducer,
   landmarks: LandmarksReducer,
   friends: FriendsReducer,
-  userGeoLocation: GeoLocationReducer
+  userGeoLocation: GeoLocationReducer,
+  achievements: AchievementsReducer
 });
