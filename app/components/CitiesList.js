@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Dimensions, ActivityIndicator, ImageBackground } from 'react-native';
+import { Text, View, Dimensions, ActivityIndicator, ScrollView, ImageBackground } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { connect } from 'react-redux';
 import { createStyles } from '../assets/styles';
@@ -27,8 +27,9 @@ class CitiesList extends Component {
         </View>
         <View style={styles.citiesDetails}>
           <Text style={styles.cititesTitle}>{ item.cityName }</Text>
-          <Text style={styles.citiesDescriptions}>{ item.cityShortDescription }
-          </Text>
+          <ScrollView style={styles.citiesScrollableDescritpion}>
+            <Text style={styles.citiesDescriptions}>{ item.cityShortDescription }</Text>
+          </ScrollView>
 
           <Button textStyle={styles.citiesTextBtn} onPress={()=>navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName})} buttonStyle={styles.citiesBtnStyle}>
             {App.explore}

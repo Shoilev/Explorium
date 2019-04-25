@@ -33,7 +33,10 @@
       "buttonTitle": "Go Explore!"
     },
     "Countries": {
-      "title": "Countries"
+      "title": "Countries",
+      "Landmarks": {
+        "exploredLabel": "Explored!"
+      }
     },
     "Achievements": {
       "title": "Achievements"

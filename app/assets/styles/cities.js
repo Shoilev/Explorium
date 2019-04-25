@@ -38,12 +38,15 @@ export const CitiesStyles = {
     color: '#1e324d',
     marginBottom: spacing.medium
   },
+  citiesScrollableDescritpion: {
+    height: '70%',
+    paddingRight: spacing.medium
+  },
   citiesDescriptions: {
     textAlign: 'justify',
     flex:1,
     color: '#1e324d',
-    maxHeight: '70%',
-    overflow: 'hidden'
+    fontSize: fonts.baseSize * 2.5
   },
   citiesPoints: {
     position: 'absolute',

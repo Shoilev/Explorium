@@ -3,7 +3,9 @@ import { View, FlatList, Text, ImageBackground, ActivityIndicator, TouchableOpac
 import { connect } from 'react-redux';
 import { createStyles } from '../assets/styles';
 import { LandmarksStyles } from '../assets/styles/landmarks';
-import { getLandmarks } from '../actions';
+import { getLandmarks, getAchievementsPerUser } from '../actions';
+import { isUserAchieved, isEmpty } from '../helpers';
+import { Screens } from '../resources/labels.json';
 
 const styles = createStyles(LandmarksStyles);
 
@@ -13,13 +15,24 @@ class LandmarksList extends Component {
     const country = this.props.navigation.getParam('country', '');
     const city = this.props.navigation.getParam('city', '');
     this.props.getLandmarks(country, city);
+    this.props.getAchievementsPerUser();
   }
 
-  renderItem(item, index, navigation) {
+  renderItem(item, index, navigation, achievements) {
+    const isAchieved = isUserAchieved(achievements, item);
+
     return (
-      <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item})}>
+      <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved})}>
           <ImageBackground source={{uri: item.landmarkImage}} style={[styles.backgroundImage, styles.landmarkImage]}>
             <View style={styles.landmarksPointsWrap}><Text style={styles.landmarkPoints}>{item.landmarkPoints} pt</Text></View>
+            { isAchieved ?
+              <View style={styles.landmarkExploredLabelWrapper}>
+                <Text style={styles.landmarkExploredLabel}>
+                  {Screens.Countries.Landmarks.exploredLabel}
+                </Text>
+              </View>
+              : null
+            }
           </ImageBackground>
           <Text style={styles.landmarksText}>{item.landmarkName}</Text>
       </TouchableOpacity>
@@ -29,15 +42,16 @@ class LandmarksList extends Component {
   render() {
     //activeLandmarks is available if we decide to implement live search in the near future.
     const { landmarksData } = this.props.landmarks;
+    const { achievementsData } = this.props.achievements;
     const { navigation } = this.props;
 
-    if(landmarksData && landmarksData.length) {
+    if(!isEmpty(landmarksData) && landmarksData.length && !isEmpty(achievementsData) && achievementsData.achievements) {
       return (
 
         <FlatList
           data={landmarksData}
           style={styles.landmarksRow}
-          renderItem={({item, index}) => this.renderItem(item,index,navigation)}
+          renderItem={({item, index}) => this.renderItem(item,index,navigation, achievementsData.achievements)}
           keyExtractor={(item, index)=> 'landmarkKey' + index}
           numColumns={2}
         />
@@ -52,8 +66,8 @@ class LandmarksList extends Component {
   }
 }
 
-const mapStateToProps = ({landmarks}) => {
-  return { landmarks };
+const mapStateToProps = ({landmarks, achievements}) => {
+  return { landmarks, achievements };
 };
 
-export default connect(mapStateToProps, { getLandmarks })(LandmarksList);
+export default connect(mapStateToProps, { getLandmarks, getAchievementsPerUser })(LandmarksList);

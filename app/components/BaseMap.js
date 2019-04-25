@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Image, View, Linking, ActivityIndicator } from 'react-native';
+import { Image, View, Linking, ActivityIndicator, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
-import { requestLocationPermission, getUser } from '../actions';
+import { requestLocationPermission, getUser, getAchievementsPerUser } from '../actions';
+import { isUserAchieved, checkHaversineDistance } from '../helpers';
 import { createStyles } from '../assets/styles';
 import { ExploreStyle } from '../assets/styles/explore';
 import { Button, Section } from './common';
@@ -12,59 +13,50 @@ import { GOOGLE_MAPS_APIKEY  } from '../settings/global.json';
 
 const styles = createStyles(ExploreStyle);
 
-// TODO: move as a helper function (index.js and haversineDistance.js)
-const haversineDistance = function(coords1, coords2) {
-  function toRad(x) {
-    return x * Math.PI / 180;
-  }
-
-  const lon1 = coords1.longitude;
-  const lat1 = coords1.latitude;
-
-  const lon2 = coords2.longitude;
-  const lat2 = coords2.latitude;
-
-  const R = 6371; // km
-
-  const x1 = lat2 - lat1;
-  const dLat = toRad(x1);
-  const x2 = lon2 - lon1;
-  const dLon = toRad(x2)
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const d = R * c;
-
-  // return d < 0.05; // 50 meters
-  return d < 10000;
-}
-
 class BaseMap extends Component {
   componentWillMount() {
     this.props.requestLocationPermission();
     this.props.getUser();
+    this.props.getAchievementsPerUser();
   }
 
   checkIn(landmark, userLocation) {
-    let isNearBy = haversineDistance(userLocation, landmark.coordinate);
+    const { achievementsData } = this.props.achievements;
+    const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate);
 
-    if(isNearBy) {
+    const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
+
+    if(isNearBy && !isAchieved) {
       // assign points to the customer
       const userUID = this.props.userUID;
-      console.log(userUID);
-      console.log(landmark);
 
       const db = firebase.firestore().collection('users').doc(userUID);
-      console.log(firebase.firestore.FieldValue);
       db.update({
         achievements: firebase.firestore.FieldValue.arrayUnion(landmark),
         allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints)
       })
     } else {
-      // do nothing ???
+      // Show error
+      // Move to resources
+      let errorMessage = '';
+
+      if (!isNearBy && isAchieved) {
+        errorMessage = 'You are too far away from the landmark and also you have already checked this landmark';
+      } else if (!isNearBy) {
+        errorMessage = 'You are too far away from the landmark';
+      } else {
+        errorMessage = 'You have already checked this landmark';
+      }
+
+      Alert.alert(
+        'Check in is not possible',
+        errorMessage,
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
     }
-    console.log(isNearBy);
   }
 
   // TODO Move this in controller with whatsupp functionality
@@ -131,7 +123,7 @@ class BaseMap extends Component {
 
           <Section style={styles.exploreButtonSection}>
             <Button onPress={()=>this.openGoogleMaps(longitude,latitude)} textStyle={styles.exploreDirectionBtnText} buttonStyle={styles.exploreDirectionBtn}>Get direction</Button>
-            { haversineDistance(userLocation, landmarkData.coordinate) 
+            { checkHaversineDistance(userLocation, landmarkData.coordinate) 
             ?
               <Button onPress={()=>this.checkIn(landmarkData, userLocation)} textStyle={styles.exploreCheckInTextBtn} buttonStyle={styles.exploreCheckInBtn}>Check in</Button>
             :
@@ -144,10 +136,10 @@ class BaseMap extends Component {
   }
 }
 
-const mapStateToProps = ({userGeoLocation, user}) => {
+const mapStateToProps = ({userGeoLocation, user, achievements}) => {
   const { userUID } = user;
 
-  return { userGeoLocation, userUID };
+  return { userGeoLocation, userUID, achievements };
 };
 
-export default connect(mapStateToProps, { requestLocationPermission, getUser })(BaseMap);
+export default connect(mapStateToProps, { requestLocationPermission, getUser, getAchievementsPerUser })(BaseMap);

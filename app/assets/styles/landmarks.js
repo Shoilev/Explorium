@@ -23,7 +23,8 @@ export const LandmarksStyles = {
     flex:1,
     alignItems:'center',
     justifyContent:'center',
-    elevation: 6
+    elevation: 6,
+    position: 'relative'
   },
   landmarksPointsWrap: {
     flex:1,
@@ -93,5 +94,24 @@ export const LandmarksStyles = {
   },
   landmarkDetailsBtnText: {
     color: colors.white
+  },
+  landmarkExploredLabelWrapper: {
+    position:'absolute',
+    flex:1,
+    justifyContent:'center',
+    alignItems: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    // backgroundColor: 'rgba(20, 22, 54, 0.7)',
+  },
+  landmarkExploredLabel: {
+    color: colors.white,
+    width: '200%',
+    textAlign: 'center',
+    padding: spacing.small,
+    backgroundColor: colors.orangeOpacity,
+    transform: [{ rotate: "-45deg" }]
   }
 }

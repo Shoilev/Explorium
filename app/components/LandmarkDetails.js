@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, ActivityIndicator } from 'react-native';
 import { createStyles } from '../assets/styles';
 import { Section, Button } from '../components/common';
 import { LandmarksStyles } from '../assets/styles/landmarks';
-import { Components } from '../resources/labels.json';
+import { Components, Screens } from '../resources/labels.json';
 
 const styles = createStyles(LandmarksStyles);
 
@@ -11,12 +11,22 @@ export default class LandmarkDetails extends Component {
 
   render() {
     const landmark = this.props.navigation.getParam('landmark', '');
+    const isAchieved = this.props.navigation.getParam('isAchieved', '');
 
     if(landmark) {
       return (
         <Section style={styles.landmarksDetails}>
           <ImageBackground source={{uri: landmark.landmarkImage}} style={[styles.backgroundImage, styles.landmarkDetailsImage]}>
             <View style={styles.landmarksDetailsPointsWrap}><Text style={styles.landmarkDetailsPoints}>{landmark.landmarkPoints} points</Text></View>
+
+            { isAchieved ?
+              <View style={styles.landmarkExploredLabelWrapper}>
+                <Text style={styles.landmarkExploredLabel}>
+                  {Screens.Countries.Landmarks.exploredLabel}
+                </Text>
+              </View>
+              : null
+            }
           </ImageBackground>
           <Text style={styles.landmarksText}>{landmark.landmarkName}</Text>
           <View>

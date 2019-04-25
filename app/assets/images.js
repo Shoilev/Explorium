@@ -5,5 +5,4 @@ export const images = {
   loginBackground: require('./images/login_background.jpg'),
   logo: require('./images/logo.png'),
   registerBackground: require('./images/register_background.jpg'),
-  landmarkTest: require('./images/landmark-test.jpg')
 }

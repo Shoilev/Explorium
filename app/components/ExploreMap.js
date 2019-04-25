@@ -17,12 +17,10 @@ import {
 } from 'react-native-maps';
 import { connect } from 'react-redux';
 import PanController from '../controllers/PanController';
+import { isUserAchieved, isEmpty } from '../helpers';
 import { Section, Button } from './common';
-import { images } from '../assets/images';
-import { getLandmarksByLocation } from '../actions';
-
-// TODO: This needs to be removed
-const landmarkTestImage = images.landmarkTest;
+import { getLandmarksByLocation, getAchievementsPerUser } from '../actions';
+import { Screens } from '../resources/labels.json';
 
 const screen = Dimensions.get('window');
 
@@ -142,6 +140,7 @@ class ExploreMap extends React.Component {
   componentWillMount() {
     LATITUDE = LATITUDE ? LATITUDE : this.props.navigation.getParam('latitude', DEFAULT_LATITUDE);
     LONGITUDE = LONGITUDE ? LONGITUDE : this.props.navigation.getParam('longitude', DEFAULT_LONGITUDE);
+    this.props.getAchievementsPerUser();
 
     //at least two elements to init the slider;
     let markers = [
@@ -234,10 +233,10 @@ class ExploreMap extends React.Component {
     })
   }
 
-  goToLandmark(landmarkData) {
+  goToLandmark(landmarkData, isAchieved) {
     const { navigation } = this.props;
 
-    navigation.navigate('LandmarkDetails',{landmark: landmarkData})
+    navigation.navigate('LandmarkDetails',{landmark: landmarkData, isAchieved})
   }
 
   onStartShouldSetPanResponder = (e) => {
@@ -321,8 +320,9 @@ class ExploreMap extends React.Component {
 
   render() {
     const { landmarksData } = this.props.landmarks;
+    const { achievementsData } = this.props.achievements;
     
-    if(!landmarksData || landmarksData.length <1) {
+    if(isEmpty(landmarksData) || isEmpty(achievementsData)) {
       return (
         <View style={styles.container}>
           <ActivityIndicator />
@@ -395,6 +395,8 @@ class ExploreMap extends React.Component {
                 opacity,
               } = animations[i];
 
+              const isAchieved = isUserAchieved(achievementsData.achievements, marker);
+
               return (
                 <Animated.View
                   key={i}
@@ -413,18 +415,27 @@ class ExploreMap extends React.Component {
                       <Text style={styles.exploreMapTitleText}>{marker.landmarkName}</Text>
                     </View>
                     <Text style={styles.exploreMapPoints}>{marker.landmarkPoints + 'pt'}</Text>
-                    
+
+                    { isAchieved ?
+                      <View style={styles.exploreExploredLabelWrapper}>
+                        <Text style={styles.exploreExploredLabel}>
+                          {Screens.Countries.Landmarks.exploredLabel}
+                        </Text>
+                      </View>
+                      : null
+                    }
+
                   </Section>
-                  <Button onPress={this.goToLandmark.bind(this,marker)} buttonStyle={{position:'absolute',top: 4, zIndex:12}}>
-                    {'BUTTON'}
+                  <Button onPress={this.goToLandmark.bind(this, marker, isAchieved)} buttonStyle={styles.exploreMapLandmarkButton}>
+                    <Text style={styles.exploreMapButtonTitle}>{'Explore'}</Text>
                   </Button>
                 </Animated.View>
               );
             })}
           </View>
         </PanController>
-    );
-  }
+      );
+    }
   }
 }
 
@@ -476,7 +487,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     textAlign: 'center',
     position:'absolute',
-    top:0,
+    bottom:0,
     left: 0
   },
   exploreMapTitleText: {
@@ -487,7 +498,7 @@ const styles = StyleSheet.create({
   },
   exploreMapPoints: {
     position: 'absolute',
-    bottom: 10,
+    top: 10,
     right: 10,
     width: 35,
     height: 35,
@@ -500,11 +511,44 @@ const styles = StyleSheet.create({
   exploreMapItemImage: {
     flex: 1,
     width: '100%'
+  },
+  exploreExploredLabelWrapper: {
+    position:'absolute',
+    flex:1,
+    justifyContent:'center',
+    alignItems: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    // backgroundColor: 'rgba(20, 22, 54, 0.7)',
+  },
+  exploreExploredLabel: {
+    color: '#ffffff',
+    width: '200%',
+    textAlign: 'center',
+    padding: 5,
+    backgroundColor: 'rgba(253, 129, 2, 0.5)',
+    transform: [{ rotate: "-45deg" }]
+  },
+  exploreMapLandmarkButton: {
+    position:'absolute',
+    top: 10,
+    left: 10,
+    zIndex:12,
+    backgroundColor: '#1a4e6c',
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  exploreMapButtonTitle: {
+    color: '#ffffff'
   }
 });
 
-const mapStateToProps = ({landmarks}) => {
-  return { landmarks };
+const mapStateToProps = ({landmarks, achievements}) => {
+  return { landmarks, achievements };
 };
 
-export default connect(mapStateToProps, { getLandmarksByLocation })(ExploreMap);
+export default connect(mapStateToProps, { getLandmarksByLocation, getAchievementsPerUser })(ExploreMap);
