@@ -24,6 +24,7 @@ import LandmarksList from './components/LandmarksList';
 import LandmarkDetails from './components/LandmarkDetails';
 import BaseMap from './components/BaseMap';
 import ExploreMap from './components/ExploreMap';
+import CheckedIn from './components/CheckedIn';
 
 const styles = createStyles();
 
@@ -98,7 +99,7 @@ const AppStack = createStackNavigator(
     CitiesList: {
       screen: CitiesList,
       navigationOptions: ({navigation}) => ({
-        title: `Cities`,
+        title: 'Cities',
         headerStyle: {
           borderBottomColor: '#1a4e6c',
           borderBottomWidth: 1,
@@ -113,7 +114,7 @@ const AppStack = createStackNavigator(
     FriendList: {
       screen: FriendList,
       navigationOptions: ({navigation}) => ({
-        title: `Friends`,
+        title: 'Friends',
         headerStyle: {
           borderBottomColor: '#1a4e6c',
           borderBottomWidth: 1,
@@ -154,6 +155,19 @@ const AppStack = createStackNavigator(
         headerTitleStyle: { color: '#1a4e6c' },
       }),
       headerMode: 'screen',
+    },
+    CheckedIn: {
+      screen: CheckedIn,
+      navigationOptions: ({navigation}) => ({
+        title: 'Checked In',
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+      }),
+      headerMode: 'float',
     },
     BaseMap: {
       screen: BaseMap,

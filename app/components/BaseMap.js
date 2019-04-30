@@ -24,7 +24,8 @@ class BaseMap extends Component {
     const { achievementsData } = this.props.achievements;
     const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate);
 
-    const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
+    // const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
+    const isAchieved = false;
 
     if(isNearBy && !isAchieved) {
       // assign points to the customer
@@ -34,7 +35,9 @@ class BaseMap extends Component {
       db.update({
         achievements: firebase.firestore.FieldValue.arrayUnion(landmark),
         allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints)
-      })
+      });
+
+      this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark})
     } else {
       // Show error
       // Move to resources
