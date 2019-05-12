@@ -23,3 +23,5 @@ export const ACHIEVEMENTS_FETCH_SUCCESS = 'achievements_fetch_success';
 export const ACHIEVEMENTS_FETCH_FAIL = 'achievements_fetch_fail';
 
 export const GET_USER = 'get_user';
+export const LOCAL_CITY_CHANGED = 'local_city_changed';
+export const NICKNAME_CHANGED = 'nickname_changed';

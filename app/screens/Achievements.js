@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getAchievementsPerUser } from '../actions';
 import { Section } from '../components/common';
 import { createStyles } from '../assets/styles';
+import { isEmpty } from '../helpers';
 import { AchievementsStyle } from '../assets/styles/achievements';
 
 const styles = createStyles(AchievementsStyle);
@@ -31,10 +32,18 @@ class Achievements extends Component {
   }
 
   render() {
-    const { achievementsData } = this.props.achievements;
+    const { achievementsData, error, errorMessage } = this.props.achievements;
 
-    if(achievementsData && achievementsData.achievements) {
+    if(!isEmpty(achievementsData)) {
       const userAchievements = achievementsData.achievements;
+
+      if(isEmpty(userAchievements)) {
+        return (
+          <View style={styles.container}>
+            <Text>{errorMessage}</Text>
+          </View>
+        )
+      }
 
       return (
         <FlatList
@@ -43,6 +52,12 @@ class Achievements extends Component {
           keyExtractor={(country, index)=> index.toString()}
           style={styles.achievementsList}
         />
+      )
+    } else if (error) {
+      return (
+        <View style={styles.container}>
+          <Text>{errorMessage}</Text>
+        </View>
       )
     } else {
       return (

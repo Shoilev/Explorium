@@ -5,6 +5,7 @@ import HeaderSearch from '../components/HeaderSearch';
 import { getFriends } from '../actions';
 import FriendList from '../components/FriendList';
 import { createStyles } from '../assets/styles';
+import { isEmpty } from '../helpers';
 
 const styles = createStyles();
 
@@ -14,7 +15,9 @@ class Friends extends Component {
   }
 
   renderItem(item, index, navigation) {
-    return <FriendList friend={item} appNavigation={navigation} friendIndex={index} />
+    if(item) {
+      return <FriendList friend={item} appNavigation={navigation} friendIndex={index} />
+    }
   }
 
   render() {
@@ -29,8 +32,7 @@ class Friends extends Component {
         keyExtractor={(friends, index)=> 'friendList' + index}
         ListHeaderComponent={<HeaderSearch title={"Friends"} data={friendsData} />}
         stickyHeaderIndices={[0]}
-        initialNumToRender={friendsData.length / 2}
-        maxToRenderPerBatch={friendsData.length / 5}
+        initialNumToRender={friendsData.length }
         updateCellsBatchingPeriod={20}
         onEndReachedThreshold={0.5}
       />

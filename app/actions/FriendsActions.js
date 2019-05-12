@@ -23,8 +23,8 @@ export const getFriends = () => {
         } else {
           // contacts returned in Array
           console.log('Contact premission approved!')
-          let contactResult = contacts.filter(({hasThumbnail, thumbnailPath, phoneNumbers, familyName,  givenName, middleName}) =>  {
-            if( phoneNumbers && phoneNumbers.length > 0 ) {
+          let contactResult = contacts.filter(({hasThumbnail, thumbnailPath, phoneNumbers, familyName, givenName, middleName}) =>  {
+            if( givenName.length > 0 && phoneNumbers && phoneNumbers.length > 0 ) {
               return {
                 hasThumbnail,
                 thumbnailPath,
@@ -35,6 +35,7 @@ export const getFriends = () => {
               }
             }
           });
+          contactResult.sort((a,b) => a.givenName.toLocaleLowerCase().localeCompare(b.givenName.toLocaleLowerCase()))
           console.log(contactResult)
 
           dispatch({ type: FRIENDS_FETCH_SUCCESS, payload: contactResult })

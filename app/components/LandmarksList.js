@@ -18,8 +18,11 @@ class LandmarksList extends Component {
     this.props.getAchievementsPerUser();
   }
 
-  renderItem(item, index, navigation, achievements) {
-    const isAchieved = isUserAchieved(achievements, item);
+  renderItem(item, index, navigation, achievementsData) {
+    let isAchieved = false;
+    if(!isEmpty(achievementsData) && achievementsData.achievements) {
+      isAchieved = isUserAchieved(achievementsData.achievements, item);
+    }
 
     return (
       <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved})}>
@@ -45,13 +48,12 @@ class LandmarksList extends Component {
     const { achievementsData } = this.props.achievements;
     const { navigation } = this.props;
 
-    if(!isEmpty(landmarksData) && landmarksData.length && !isEmpty(achievementsData) && achievementsData.achievements) {
+    if(!isEmpty(landmarksData)) {
       return (
-
         <FlatList
           data={landmarksData}
           style={styles.landmarksRow}
-          renderItem={({item, index}) => this.renderItem(item,index,navigation, achievementsData.achievements)}
+          renderItem={({item, index}) => this.renderItem(item,index,navigation, achievementsData)}
           keyExtractor={(item, index)=> 'landmarkKey' + index}
           numColumns={2}
         />

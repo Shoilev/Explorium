@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ImageBackground, Image, View, ActivityIndicator } from 'react-native';
+import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import { ModelView } from 'react-native-3d-model-view';
 import { requestLocationPermission } from '../actions';
@@ -7,12 +8,31 @@ import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
 import { ExploreStyle } from '../assets/styles/explore';
 import { Button } from '../components/common';
+import { isEmpty } from '../helpers';
 import { Screens, App } from '../resources/labels.json';
 
 const styles = createStyles(ExploreStyle);
 const exploreumSrc = images.exploreumBackground;
 const exploreumSecondSrc = images.exploreumSecondBackground;
 const exploreEarth = images.earth;
+
+const requestAdditionalUserData = (nav) => {
+  const userUID = firebase.auth().currentUser.uid;
+
+  return firebase.firestore().collection('users').doc(userUID)
+  .get().then(doc => {
+    if(doc.exists) {
+      const userData = doc.data();
+
+      if(!userData.userHomeLocale) {
+        return  true;
+      }
+
+      return false;
+    }
+    return false;
+  })
+}
 
 class Explore extends Component {
   state = {
@@ -44,11 +64,17 @@ class Explore extends Component {
 
   componentWillMount() {
     // this.load() // only first time
+    const { navigation } = this.props;
+    requestAdditionalUserData().then(premission=>{
+      if(premission) {
+        navigation.navigate('UserInfo')
+      }
+    })
     this.props.navigation.addListener('willFocus', this.load);
     this.props.requestLocationPermission();
   }
   
-  componentDidMount(){
+  componentDidMount() {
   }
 
   load = () => {

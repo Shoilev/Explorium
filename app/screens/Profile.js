@@ -24,9 +24,14 @@ class Profile extends Component {
 
     return (
       <View style={styles.container}>
-        <Image style={{ width: 200, height: 200 }} source={require('../assets/images/user_profile.png')} />
+        {this.props.user.userPhoto ? 
+        <Image style={{ width: 200, height: 200, borderRadius: 100 }} source={{
+          uri:
+            this.props.user.userPhoto,
+        }} /> :
+        <Image style={{ width: 200, height: 200, }} source={require('../assets/images/user_profile.png')} /> }
         <Text style={styles.title}>
-          Hi {this.props.userEmail}
+          Hi {this.props.user.userName || achievementsData.userNickname || this.props.user.userEmail}
         </Text>
 
         <Text>Level: {achievementsData.level}</Text>
@@ -44,9 +49,8 @@ class Profile extends Component {
 }
 
 const mapStateToProps = ({user, achievements}) => {
-  const { userEmail } = user;
 
-  return { userEmail, achievements };
+  return { user, achievements };
 };
 
 export default connect(mapStateToProps, {

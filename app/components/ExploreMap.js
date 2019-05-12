@@ -322,7 +322,7 @@ class ExploreMap extends React.Component {
     const { landmarksData } = this.props.landmarks;
     const { achievementsData } = this.props.achievements;
     
-    if(isEmpty(landmarksData) || isEmpty(achievementsData)) {
+    if(isEmpty(landmarksData)) {
       return (
         <View style={styles.container}>
           <ActivityIndicator />
@@ -395,7 +395,10 @@ class ExploreMap extends React.Component {
                 opacity,
               } = animations[i];
 
-              const isAchieved = isUserAchieved(achievementsData.achievements, marker);
+              let isAchieved = false;
+              if(!isEmpty(achievementsData) && achievementsData.achievements) {
+                isAchieved = isUserAchieved(achievementsData.achievements, marker);
+              }
 
               return (
                 <Animated.View

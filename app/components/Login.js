@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, ImageBackground, Image } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { emailChanged, passwordChanged, loginUser, emptyUserOrPassword } from '../actions';
+import { emailChanged, passwordChanged, loginUser, emptyUserOrPassword, FBLoginOrRegister } from '../actions';
 import { Section, Button } from './common';
 import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
@@ -23,6 +23,11 @@ class Login extends Component {
     }
 
     this.props.loginUser({ email, password });
+  }
+
+  onFbLogin() {
+    this.props.FBLoginOrRegister();
+    return;
   }
 
   onEmailChange(text) {
@@ -75,6 +80,10 @@ class Login extends Component {
             {Authentication.LogIn.buttonTitle}
           </Button>
 
+          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
+            {'FB LOGIN'}
+          </Button>
+
           <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Register')}>
             {Authentication.LogIn.additionalLinkTitle}
           </Button>
@@ -94,5 +103,6 @@ export default connect(mapStateToProps, {
   emailChanged,
   passwordChanged,
   loginUser,
+  FBLoginOrRegister,
   emptyUserOrPassword
 })(Login);

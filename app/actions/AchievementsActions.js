@@ -9,15 +9,13 @@ export const getAchievementsPerUser = () => {
     const userUID = firebase.auth().currentUser.uid;
 
     firebase.firestore().collection('users').doc(userUID)
-    .get().then(documentSnapshot => {
-      if (documentSnapshot.exists) {
-        console.log('achievements');
-        const userAchievements = documentSnapshot.data();
-        return dispatch({ type: ACHIEVEMENTS_FETCH_SUCCESS, payload: userAchievements })
-      } else {
-        console.log('document not found');
-        return dispatch({ type: ACHIEVEMENTS_FETCH_FAIL, payload: {} })
-      }
+    .onSnapshot(documentSnapshot => {
+      console.log('achievements');
+      const userAchievements = documentSnapshot.data();
+      return dispatch({ type: ACHIEVEMENTS_FETCH_SUCCESS, payload: userAchievements })
+    }, (err) => {
+      console.log('document not found');
+      return dispatch({ type: ACHIEVEMENTS_FETCH_FAIL, payload: {} })
     })
   }
 }

@@ -1,4 +1,5 @@
 import firebase from 'react-native-firebase';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { Authentication } from '../resources/labels.json';
 import {
   EMAIL_CHANGED,
@@ -48,6 +49,47 @@ export const loginUser = ({ email, password }) => {
     .catch(error => loginUserFail(dispatch, error))
   }
 };
+
+export const FBLoginOrRegister = () => {
+  return (dispatch) => {
+    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+    .then((result) => {
+      if (result.isCancelled) {
+        return Promise.reject(new Error('The user cancelled the request'));
+      }
+      // Retrieve the access token
+      return AccessToken.getCurrentAccessToken();
+    })
+    .then((data) => {
+      // Create a new Firebase credential with the token
+      const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+      // Login with the credential
+      return firebase.auth().signInWithCredential(credential);
+    })
+    .then((user) => {
+      // If you need to do anything with the user, do it here
+      // The user will be logged in automatically by the
+      // `onAuthStateChanged` listener we set up in App.js earlier
+      console.log(user.user.uid)
+      if(user.additionalUserInfo.isNewUser) {
+        return firebase.firestore().collection('users').doc(user.user.uid).set({
+          allPoints: 0,
+          level: 0,
+          achievements: []
+        });
+      }
+      console.log('sadsadas')
+      loginUserSuccess(dispatch, user)
+    })
+    .catch((error) => {
+      const { code, message } = error;
+      // For details of error codes, see the docs
+      // The message contains the default Firebase string
+      // representation of the error
+      loginUserFail(dispatch, error)
+    });
+  }
+}
 
 export const signUpUser = ({ email, password }) => {
   return (dispatch) => {

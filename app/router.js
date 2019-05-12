@@ -25,6 +25,7 @@ import LandmarkDetails from './components/LandmarkDetails';
 import BaseMap from './components/BaseMap';
 import ExploreMap from './components/ExploreMap';
 import CheckedIn from './components/CheckedIn';
+import UserInfo from './components/UserInfo';
 
 const styles = createStyles();
 
@@ -188,6 +189,13 @@ const AppStack = createStackNavigator(
         headerTitleStyle: { color: '#1a4e6c' }
       }),
       headerMode: 'screen',
+    },
+    UserInfo: {
+      screen: UserInfo,
+      navigationOptions: ({navigation}) => ({
+        title: 'Additional User Info',
+      }),
+      headerMode: 'screen',
     }
   },
   {
@@ -218,7 +226,7 @@ export const RootNavigation = new createSwitchNavigator(
   {
     AuthLoading: AuthLoading,
     App: AppStack,
-    Auth: AuthStack,
+    Auth: AuthStack
   },
   {
     initialRouteName: 'AuthLoading',
