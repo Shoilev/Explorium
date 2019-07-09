@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text, ImageBackground, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, FlatList, Text, ImageBackground, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { createStyles } from '../assets/styles';
 import { LandmarksStyles } from '../assets/styles/landmarks';
@@ -27,9 +27,10 @@ class LandmarksList extends Component {
     return (
       <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved})}>
           <ImageBackground source={{uri: item.landmarkImage}} style={[styles.backgroundImage, styles.landmarkImage]}>
-            <View style={styles.landmarksPointsWrap}><Text style={styles.landmarkPoints}>{item.landmarkPoints} pt</Text></View>
+            <View style={styles.landmarksPointsWrap}><Text style={styles.landmarkPoints}>{item.landmarkPoints} points</Text></View>
             { isAchieved ?
               <View style={styles.landmarkExploredLabelWrapper}>
+                <Image style={styles.landmarkExploredImage} source={require('../assets/images/checked-icon.png')} />
                 <Text style={styles.landmarkExploredLabel}>
                   {Screens.Countries.Landmarks.exploredLabel}
                 </Text>

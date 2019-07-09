@@ -12,14 +12,40 @@ import {
   GEO_LOCATION_COUNTRY_CITY_FAIL
 } from './types';
 
+Geolocation.configure({
+  desiredAccuracy: {
+    ios: "best",
+    android: "highAccuracy"
+  },
+  interval: 1000,
+  maxWaitTime: 1000
+});
+
 BackHandler.addEventListener('hardwareBackPress', () => { //(optional) you can use it if you need it
   //do not use this method if you are using navigation."preventBackClick: false" is already doing the same thing.
-  LocationServicesDialogBox.forceCloseDialog();
+  // LocationServicesDialogBox.forceCloseDialog();
 });
 
 DeviceEventEmitter.addListener('locationProviderStatusChange', function(status) { // only trigger when "providerListener" is enabled
    console.log(status); //  status => {enabled: false, status: "disabled"} or {enabled: true, status: "enabled"}
 });
+
+
+// LocationServicesDialogBox.checkLocationServicesIsEnabled({
+//   message: "<h2 style='color: #0af13e'>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/><a href='#'>Learn more</a>",
+//   ok: "YES",
+//   cancel: "NO",
+//   enableHighAccuracy: true, // true => GPS AND NETWORK PROVIDER, false => GPS OR NETWORK PROVIDER
+//   showDialog: true, // false => Opens the Location access page directly
+//   openLocationServices: true, // false => Directly catch method is called if location services are turned off
+//   preventOutSideTouch: false, // true => To prevent the location services window from closing when it is clicked outside
+//   preventBackClick: false, // true => To prevent the location services popup from closing when it is clicked back button
+//   providerListener: false // true ==> Trigger locationProviderStatusChange listener when the location state changes
+// }).then(function(success) {
+// }).catch((error) => {
+//   console.log(error.message); // error.message => "disabled"
+//   dispatch({ type: GEO_LOCATION_USER_FAIL, payload: {} })
+// });
 
 export const requestLocationPermission = () => {
   return (dispatch) => {
@@ -36,31 +62,13 @@ export const requestLocationPermission = () => {
         }
       }
     }).then(granted => {
+      console.log(granted);
       if(granted) {
-        LocationServicesDialogBox.checkLocationServicesIsEnabled({
-          message: "<h2 style='color: #0af13e'>Use Location ?</h2>This app wants to change your device settings:<br/><br/>Use GPS, Wi-Fi, and cell network for location<br/><br/><a href='#'>Learn more</a>",
-          ok: "YES",
-          cancel: "NO",
-          enableHighAccuracy: true, // true => GPS AND NETWORK PROVIDER, false => GPS OR NETWORK PROVIDER
-          showDialog: true, // false => Opens the Location access page directly
-          openLocationServices: true, // false => Directly catch method is called if location services are turned off
-          preventOutSideTouch: false, // true => To prevent the location services window from closing when it is clicked outside
-          preventBackClick: false, // true => To prevent the location services popup from closing when it is clicked back button
-          providerListener: false // true ==> Trigger locationProviderStatusChange listener when the location state changes
-        }).then(function(success) {
-          console.log(success)
-          Geolocation.getLatestLocation({ timeout: 60000 }).then(location => {
+          Geolocation.subscribeToLocationUpdates(location => {
             console.log(location);
-            dispatch({ type: GEO_LOCATION_FETCH_SUCCESS, payload: location})
             console.log('You can use the Location');
-          }).catch(err=>{
-            console.log(err)
-            dispatch({ type: GEO_LOCATION_USER_FAIL, payload: {} })
+            dispatch({ type: GEO_LOCATION_FETCH_SUCCESS, payload: location[0]})
           });
-        }).catch((error) => {
-          console.log(error.message); // error.message => "disabled"
-          dispatch({ type: GEO_LOCATION_USER_FAIL, payload: {} })
-        });
       } else {
         dispatch({ type: GEO_LOCATION_USER_FAIL, payload: {} })
         console.log('Location permission denied');
@@ -85,14 +93,31 @@ export const getLocationCountryAndCity = ( lat, long ) => {
     .then((responseData) => {
         console.log("RESULTS HERE:", responseData)
         if(responseData.results && responseData.results.length > 0) {
-          let userAddress = responseData.results[0].formatted_address.split(',');
-          let userCountryAndCity = userAddress.splice(userAddress.length-2, userAddress.length-1);
-          let userCity = userCountryAndCity[0].trim();
-          let userCountry = userCountryAndCity[1].trim();
-          let userDataAddress = {
-            userCity,
-            userCountry
-          };
+          // let userAddress = responseData.results[0].formatted_address.split(',');
+          // let userCountryAndCity = userAddress.splice(userAddress.length-2, userAddress.length-1);
+          // let userCity = userCountryAndCity[0].trim();
+          // let userCountry = userCountryAndCity[1].trim();
+          // let userDataAddress = {
+          //   userCity,
+          //   userCountry
+          // };
+          
+          let userDataAddress = responseData.results.map(({address_components}) => {
+            let city;
+            let country;
+            address_components.forEach(address=> {
+              if( address.types.indexOf('locality') !== -1 ) {
+                city = address.long_name;
+              }
+              if( address.types.indexOf('country') !== -1 ) {
+                country = address.long_name;
+              }
+            })
+
+            return city && country ? {userCity: city, userCountry: country} : false
+          }).find(data=> data && data.userCity && data.userCountry)
+
+          console.log(userDataAddress)
 
           dispatch({ type: GEO_LOCATION_COUNTRY_CITY_SUCCESS, payload: userDataAddress })
           return userDataAddress;

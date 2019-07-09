@@ -21,6 +21,6 @@ export const checkHaversineDistance = (coords1, coords2) => {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const d = R * c;
 
-  // return d < 0.05; // 50 meters
-  return d < 10000;
+  return d < 0.05; // 50 meters
+  // return d < 10000;
 }

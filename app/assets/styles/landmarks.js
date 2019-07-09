@@ -28,21 +28,22 @@ export const LandmarksStyles = {
   },
   landmarksPointsWrap: {
     flex:1,
+    alignSelf: 'center',
     alignItems:'center',
     justifyContent:'center',
     position: 'absolute',
     bottom: 20,
-    right: 10,
-    width: 40,
-    height: 40,
-    borderRadius: 100,
+    borderRadius: 30,
     backgroundColor: colors.yellow,
   },
   landmarkPoints: {
     textAlign: 'center',
     color: colors.white,
-    fontWeight: 'bold',
-    fontSize: fonts.baseSize * 3
+    fontSize: fonts.baseSize * 2.5,
+    paddingTop: 1,
+    paddingBottom: 1,
+    paddingLeft: 8,
+    paddingRight: 8
   },
   landmarksText: {
     height: 40,
@@ -98,20 +99,32 @@ export const LandmarksStyles = {
   landmarkExploredLabelWrapper: {
     position:'absolute',
     flex:1,
+    flexDirection: 'row',
     justifyContent:'center',
     alignItems: 'center',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    // backgroundColor: 'rgba(20, 22, 54, 0.7)',
+    backgroundColor: 'rgba(4, 130, 178, 0.6)'
+  },
+  landmarkExploredImage: {
+    width: 25,
+    height: 25,
+    marginRight: 2
+  },
+  landmarkExploredImageLarge: {
+    width: 40,
+    height: 40,
   },
   landmarkExploredLabel: {
-    color: colors.white,
-    width: '200%',
-    textAlign: 'center',
     padding: spacing.small,
-    backgroundColor: colors.orangeOpacity,
-    transform: [{ rotate: "-45deg" }]
+    color: '#ffffff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
+  landmarkExploredLabelLarge: {
+    fontSize: fonts.baseSize * 3
   }
 }

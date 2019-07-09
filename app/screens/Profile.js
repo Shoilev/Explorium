@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { logOutUser, getUser, getAchievementsPerUser } from '../actions';
 import { connect } from 'react-redux';
 import { createStyles } from '../assets/styles';
 import { ProfileStyle } from '../assets/styles/profile';
 import { Authentication } from '../resources/labels.json';
+import { images } from '../assets/images';
 
 const styles = createStyles(ProfileStyle);
 
@@ -23,25 +24,35 @@ class Profile extends Component {
     const { achievementsData } = this.props.achievements;
 
     return (
-      <View style={styles.container}>
-        {this.props.user.userPhoto ? 
-        <Image style={{ width: 200, height: 200, borderRadius: 100 }} source={{
-          uri:
-            this.props.user.userPhoto,
-        }} /> :
-        <Image style={{ width: 200, height: 200, }} source={require('../assets/images/user_profile.png')} /> }
-        <Text style={styles.title}>
-          Hi {this.props.user.userName || achievementsData.userNickname || this.props.user.userEmail}
+      <View style={[styles.container, styles.profileWrapper]}>
+        <ImageBackground source={images.profileBackground} style={styles.profileBackgroundImage}>
+          {this.props.user.userPhoto ? 
+          <Image style={styles.profileImageFb} source={{
+            uri:
+              this.props.user.userPhoto,
+          }} /> :
+          <Image style={styles.profileImage} source={images.userProfile} /> }
+        </ImageBackground>
+        <Text style={[styles.title, styles.profileTitle]}>
+          Hello {"\n"} {this.props.user.userName || achievementsData.userNickname || this.props.user.userEmail}!
         </Text>
 
-        <Text>Level: {achievementsData.level}</Text>
-        <Text>Points: {achievementsData.allPoints}</Text>
+        <View style={styles.profileScore}>
+          <Image style={styles.profileIcon} source={images.profileLevel} />
+          <Text>Level:</Text>
+          <Text style={styles.profileRightScore}>{achievementsData.level}</Text>
+        </View>
+        <View style={styles.profileScore}>
+          <Image style={styles.profileIcon} source={images.profilePoints} />
+          <Text>Points:</Text>
+          <Text style={styles.profileRightScore}>{achievementsData.allPoints}</Text>
+        </View>
 
         <TouchableOpacity
           style={[styles.button, styles.profileBtn]}
           onPress={this.handleLogOut}
         >
-          <Text> {Authentication.LogOut.buttonTitle} </Text>
+          <Text style={styles.profileBtnText}> {Authentication.LogOut.buttonTitle} </Text>
         </TouchableOpacity>
       </View>
     );

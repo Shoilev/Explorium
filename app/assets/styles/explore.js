@@ -62,22 +62,41 @@ export const ExploreStyle = {
   },
   exploreCheckInBtn: {
     flex: 1,
-    width: '80%',
-    backgroundColor: colors.primeryBlue,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0078b4',
+    padding: spacing.large,
+    paddingTop: spacing.small,
+    paddingBottom: spacing.small,
+    marginBottom: spacing.large,
+    borderRadius: 20
   },
   exploreCheckInDisabledBtn: {
-    flex: 1,
-    width: '80%',
     backgroundColor: colors.gray,
   },
   exploreCheckInTextBtn: {
     color: colors.white,
-    fontSize: fonts.baseSize * 4
+    fontSize: fonts.baseSize * 4,
+    fontWeight: 'bold',
   },
   exploreDirectionBtn: {
-    backgroundColor: colors.orange
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   exploreDirectionBtnText: {
-    color: colors.white
-  }
+    color: colors.primeryBlue
+  },
+  exploreDirectionIcon: {
+    width: 60,
+    height: 60,
+  },
+  exploreCheckInIcon: {
+    width: 40,
+    height: 40,
+    marginRight: spacing.small
+  },
 }

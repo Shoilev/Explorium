@@ -7,7 +7,7 @@ import { countryColors } from '../settings/global.json';
 
 const styles = createStyles(FriendsStyle);
 
-export default class FriendList extends Component {
+export default class FriendList extends React.PureComponent {
   inviteFriend(phoneNumber) {
     Linking.openURL('whatsapp://send?text=Join us and download our app!&phone='+ phoneNumber.toString());
   };

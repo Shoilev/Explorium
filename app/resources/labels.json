@@ -39,7 +39,8 @@
       }
     },
     "Achievements": {
-      "title": "Achievements"
+      "title": "Achievements",
+      "headerTitle": "Your Achievements"
     },
     "Friends": {
       "title": "Friends"

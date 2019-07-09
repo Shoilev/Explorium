@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, View, Linking, ActivityIndicator, Alert } from 'react-native';
+import { Image, TouchableOpacity, Text, View, Linking, ActivityIndicator, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import { requestLocationPermission, getUser, getAchievementsPerUser } from '../a
 import { isUserAchieved, checkHaversineDistance } from '../helpers';
 import { createStyles } from '../assets/styles';
 import { ExploreStyle } from '../assets/styles/explore';
+import { images } from '../assets/images';
 import { Button, Section } from './common';
 import { GOOGLE_MAPS_APIKEY  } from '../settings/global.json';
 
@@ -24,8 +25,8 @@ class BaseMap extends Component {
     const { achievementsData } = this.props.achievements;
     const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate);
 
-    // const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
-    const isAchieved = false;
+    const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
+    // const isAchieved = false;
 
     if(isNearBy && !isAchieved) {
       // assign points to the customer
@@ -112,7 +113,7 @@ class BaseMap extends Component {
             <Marker
               coordinate={landmarkDirection}
             >
-              <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin.png')} />
+              <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />
             </Marker>
 
             <MapViewDirections
@@ -124,13 +125,22 @@ class BaseMap extends Component {
             />
           </MapView>
 
+          <TouchableOpacity onPress={()=>this.openGoogleMaps(longitude,latitude)} style={styles.exploreDirectionBtn}>
+            <Image style={styles.exploreDirectionIcon} source={images.directionImage} />
+            <Text style={styles.exploreDirectionBtnText}>Get Direction</Text>
+          </TouchableOpacity>
           <Section style={styles.exploreButtonSection}>
-            <Button onPress={()=>this.openGoogleMaps(longitude,latitude)} textStyle={styles.exploreDirectionBtnText} buttonStyle={styles.exploreDirectionBtn}>Get direction</Button>
-            { checkHaversineDistance(userLocation, landmarkData.coordinate) 
+            { checkHaversineDistance(userLocation, landmarkData.coordinate)
             ?
-              <Button onPress={()=>this.checkIn(landmarkData, userLocation)} textStyle={styles.exploreCheckInTextBtn} buttonStyle={styles.exploreCheckInBtn}>Check in</Button>
+              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation)} style={styles.exploreCheckInBtn}>
+                <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
+                <Text style={styles.exploreCheckInTextBtn}>Check in</Text>
+              </TouchableOpacity>
             :
-              <Button onPress={()=>this.checkIn(landmarkData, userLocation)} textStyle={styles.exploreCheckInTextBtn} buttonStyle={styles.exploreCheckInDisabledBtn}>You are too far away</Button>
+              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation)} style={[styles.exploreCheckInBtn, styles.exploreCheckInDisabledBtn]}>
+                <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
+                <Text style={styles.exploreCheckInTextBtn}>You are too far away</Text>
+              </TouchableOpacity>
             }
           </Section>
         </View>

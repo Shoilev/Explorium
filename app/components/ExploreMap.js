@@ -321,6 +321,9 @@ class ExploreMap extends React.Component {
   render() {
     const { landmarksData } = this.props.landmarks;
     const { achievementsData } = this.props.achievements;
+
+    console.log(landmarksData)
+    console.log(111111111111111)
     
     if(isEmpty(landmarksData)) {
       return (
@@ -381,7 +384,7 @@ class ExploreMap extends React.Component {
                   key={i}
                   coordinate={marker.coordinate}
                 >
-                  <Image style={{ width: 25, height: 25 }} source={require('../assets/images/pin.png')} />
+                  <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />
                 </Marker>
               );
             })}
@@ -417,10 +420,11 @@ class ExploreMap extends React.Component {
                     <View style={styles.exploreMapTitle}>
                       <Text style={styles.exploreMapTitleText}>{marker.landmarkName}</Text>
                     </View>
-                    <Text style={styles.exploreMapPoints}>{marker.landmarkPoints + 'pt'}</Text>
+                    <Text style={styles.exploreMapPoints}>{marker.landmarkPoints + 'points'}</Text>
 
                     { isAchieved ?
                       <View style={styles.exploreExploredLabelWrapper}>
+                        <Image style={styles.exploreExploredImage} source={require('../assets/images/checked-icon.png')} />
                         <Text style={styles.exploreExploredLabel}>
                           {Screens.Countries.Landmarks.exploredLabel}
                         </Text>
@@ -475,19 +479,21 @@ const styles = StyleSheet.create({
   exploreMapItem: {
     width: ITEM_WIDTH,
     height: ITEM_PREVIEW_HEIGHT,
+    backgroundColor: 'rgba(4, 130, 178, 0.6)',
     marginHorizontal: ITEM_SPACING / 2,
     overflow: 'hidden',
-    borderRadius: 3,
+    borderRadius: 20,
     borderColor: '#000',
     position:'relative',
     zIndex: 10
   },
   exploreItemWrapper: {
-    position:'relative'
+    position:'relative',
+    height: ITEM_PREVIEW_HEIGHT
   },
   exploreMapTitle: {
     width: '100%',
-    color: '#000000',
+    color: '#ffffff',
     textAlign: 'center',
     position:'absolute',
     bottom:0,
@@ -495,55 +501,61 @@ const styles = StyleSheet.create({
   },
   exploreMapTitleText: {
     padding: 5,
-    backgroundColor: '#ffffff',
-    backgroundColor: 'rgba(246, 202, 23, 0.8)',
+    color: '#123c55',
+    backgroundColor: 'rgba(205, 209, 213, 0.8);',
     textAlign: 'center'
   },
   exploreMapPoints: {
     position: 'absolute',
-    top: 10,
-    right: 10,
-    width: 35,
-    height: 35,
-    borderRadius: 100,
+    bottom: 35,
+    alignSelf: 'center',
     backgroundColor: 'rgb(246, 202, 23)',
-    padding: 5,
-    paddingTop: 8,
-    fontSize: 12
+    borderRadius: 30,
+    paddingTop: 1,
+    paddingBottom: 1,
+    paddingLeft: 8,
+    paddingRight: 8,
+    fontSize: 10
   },
   exploreMapItemImage: {
     flex: 1,
-    width: '100%'
+    width: '100%',
+    height: ITEM_PREVIEW_HEIGHT
   },
   exploreExploredLabelWrapper: {
     position:'absolute',
     flex:1,
+    flexDirection: 'row',
     justifyContent:'center',
     alignItems: 'center',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    // backgroundColor: 'rgba(20, 22, 54, 0.7)',
+    backgroundColor: 'rgba(4, 130, 178, 0.6)'
+  },
+  exploreExploredImage: {
+    width: 25,
+    height: 25,
+    marginRight: 5
   },
   exploreExploredLabel: {
     color: '#ffffff',
-    width: '200%',
+    fontWeight: 'bold',
     textAlign: 'center',
-    padding: 5,
-    backgroundColor: 'rgba(253, 129, 2, 0.5)',
-    transform: [{ rotate: "-45deg" }]
+    textTransform: 'uppercase',
   },
   exploreMapLandmarkButton: {
     position:'absolute',
     top: 10,
     left: 10,
     zIndex:12,
-    backgroundColor: '#1a4e6c',
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 15,
-    paddingRight: 15
+    backgroundColor: '#50ced3',
+    borderRadius: 30,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 12,
+    paddingRight: 12
   },
   exploreMapButtonTitle: {
     color: '#ffffff'

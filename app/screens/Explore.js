@@ -73,7 +73,7 @@ class Explore extends Component {
     this.props.navigation.addListener('willFocus', this.load);
     this.props.requestLocationPermission();
   }
-  
+
   componentDidMount() {
   }
 

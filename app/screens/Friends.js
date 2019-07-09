@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderSearch from '../components/HeaderSearch';
 import { getFriends } from '../actions';
@@ -32,9 +32,10 @@ class Friends extends Component {
         keyExtractor={(friends, index)=> 'friendList' + index}
         ListHeaderComponent={<HeaderSearch title={"Friends"} data={friendsData} />}
         stickyHeaderIndices={[0]}
-        initialNumToRender={friendsData.length }
-        updateCellsBatchingPeriod={20}
-        onEndReachedThreshold={0.5}
+        initialNumToRender={100}
+        updateCellsBatchingPeriod={600}
+        maxToRenderPerBatch = {(friendsData.length - 100) / 2}
+        windowSize={Dimensions.get('window').height*2}
       />
       );
     } else {

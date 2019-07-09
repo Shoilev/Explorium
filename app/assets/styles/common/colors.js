@@ -8,6 +8,7 @@ export const Colors = {
   transparent: 'transparent',
   white: '#ffffff',
   gray: '#DDDDDD',
+  lightGray: '#f7f7f7',
   darkGray: 'rgb(20, 22, 54)',
   black: '#000000',
   yellow: 'rgb(246, 202, 23)',
@@ -16,5 +17,5 @@ export const Colors = {
   darkBlue: 'rgb(3, 146, 221)',
   primeryBlue: '#1a4e6c',
   purple: 'rgb(95, 98, 159)',
-
+  grassGreen: '#6aa406'
 };

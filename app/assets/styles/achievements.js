@@ -2,37 +2,51 @@ import { colors, spacing, fonts } from './base';
 import { auth } from 'react-native-firebase';
 
 export const AchievementsStyle = {
-  achievementsList: {
-    padding: spacing.large
-  },
-  achievementListCard: {
+  achievementsListCard: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    marginBottom: spacing.large
-  },
-  achievementsImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 100,
-    marginRight: spacing.large
-  },
-  achievementTextIndex: {
-    height: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: spacing.large
+    marginTop: spacing.small,
+    marginBottom: spacing.medium,
+    marginLeft: spacing.medium,
+    marginRight: spacing.medium,
+    height: 80,
+    borderRadius: 15,
+    overflow: 'hidden',
+    textAlign: 'center'
   },
-  achievementsPoints: {
-    backgroundColor: colors.yellow,
-    borderRadius: 10,
-    padding: spacing.small,
-    fontSize: fonts.baseSize * 2
+  achievementsIndexText: {
+    color: colors.white,
+    opacity: 0.6,
+    fontWeight: 'bold'
   },
-  achievementsRightSection: {
-    flex: 1,
-    alignItems: 'flex-start',
+  achievementsListTitle: {
+    color: colors.white,
+    textAlign: 'center',
+    fontSize: fonts.baseSize * 3,
+    fontWeight: 'bold'
+  },
+  achievementsListPoints: {
+    paddingLeft: spacing.medium,
+    paddingRight: spacing.medium,
+    paddingTop: spacing.small / 1.5,
+    paddingBottom: spacing.small / 1.5,
+    marginTop: spacing.small / 1.5,
+    fontSize: fonts.baseSize * 2,
+    color: colors.white,
+    borderRadius: 10
+  },
+  achievementsHeader: {
     justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.large,
+    borderBottomWidth: 1,
+    borderColor: colors.primeryBlue,
+    marginBottom: spacing.small
+  },
+  achievementsHeaderText: {
+    color: colors.primeryBlue,
+    textTransform: 'uppercase',
+    fontWeight: 'bold'
   }
 }

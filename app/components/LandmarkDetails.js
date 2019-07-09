@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, ActivityIndicator } from 'react-native';
+import { View, Text, ImageBackground, ActivityIndicator, Image } from 'react-native';
 import { createStyles } from '../assets/styles';
 import { Section, Button } from '../components/common';
 import { LandmarksStyles } from '../assets/styles/landmarks';
@@ -21,7 +21,8 @@ export default class LandmarkDetails extends Component {
 
             { isAchieved ?
               <View style={styles.landmarkExploredLabelWrapper}>
-                <Text style={styles.landmarkExploredLabel}>
+                <Image style={[styles.landmarkExploredImage, styles.landmarkExploredImageLarge]} source={require('../assets/images/checked-icon-large.png')} />
+                <Text style={[styles.landmarkExploredLabel, styles.landmarkExploredLabelLarge]}>
                   {Screens.Countries.Landmarks.exploredLabel}
                 </Text>
               </View>
