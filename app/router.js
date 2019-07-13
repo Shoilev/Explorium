@@ -194,6 +194,7 @@ const AppStack = createStackNavigator(
       screen: UserInfo,
       navigationOptions: ({navigation}) => ({
         title: 'Additional User Info',
+        header: null
       }),
       headerMode: 'screen',
     }

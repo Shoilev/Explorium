@@ -15,7 +15,8 @@ class Countries extends Component {
   }
 
   renderItem(item, index, navigation) {
-    return <CountryList country={item.countryName} appNavigation={navigation} countryImage={item.countryImage} countryPoints={item.countryPoints} countryIndex={index} />
+    console.log(item)
+    return <CountryList country={item.countryName} countryOnline={item.countryIsOnline} appNavigation={navigation} countryImage={item.countryImage} countryPoints={item.countryPoints} countryIndex={index} />
   }
 
   renderState() {

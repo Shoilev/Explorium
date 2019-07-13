@@ -14,6 +14,9 @@ export const CountriesStyles = {
     overflow: 'hidden',
     textAlign: 'center'
   },
+  countryListCardOffline: {
+    opacity: 0.6
+  },
   countryListTitle: {
     color: colors.white,
     textAlign: 'center',
@@ -28,5 +31,12 @@ export const CountriesStyles = {
     fontSize: fonts.baseSize * 2,
     color: colors.white,
     borderRadius: 10
+  },
+  countryListOfflineLabel: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 3,
+    marginBottom: spacing.medium,
+    fontWeight: '700',
+    textTransform: 'uppercase'
   }
 }

@@ -22,6 +22,7 @@ import com.airbnb.android.react.maps.MapsPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.github.reactnativecommunity.location.RNLocationPackage;
 import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
+import com.brentvatne.react.ReactVideoPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +57,8 @@ public class MainApplication extends Application implements ReactApplication {
           new RNLocationPackage(),
           new MapsPackage(),
           new ReactNativeContacts(),
-          new LocationServicesDialogBoxPackage()
+          new LocationServicesDialogBoxPackage(),
+          new ReactVideoPackage()
       );
     }
 

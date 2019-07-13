@@ -30,7 +30,8 @@
   "Screens": {
     "Explore": {
       "title": "Explore",
-      "buttonTitle": "Go Explore!"
+      "buttonTitle": "Go Explore",
+      "introTitle": "The game of discovery!"
     },
     "Countries": {
       "title": "Countries",

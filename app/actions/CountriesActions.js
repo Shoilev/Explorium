@@ -14,20 +14,23 @@ export const getCountries = () => {
           console.log(doc)
           countries.push({
             countryName: doc.data().name,
-            countryImage: doc.data().image
+            countryImage: doc.data().image,
+            countryIsOnline: doc.data().isOnline
           })
         })
 
         // TODO waiting for an update from firestore to make possible to get
         // child collections.
         getCitiesName(countries).then(dataWithCities => {
-          console.log(dataWithCities)
+          // dataWithCities.sort(function(a, b) {
+          //   return b.countryPoints - a.countryPoints;
+          // })
           return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: dataWithCities })
         }).catch(err=>{console.log(err)});
 
         countries.sort(function(a, b) {
           return a.countryName.localeCompare(b.countryName);
-        })
+        });
 
         return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: countries })
       })

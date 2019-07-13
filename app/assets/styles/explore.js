@@ -5,7 +5,7 @@ export const ExploreStyle = {
     color: colors.white
   },
   exploreBtnStyle: {
-    backgroundColor: '#1e324d',
+    backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: colors.white,
     borderRadius: 15,
@@ -99,4 +99,30 @@ export const ExploreStyle = {
     height: 40,
     marginRight: spacing.small
   },
+  exploreBackgroundVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    opacity: 0.5
+  },
+  exploreIntroText: {
+    fontSize: fonts.baseSize * 4,
+    color: colors.white,
+    marginBottom: spacing.extraLarge
+  },
+  exploreCountryText: {
+    fontSize: fonts.baseSize * 8,
+    color: colors.white,
+    marginBottom: spacing.small,
+    textAlign: 'center'
+  },
+  exploreIntroLogo: {
+    position: 'absolute',
+    top: 30,
+    width: 119,
+    height: 68,
+    opacity: 0.5
+  }
 }
