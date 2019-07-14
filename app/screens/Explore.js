@@ -14,7 +14,7 @@ import { Screens, App } from '../resources/labels.json';
 const styles = createStyles(ExploreStyle);
 const exploreumSrc = images.exploreumBackground;
 const exploreWhiteLogo = images.whiteLogo;
-let videoLoaded = false;
+let videoLoad;
 
 const requestAdditionalUserData = (nav) => {
   const userUID = firebase.auth().currentUser.uid;
@@ -47,6 +47,16 @@ class Explore extends Component {
   }
 
   componentWillMount() {
+    videoLoad = <Video source={ {uri:'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2Fintro.mp4?alt=media&token=6308c168-820c-4900-8654-6beaff5f84e1'} }   // Can be a URL or a local file.
+    ref={(ref) => {
+      this.player = ref
+    }}
+    muted={true}
+    repeat={true}
+    onReadyForDisplay={this.isVideoLoaded.bind(this)}
+    resizeMode={"cover"}
+    style={styles.exploreBackgroundVideo} />;
+
     const { navigation } = this.props;
     requestAdditionalUserData().then(premission=>{
       if(premission) {
@@ -69,15 +79,7 @@ class Explore extends Component {
         <ImageBackground source={exploreumSrc} style={styles.backgroundImage}>
           <View style={styles.container}>
 
-            <Video source={require('../assets/images/intro.mp4')}   // Can be a URL or a local file.
-              ref={(ref) => {
-                this.player = ref
-              }}
-              muted={true}
-              repeat={true}
-              onReadyForDisplay={this.isVideoLoaded.bind(this)}
-              resizeMode={"cover"}
-              style={styles.exploreBackgroundVideo} />
+            {videoLoad}
 
             <View style={styles.exploreLoadingWrapper}>
                {!this.state.loader ? <ActivityIndicator color="#ffffff" size="large" />: null}

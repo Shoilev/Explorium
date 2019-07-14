@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ExploriumApp</string>
+    <string name="app_name">Exploreum</string>
     <string name="facebook_app_id">611676262666071</string>
     <string name="fb_login_protocol_scheme">fb611676262666071</string>
 </resources>
