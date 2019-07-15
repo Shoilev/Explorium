@@ -1,5 +1,6 @@
 import firebase from 'react-native-firebase';
 import {getLocationCountryAndCity}  from './GeoLocationActions';
+import { checkHaversineDistance } from '../helpers';
 import {
   LANDMARKS_FETCH_SUCCESS,
 } from './types';
@@ -29,9 +30,8 @@ export const getLandmarks = (country, city) => {
           })
         })
 
-        // TODO: sort by points
         landmarks.sort(function(a, b) {
-          return a.landmarkName.localeCompare(b.landmarkName);
+          return b.landmarkPoints - a.landmarkPoints;
         })
 
         dispatch({ type: LANDMARKS_FETCH_SUCCESS, payload: landmarks });
@@ -44,6 +44,15 @@ export const getLandmarksByLocation = ( lat, long ) => {
   return (dispatch) => {
     return dispatch(getLocationCountryAndCity(lat, long)).then((result)=>{
       return dispatch(getLandmarks(result.userCountry, result.userCity)).then((landmarkResult)=>{
+        landmarkResult.sort((a,b) => {
+          let distanceA = checkHaversineDistance({latitude: lat, longitude: long}, a.coordinate, true);
+          let distanceB = checkHaversineDistance({latitude: lat, longitude: long}, b.coordinate, true);
+          
+          if (distanceA < distanceB) {return -1;}
+          if (distanceA > distanceB) {return 1;}
+          return 0;
+        });
+
         return landmarkResult;
       });
     })

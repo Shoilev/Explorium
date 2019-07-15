@@ -121,8 +121,8 @@ export const ExploreStyle = {
   exploreIntroLogo: {
     position: 'absolute',
     top: 30,
-    width: 119,
-    height: 68,
+    width: 100,
+    height: 57,
     opacity: 0.5
   }
 }
