@@ -14,7 +14,6 @@ import { Screens, App } from '../resources/labels.json';
 const styles = createStyles(ExploreStyle);
 const exploreumSrc = images.exploreumBackground;
 const exploreWhiteLogo = images.whiteLogo;
-let videoLoad;
 
 const requestAdditionalUserData = (nav) => {
   const userUID = firebase.auth().currentUser.uid;
@@ -36,7 +35,8 @@ const requestAdditionalUserData = (nav) => {
 
 class Explore extends Component {
   state = {
-    loader: false
+    loader: false,
+    loadFallbackVideo: false
   }
 
   onButtonPress() {
@@ -47,23 +47,15 @@ class Explore extends Component {
   }
 
   componentWillMount() {
-    videoLoad = <Video source={ {uri:'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2Fintro.mp4?alt=media&token=6308c168-820c-4900-8654-6beaff5f84e1'} }   // Can be a URL or a local file.
-    ref={(ref) => {
-      this.player = ref
-    }}
-    muted={true}
-    repeat={true}
-    onReadyForDisplay={this.isVideoLoaded.bind(this)}
-    resizeMode={"cover"}
-    style={styles.exploreBackgroundVideo} />;
-
     const { navigation } = this.props;
+
     requestAdditionalUserData().then(premission=>{
       if(premission) {
         navigation.navigate('UserInfo')
       }
-    })
-    this.props.requestLocationPermission();
+    });
+
+    this.props.requestLocationPermission(true);
   }
 
   componentDidMount() {
@@ -73,13 +65,45 @@ class Explore extends Component {
     this.setState({loader: true })
   }
 
+  loadFallbackVideo() {
+    this.setState({loadFallbackVideo : true});
+  }
+
   render() {
+    const { userLocatioVideoUri } = this.props.userGeoLocation;
       return (
         // quests screen based on your location
         <ImageBackground source={exploreumSrc} style={styles.backgroundImage}>
           <View style={styles.container}>
 
-            {videoLoad}
+            { !isEmpty(userLocatioVideoUri) && !this.state.loadFallbackVideo ?
+              <Video source={ {uri:userLocatioVideoUri} }
+              ref={(ref) => {
+                this.player = ref
+              }}
+              muted={true}
+              repeat={true}
+              onReadyForDisplay={this.isVideoLoaded.bind(this)}
+              onError={this.loadFallbackVideo.bind(this)}
+              resizeMode={"cover"}
+              style={styles.exploreBackgroundVideo} />
+              : null
+            }
+
+            { this.state.loadFallbackVideo ? 
+              <Video source={ {uri:'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2Fintro.mp4?alt=media&token=6308c168-820c-4900-8654-6beaff5f84e1'} }
+              ref={(ref) => {
+                this.player = ref
+              }}
+              muted={true}
+              repeat={true}
+              onReadyForDisplay={this.isVideoLoaded.bind(this)}
+              onError={this.loadFallbackVideo.bind(this)}
+              resizeMode={"cover"}
+              style={styles.exploreBackgroundVideo} /> 
+              :
+              null
+            }
 
             <View style={styles.exploreLoadingWrapper}>
                {!this.state.loader ? <ActivityIndicator color="#ffffff" size="large" />: null}

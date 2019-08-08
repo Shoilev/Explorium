@@ -1,8 +1,9 @@
 import firebase from 'react-native-firebase';
 import {getLocationCountryAndCity}  from './GeoLocationActions';
-import { checkHaversineDistance } from '../helpers';
+import { checkHaversineDistance, isEmpty } from '../helpers';
 import {
   LANDMARKS_FETCH_SUCCESS,
+  LANDMARKS_FETCH_FAIL
 } from './types';
 
 // SOFIA
@@ -29,6 +30,10 @@ export const getLandmarks = (country, city) => {
             }
           })
         })
+
+        if(isEmpty(landmarks)) {
+          dispatch({ type: LANDMARKS_FETCH_FAIL, payload: {errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
+        }
 
         landmarks.sort(function(a, b) {
           return b.landmarkPoints - a.landmarkPoints;

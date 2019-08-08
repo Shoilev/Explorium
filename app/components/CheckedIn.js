@@ -12,28 +12,6 @@ export default class CheckedIn extends Component {
   componentWillMount() {
   }
 
-  // onShare = async () => {
-  //   try {
-  //     const result = await Share.share({
-  //       title: 'Exploreum',
-  //       message: 'I have checked in.',
-  //       url: 'https://www.google.com'
-  //     });
-
-  //     if (result.action === Share.sharedAction) {
-  //       if (result.activityType) {
-  //         // shared with activity type of result.activityType
-  //       } else {
-  //         // shared
-  //       }
-  //     } else if (result.action === Share.dismissedAction) {
-  //       // dismissed
-  //     }
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // };
-
   shareLinkWithShareDialog() {
     const landmark = this.props.navigation.getParam('landmark', {});
     const shareLinkContent = {

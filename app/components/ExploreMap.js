@@ -239,6 +239,11 @@ class ExploreMap extends React.Component {
     navigation.navigate('LandmarkDetails',{landmark: landmarkData, isAchieved})
   }
 
+  gotBack() {
+    const { navigation } = this.props;
+    navigation.goBack();
+  }
+
   onStartShouldSetPanResponder = (e) => {
     // we only want to move the view if they are starting the gesture on top
     // of the view, so this calculates that and returns true if so. If we return
@@ -319,14 +324,20 @@ class ExploreMap extends React.Component {
   }
 
   render() {
-    const { landmarksData } = this.props.landmarks;
+    const { landmarksData, error } = this.props.landmarks;
     const { achievementsData } = this.props.achievements;
 
-    console.log(landmarksData)
-    console.log(111111111111111)
-    
-    if(isEmpty(landmarksData)) {
+    if(error) {
       return (
+        <View style={styles.container}>
+          <Text style={styles.exploreErrorMessage}>{error.errorMessage}</Text>
+          <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreBackBtn}>
+            <Text style={styles.exploreBackBtnText}>{'Explore'}</Text>
+          </Button>
+        </View>
+      )
+    } else if(isEmpty(landmarksData)) {
+      return(
         <View style={styles.container}>
           <ActivityIndicator />
         </View>
@@ -420,7 +431,7 @@ class ExploreMap extends React.Component {
                     <View style={styles.exploreMapTitle}>
                       <Text style={styles.exploreMapTitleText}>{marker.landmarkName}</Text>
                     </View>
-                    <Text style={styles.exploreMapPoints}>{marker.landmarkPoints + 'points'}</Text>
+                    <Text style={styles.exploreMapPoints}>{marker.landmarkPoints ? marker.landmarkPoints + ' points' : 'Loading...'}</Text>
 
                     { isAchieved ?
                       <View style={styles.exploreExploredLabelWrapper}>
@@ -559,6 +570,21 @@ const styles = StyleSheet.create({
   },
   exploreMapButtonTitle: {
     color: '#ffffff'
+  },
+  exploreBackBtn: {
+    backgroundColor: '#50ced3',
+    borderRadius: 30,
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  exploreBackBtnText: {
+    color: '#ffffff'
+  },
+  exploreErrorMessage: {
+    padding: 20,
+    textAlign: 'center'
   }
 });
 

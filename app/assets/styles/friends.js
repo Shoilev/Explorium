@@ -4,7 +4,7 @@ export const FriendsStyle = {
   friendsList: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     marginTop: spacing.small,
     marginBottom: spacing.medium,
     marginLeft: spacing.extraLarge,
@@ -34,20 +34,39 @@ export const FriendsStyle = {
     top: 0,
     right: spacing.extraLarge * 2
   },
-  friendsBtnText: {
-    color: colors.white,
-    padding: 0,
-    margin: 0,
-    fontSize: fonts.baseSize * 2.2
+  friendsWAIcon: {
+    width: 30,
+    height: 30,
   },
-  friendsBtn: {
-    backgroundColor: colors.orange,
-    paddingTop: spacing.small,
-    paddingBottom: spacing.small,
-    paddingLeft: spacing.medium,
-    paddingRight: spacing.medium,
-    marginBottom: spacing.reset,
-    marginTop: spacing.medium,
-    borderRadius: 10
+  friendsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    position: 'relative'
+  },
+  friendsInviteBtn: {
+    position: 'absolute',
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.gray,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    right: 20,
+    bottom: 30,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  friendsInviteIcon: {
+    resizeMode: 'contain',
+    width: 50,
+    height: 50,
   }
 }

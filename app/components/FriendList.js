@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, Linking, TouchableNativeFeedback } from 'react-native';
+import { Text, View, Linking, TouchableOpacity, Image, TouchableNativeFeedback } from 'react-native';
 import { Section, Button } from './common';
 import { createStyles } from '../assets/styles';
+import { images } from '../assets/images';
 import { FriendsStyle } from '../assets/styles/friends';
 import { countryColors } from '../settings/global.json';
 
 const styles = createStyles(FriendsStyle);
+const INVITE_MESSAGE = 'Join us and download our app!';
 
 export default class FriendList extends React.PureComponent {
-  inviteFriend(phoneNumber) {
-    Linking.openURL('whatsapp://send?text=Join us and download our app!&phone='+ phoneNumber.toString());
+  inviteWAFriend(phoneNumber) {
+    Linking.openURL('whatsapp://send?text=' + INVITE_MESSAGE+ '&phone='+ phoneNumber.toString());
   };
 
   render() {
@@ -32,8 +34,8 @@ export default class FriendList extends React.PureComponent {
     }
 
     return (
-      <Section style={{alignItems: 'flex-start'}}>
-        <TouchableNativeFeedback background={TouchableNativeFeedback.Ripple('#fff')} onPress={()=>this.inviteFriend(friend.phoneNumbers[0].number)}>
+      <View style={{alignItems: 'flex-start'}}>
+        <TouchableNativeFeedback activeOpacity={0.5} onPress={()=>this.inviteWAFriend(friend.phoneNumbers[0].number)} background={TouchableNativeFeedback.Ripple('#fff')}>
           <View style={styles.friendsList}>
               <View style={[styles.frendsItemLeft, styles[friendColor]]}>
                 <Text style={styles.friendsText}>{friendShortName}</Text>
@@ -43,11 +45,13 @@ export default class FriendList extends React.PureComponent {
               <Text style={styles.friendsItemNumber}>{ friend.phoneNumbers && friend.phoneNumbers.length > 0 ? friend.phoneNumbers[0].number: 'None'}</Text>
             </View>
             <View style={styles.friendsRightBtn}>
-              <Button textStyle={styles.friendsBtnText} buttonStyle={styles.friendsBtn} onPress={()=>this.inviteFriend(friend.phoneNumbers[0].number)}>Invite</Button>
+              <TouchableOpacity style={styles.friendsBtn} activeOpacity={0.5} onPress={()=>this.inviteWAFriend(friend.phoneNumbers[0].number)}>
+                <Image style={styles.friendsWAIcon} source={images.whatsAppIcon} />
+              </TouchableOpacity>
             </View>
           </View>
         </TouchableNativeFeedback>
-      </Section>
+      </View>
     );
   }
 }

@@ -12,4 +12,6 @@ export const images = {
   profilePoints: require('./images/score_icon.png'),
   checkedIconLarge: require('./images/checked-icon-large.png'),
   directionImage: require('./images/direction_icon.png'),
+  linkIcon: require('./images/link_icon.png'),
+  whatsAppIcon: require('./images/whatsapp_icon.png')
 }

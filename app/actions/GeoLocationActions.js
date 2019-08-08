@@ -9,7 +9,8 @@ import {
   GEO_LOCATION_FETCH_SUCCESS,
   GEO_LOCATION_USER_FAIL,
   GEO_LOCATION_COUNTRY_CITY_SUCCESS,
-  GEO_LOCATION_COUNTRY_CITY_FAIL
+  GEO_LOCATION_COUNTRY_CITY_FAIL,
+  GEO_LOCATION_VIDEO_URI
 } from './types';
 
 Geolocation.configure({
@@ -47,7 +48,7 @@ DeviceEventEmitter.addListener('locationProviderStatusChange', function(status) 
 //   dispatch({ type: GEO_LOCATION_USER_FAIL, payload: {} })
 // });
 
-export const requestLocationPermission = () => {
+export const requestLocationPermission = (requestCountry = false) => {
   return (dispatch) => {
     Geolocation.requestPermission({
       ios: "whenInUse",
@@ -64,6 +65,19 @@ export const requestLocationPermission = () => {
     }).then(granted => {
       console.log(granted);
       if(granted) {
+          if(requestCountry) {
+            console.log('Request country');
+            Geolocation.getLatestLocation({ timeout: 6000 }).then(location => {
+              return dispatch(getLocationCountryAndCity(location.latitude, location.longitude)).then(result=>{
+                let videoURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2F' + result.userCountry + '%2Fintro.mp4?alt=media';
+                dispatch({ type: GEO_LOCATION_VIDEO_URI, payload: videoURI });
+              });
+            }).catch(err=>{
+              let defaultVideoURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2Fintro.mp4?alt=media&token=6308c168-820c-4900-8654-6beaff5f84e1';
+              dispatch({ type: GEO_LOCATION_VIDEO_URI, payload: defaultVideoURI });
+            })
+          }
+
           Geolocation.subscribeToLocationUpdates(location => {
             console.log(location);
             console.log('You can use the Location');
