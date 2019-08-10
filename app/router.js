@@ -132,13 +132,14 @@ const AppStack = createStackNavigator(
       navigationOptions: ({navigation}) => ({
         title: navigation.getParam('city', 'Landmarks'),
         headerStyle: {
-          borderBottomColor: '#1a4e6c',
+          borderBottomColor: navigation.state.params.shadowCities ? '#fff' : '#1a4e6c',
           borderBottomWidth: 1,
           elevation: 0,
           shadowOpacity: 0,
+          backgroundColor: navigation.state.params.shadowCities ? '#1f1f1f' : '#fff',
         },
-        headerTintColor: '#1a4e6c',
-        headerTitleStyle: { color: '#1a4e6c' },
+        headerTintColor: navigation.state.params.shadowCities ? '#fff' : '#1a4e6c',
+        headerTitleStyle: { color: navigation.state.params.shadowCities ? '#fff' : '#1a4e6c' },
       }),
       headerMode: 'screen',
     },
@@ -151,11 +152,12 @@ const AppStack = createStackNavigator(
           borderBottomWidth: 1,
           elevation: 0,
           shadowOpacity: 0,
+          backgroundColor: 'transparent'
         },
         headerTintColor: '#1a4e6c',
         headerTitleStyle: { color: '#1a4e6c' },
       }),
-      headerMode: 'screen',
+      headerMode: 'none'
     },
     CheckedIn: {
       screen: CheckedIn,

@@ -36,7 +36,8 @@
     "Countries": {
       "title": "Countries",
       "Landmarks": {
-        "exploredLabel": "Explored!"
+        "exploredLabel": "Explored!",
+        "shadowCities": "Shadow Cities"
       }
     },
     "Achievements": {

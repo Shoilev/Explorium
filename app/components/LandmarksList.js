@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text, ImageBackground, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
+import { View, FlatList, Text, Switch, ImageBackground, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { createStyles } from '../assets/styles';
 import { LandmarksStyles } from '../assets/styles/landmarks';
-import { getLandmarks, getAchievementsPerUser } from '../actions';
+import { getLandmarks, getAchievementsPerUser, switchToShadowCities } from '../actions';
 import { isUserAchieved, isEmpty } from '../helpers';
 import { Screens } from '../resources/labels.json';
 
@@ -16,6 +16,11 @@ class LandmarksList extends Component {
     const city = this.props.navigation.getParam('city', '');
     this.props.getLandmarks(country, city);
     this.props.getAchievementsPerUser();
+  }
+
+  handleShadowCities(value) {
+    this.props.navigation.setParams({shadowCities: value});
+    this.props.switchToShadowCities(value);
   }
 
   renderItem(item, index, navigation, achievementsData) {
@@ -45,17 +50,30 @@ class LandmarksList extends Component {
 
   render() {
     //activeLandmarks is available if we decide to implement live search in the near future.
-    const { landmarksData } = this.props.landmarks;
+    const { landmarksData, landmarksShadowData, shadowCities } = this.props.landmarks;
     const { achievementsData } = this.props.achievements;
     const { navigation } = this.props;
 
     if(!isEmpty(landmarksData)) {
+      console.log(this.props.landmarks.shadowCities)
+      console.log('landmarksData.shadowCities')
+
       return (
         <FlatList
-          data={landmarksData}
-          style={styles.landmarksRow}
+          data={shadowCities && !isEmpty(landmarksShadowData) ? landmarksShadowData : landmarksData}
+          style={shadowCities ? [styles.landmarkShadowActive, styles.landmarksRow]: styles.landmarksRow}
           renderItem={({item, index}) => this.renderItem(item,index,navigation, achievementsData)}
           keyExtractor={(item, index)=> 'landmarkKey' + index}
+          ListHeaderComponent={
+            <View style={styles.landmarksShadowCities}>
+              <View style={styles.landmarksShdowCitiesInner}>
+                <Text style={styles.shadowCitiesLabel}>{Screens.Countries.Landmarks.shadowCities}</Text>
+                <Switch
+                  value={ shadowCities }
+                  onValueChange={ this.handleShadowCities.bind(this) } />
+              </View>
+            </View>
+          }
           numColumns={2}
         />
       );
@@ -73,4 +91,4 @@ const mapStateToProps = ({landmarks, achievements}) => {
   return { landmarks, achievements };
 };
 
-export default connect(mapStateToProps, { getLandmarks, getAchievementsPerUser })(LandmarksList);
+export default connect(mapStateToProps, { getLandmarks, getAchievementsPerUser, switchToShadowCities })(LandmarksList);

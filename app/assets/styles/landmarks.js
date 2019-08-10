@@ -2,11 +2,34 @@ import { colors, spacing, fonts, dimensions } from './base';
 const COLUMNS_NUM = 2;
 
 export const LandmarksStyles = {
+  landmarksContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    position: 'relative'
+  },
+  landmarksShadowCities: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    flexDirection:'row'
+  },
+  landmarksShdowCitiesInner: {
+    width: 170,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: colors.primeryBlue,
+    borderRadius: 50,
+    marginBottom: spacing.large,
+    marginTop: spacing.large
+  },
+  shadowCitiesLabel: {
+    color: colors.white
+  },
   landmarksRow: {
     flex: 1,
-    marginTop: spacing.large,
-    marginLeft: spacing.extraLarge,
-    marginRight: spacing.extraLarge
+    paddingRight: spacing.large,
+    paddingLeft: spacing.large
   },
   landmarksBox: {
     flex: 1,
@@ -126,5 +149,8 @@ export const LandmarksStyles = {
   },
   landmarkExploredLabelLarge: {
     fontSize: fonts.baseSize * 3
+  },
+  landmarkShadowActive: {
+    backgroundColor: '#1f1f1f'
   }
 }

@@ -3,7 +3,9 @@ import {getLocationCountryAndCity}  from './GeoLocationActions';
 import { checkHaversineDistance, isEmpty } from '../helpers';
 import {
   LANDMARKS_FETCH_SUCCESS,
-  LANDMARKS_FETCH_FAIL
+  LANDMARKS_FETCH_FAIL,
+  LANDMARKS_SHADOW_CITIES,
+  LANDMARKS_SHADOW_FETCH_SUCCESS
 } from './types';
 
 // SOFIA
@@ -16,19 +18,29 @@ export const getLandmarks = (country, city) => {
     .get().then(querySnapshot => {
         console.log('firebase');
         const landmarks = [];
+        const shadowLandmarks = [];
         querySnapshot.forEach(doc => {
           console.log(doc)
-          landmarks.push({
+          const dataDoc = doc.data();
+          const isShadowLandmark = dataDoc.isShadow || false;
+          const landmarkData = {
             id: doc.id,
-            landmarkName: doc.data().name,
-            landmarkImage: doc.data().image,
-            landmarkDescription: doc.data().description,
-            landmarkPoints: doc.data().points,
+            landmarkName: dataDoc.name,
+            landmarkImage: dataDoc.image,
+            landmarkDescription: dataDoc.description,
+            landmarkPoints: dataDoc.points,
+            isShadowLandmark,
             coordinate: {
-              latitude: doc.data().latitude || LATITUDE,
-              longitude: doc.data().longitude || LONGITUDE
+              latitude: dataDoc.latitude || LATITUDE,
+              longitude: dataDoc.longitude || LONGITUDE
             }
-          })
+          };
+
+          if(isShadowLandmark) {
+            shadowLandmarks.push(landmarkData);
+          } else {
+            landmarks.push(landmarkData);
+          }
         })
 
         if(isEmpty(landmarks)) {
@@ -37,9 +49,14 @@ export const getLandmarks = (country, city) => {
 
         landmarks.sort(function(a, b) {
           return b.landmarkPoints - a.landmarkPoints;
-        })
+        });
+
+        shadowLandmarks.sort(function(a, b) {
+          return b.landmarkPoints - a.landmarkPoints;
+        });
 
         dispatch({ type: LANDMARKS_FETCH_SUCCESS, payload: landmarks });
+        dispatch({ type: LANDMARKS_SHADOW_FETCH_SUCCESS, payload: shadowLandmarks });
         return landmarks;
       })
   }
@@ -63,3 +80,7 @@ export const getLandmarksByLocation = ( lat, long ) => {
     })
   }
 }
+
+export const switchToShadowCities = (value) => {
+  return { type: LANDMARKS_SHADOW_CITIES, payload: value };
+};
