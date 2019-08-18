@@ -70,7 +70,7 @@ class Explore extends Component {
   }
 
   render() {
-    const { userLocatioVideoUri } = this.props.userGeoLocation;
+    const { userLocatioVideoUri, userLocation } = this.props.userGeoLocation;
       return (
         // quests screen based on your location
         <ImageBackground source={exploreumSrc} style={styles.backgroundImage}>
@@ -106,14 +106,14 @@ class Explore extends Component {
             }
 
             <View style={styles.exploreLoadingWrapper}>
-               {!this.state.loader ? <ActivityIndicator color="#ffffff" size="large" />: null}
+               { !this.state.loader ? <ActivityIndicator color="#ffffff" size="large" />: null }
             </View>
 
-              {this.state.loader ? <Image style={styles.exploreIntroLogo} source={exploreWhiteLogo} /> : null }
-              {this.state.loader ? <Text style={styles.exploreCountryText}>Explore Bulgaria</Text> : null }
-              {this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
+              { this.state.loader ? <Image style={styles.exploreIntroLogo} source={exploreWhiteLogo} /> : null }
+              { this.state.loader ? <Text style={styles.exploreCountryText}>Explore Bulgaria</Text> : null }
+              { this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
 
-              <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
+              { !isEmpty(userLocation) ? <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button> : null }
             </View>
           </ImageBackground>
       );

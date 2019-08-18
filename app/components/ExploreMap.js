@@ -265,8 +265,19 @@ class ExploreMap extends React.Component {
     return topOfTap < topOfMainWindow;
   }
 
+  markerHandler(newIndex) {
+    const { panX, index } = this.state;
+
+    if (index !== newIndex) {
+      this.setState({ index: newIndex });
+      Animated.spring(panX, {
+        toValue: (newIndex * ITEM_WIDTH) * -1
+      }).start();
+    }
+  }
+
   onPanXChange = ({ value }) => {
-    const { index } = this.state;
+    const { index, markers } = this.state;
     const newIndex = Math.floor(((-1 * value) + (SNAP_WIDTH / 2)) / SNAP_WIDTH);
     if (index !== newIndex) {
       this.setState({ index: newIndex });
@@ -319,8 +330,8 @@ class ExploreMap extends React.Component {
     }
   }
 
-  onRegionChange(/* region */) {
-    // this.state.region.setValue(region);
+  onRegionChange(region) {
+
   }
 
   render() {
@@ -370,7 +381,7 @@ class ExploreMap extends React.Component {
           xMode="snap"
           snapSpacingX={SNAP_WIDTH}
           yBounds={[-1 * screen.height, 0]}
-          xBounds={[-screen.width * (markers.length - 1), 0]}
+          xBounds={[-(screen.width * (markers.length - 1)) + (markers.length * 25), 0]} // 20 is the margin between the sliders
           panY={panY}
           panX={panX}
           onStartShouldSetPanResponder={this.onStartShouldSetPanResponder}
@@ -394,8 +405,14 @@ class ExploreMap extends React.Component {
                 <Marker
                   key={i}
                   coordinate={marker.coordinate}
+                  title={marker.landmarkPoints + ' points'}
+                  onPress={(e)=>{e.stopPropagation(); this.markerHandler(i);}}
                 >
-                  <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />
+                  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative', padding: 3, width: 100, height: 70, borderRadius: 10}}>
+                    <Text style={{backgroundColor: '#fff', padding: 3, fontSize: 6}}>{marker.landmarkName}</Text>
+                    <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />
+                    <Text style={{fontSize: 12, marginTop: -32, fontWeight: '700', color: '#fff'}}>{i+1}</Text>
+                  </View>
                 </Marker>
               );
             })}
@@ -429,7 +446,7 @@ class ExploreMap extends React.Component {
                   <Section style={styles.exploreItemWrapper}>
                     <Image style={styles.exploreMapItemImage} source={{uri:marker.landmarkImage}}/>
                     <View style={styles.exploreMapTitle}>
-                      <Text style={styles.exploreMapTitleText}>{marker.landmarkName}</Text>
+                      <Text style={styles.exploreMapTitleText}>{i+1 + '. ' + marker.landmarkName}</Text>
                     </View>
                     <Text style={styles.exploreMapPoints}>{marker.landmarkPoints ? marker.landmarkPoints + ' points' : 'Loading...'}</Text>
 

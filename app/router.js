@@ -157,7 +157,7 @@ const AppStack = createStackNavigator(
         headerTintColor: '#1a4e6c',
         headerTitleStyle: { color: '#1a4e6c' },
       }),
-      headerMode: 'none'
+      headerMode: 'screen'
     },
     CheckedIn: {
       screen: CheckedIn,

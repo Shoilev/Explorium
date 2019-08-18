@@ -190,6 +190,16 @@ class PanController extends React.Component{
     let val = anim._offset + delta;
     console.log(5)
 
+    // Fix for slider
+    if(val > max)  {
+      val = max;
+      return;
+    }
+    if (val < min) {
+      val = min;
+      return;
+    }
+
     if (val > max) {
       switch (overshoot) {
         case 'spring':
@@ -210,6 +220,7 @@ class PanController extends React.Component{
           break;
       }
     }
+
     val = val - anim._offset;
     anim.setValue(val);
   }
