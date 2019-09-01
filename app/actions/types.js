@@ -1,7 +1,9 @@
 export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_changed';
+export const CONFIRM_PASSWORD_CHANGED = "confirm_password_changed";
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
+export const LOGIN_PASSWORD_FAIL = 'login_password_fail';
 export const LOGIN_USER = 'login_user';
 export const LOGOUT_USER = 'logout_user';
 export const LOGOUT_USER_SUCCESS = 'logout_user_success';
@@ -14,6 +16,7 @@ export const COUNTRIES_UPDATE = 'countries_update';
 export const CITIES_PER_COUNTRY_FETCH_SUCCESS = 'cities_per_country_fetch_success';
 export const LANDMARKS_FETCH_SUCCESS = 'landmarks_fetch_success';
 export const LANDMARKS_SHADOW_FETCH_SUCCESS = 'landmarks_shadow_fetch_success';
+export const LANDMARKS_ALL_FETCH_SUCCESS = 'landmarks_all_fetch_success';
 export const LANDMARKS_FETCH_FAIL = 'landmarks_fetch_fail';
 export const LANDMARKS_SHADOW_CITIES = 'landmarks_shadow-cities';
 export const FRIENDS_FETCH_SUCCESS = 'friends_fetch_success';

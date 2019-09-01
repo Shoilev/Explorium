@@ -25,7 +25,8 @@
     "LogOut": {
       "buttonTitle": "Log out"
     },
-    "errorMessage": "Please enter your email and password"
+    "errorMessage": "Please enter your email and password",
+    "errorPasswordMessage": "Password do not match"
   },
   "Screens": {
     "Explore": {

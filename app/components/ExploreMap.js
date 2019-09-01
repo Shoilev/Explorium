@@ -271,7 +271,7 @@ class ExploreMap extends React.Component {
     if (index !== newIndex) {
       this.setState({ index: newIndex });
       Animated.spring(panX, {
-        toValue: (newIndex * ITEM_WIDTH) * -1
+        toValue: ((newIndex * ITEM_WIDTH) + (10 * newIndex)) * -1
       }).start();
     }
   }
@@ -335,7 +335,7 @@ class ExploreMap extends React.Component {
   }
 
   render() {
-    const { landmarksData, error } = this.props.landmarks;
+    const { landmarksData, landmarksAllData, error } = this.props.landmarks;
     const { achievementsData } = this.props.achievements;
 
     if(error) {
@@ -347,7 +347,7 @@ class ExploreMap extends React.Component {
           </Button>
         </View>
       )
-    } else if(isEmpty(landmarksData)) {
+    } else if(isEmpty(landmarksAllData)) {
       return(
         <View style={styles.container}>
           <ActivityIndicator />
@@ -408,11 +408,18 @@ class ExploreMap extends React.Component {
                   title={marker.landmarkPoints + ' points'}
                   onPress={(e)=>{e.stopPropagation(); this.markerHandler(i);}}
                 >
-                  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative', padding: 3, width: 100, height: 70, borderRadius: 10}}>
-                    <Text style={{backgroundColor: '#fff', padding: 3, fontSize: 6}}>{marker.landmarkName}</Text>
-                    <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />
-                    <Text style={{fontSize: 12, marginTop: -32, fontWeight: '700', color: '#fff'}}>{i+1}</Text>
-                  </View>
+                  {marker.isShadowLandmark ? 
+                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative', padding: 3, width: 100, height: 70, borderRadius: 10}}>
+                      <Text style={{backgroundColor: '#000', padding: 3, fontSize: 6, color: '#fff'}}>{marker.landmarkName}</Text>
+                      <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full-shadow.png')} />
+                      <Text style={{fontSize: 12, marginTop: -32, fontWeight: '700', color: '#fff'}}>{i+1}</Text>
+                    </View> :
+                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative', padding: 3, width: 100, height: 70, borderRadius: 10}}>
+                      <Text style={{backgroundColor: '#fff', padding: 3, fontSize: 6}}>{marker.landmarkName}</Text>
+                      <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />
+                      <Text style={{fontSize: 12, marginTop: -32, fontWeight: '700', color: '#fff'}}>{i+1}</Text>
+                    </View>
+                  }
                 </Marker>
               );
             })}
@@ -446,7 +453,7 @@ class ExploreMap extends React.Component {
                   <Section style={styles.exploreItemWrapper}>
                     <Image style={styles.exploreMapItemImage} source={{uri:marker.landmarkImage}}/>
                     <View style={styles.exploreMapTitle}>
-                      <Text style={styles.exploreMapTitleText}>{i+1 + '. ' + marker.landmarkName}</Text>
+                      <Text style={[styles.exploreMapTitleText, marker.isShadowLandmark ? styles.exploreMapTexShadow : '']}>{i+1 + '. ' + marker.landmarkName}</Text>
                     </View>
                     <Text style={styles.exploreMapPoints}>{marker.landmarkPoints ? marker.landmarkPoints + ' points' : 'Loading...'}</Text>
 
@@ -461,7 +468,7 @@ class ExploreMap extends React.Component {
                     }
 
                   </Section>
-                  <Button onPress={this.goToLandmark.bind(this, marker, isAchieved)} buttonStyle={styles.exploreMapLandmarkButton}>
+                  <Button onPress={this.goToLandmark.bind(this, marker, isAchieved)} buttonStyle={[styles.exploreMapLandmarkButton, marker.isShadowLandmark ? styles.exploreMapLandmarkShadowButton : '']}>
                     <Text style={styles.exploreMapButtonTitle}>{'Explore'}</Text>
                   </Button>
                 </Animated.View>
@@ -533,6 +540,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(205, 209, 213, 0.8);',
     textAlign: 'center'
   },
+  exploreMapTexShadow: {
+    backgroundColor: 'rgba(0, 0, 0, 0.8);',
+    color: '#fff'
+  },
   exploreMapPoints: {
     position: 'absolute',
     bottom: 35,
@@ -584,6 +595,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingLeft: 12,
     paddingRight: 12
+  },
+  exploreMapLandmarkShadowButton: {
+    backgroundColor: '#000'
   },
   exploreMapButtonTitle: {
     color: '#ffffff'

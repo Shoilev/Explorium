@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ImageBackground, View, Text, Image, ActivityIndicator } from 'react-native';
+import { ImageBackground, View, Text, Image, Animated, ActivityIndicator } from 'react-native';
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import Video from 'react-native-video';
@@ -36,7 +36,9 @@ const requestAdditionalUserData = (nav) => {
 class Explore extends Component {
   state = {
     loader: false,
-    loadFallbackVideo: false
+    loadFallbackVideo: false,
+    animateButton: new Animated.Value(0),
+    animateText: new Animated.Value(0)
   }
 
   onButtonPress() {
@@ -71,6 +73,28 @@ class Explore extends Component {
 
   render() {
     const { userLocatioVideoUri, userLocation } = this.props.userGeoLocation;
+    let { animateButton, animateText } = this.state;
+
+    if(!isEmpty(userLocation)) {
+      Animated.timing(
+        animateButton,
+        {
+          toValue: 1,
+          duration: 800,
+        }
+      ).start();
+    }
+
+    if(this.state.loader) {
+      Animated.timing(
+        animateText,
+        {
+          toValue: 1,
+          duration: 800,
+        }
+      ).start();
+    }
+
       return (
         // quests screen based on your location
         <ImageBackground source={exploreumSrc} style={styles.backgroundImage}>
@@ -109,11 +133,25 @@ class Explore extends Component {
                { !this.state.loader ? <ActivityIndicator color="#ffffff" size="large" />: null }
             </View>
 
-              { this.state.loader ? <Image style={styles.exploreIntroLogo} source={exploreWhiteLogo} /> : null }
-              { this.state.loader ? <Text style={styles.exploreCountryText}>Explore Bulgaria</Text> : null }
-              { this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
+              <Animated.View style={[styles.exploreIntroLogo, {opacity: animateText}]}>
+                { this.state.loader ? <Image style={styles.exploreIntroLogo} source={exploreWhiteLogo} /> : null }
+              </Animated.View>
 
-              { !isEmpty(userLocation) ? <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button> : null }
+              <Animated.View style={{opacity: animateText}}>
+                { this.state.loader ? <Text style={styles.exploreCountryText}>Explore Bulgaria</Text> : null }
+              </Animated.View>
+
+              <Animated.View style={{opacity: animateText}}>
+                { this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
+              </Animated.View>
+
+              { !isEmpty(userLocation) ? 
+                <Animated.View
+                  style={{opacity: animateButton}}
+                >
+                  <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
+                </Animated.View>
+              : null }
             </View>
           </ImageBackground>
       );

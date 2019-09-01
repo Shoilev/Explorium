@@ -2,12 +2,15 @@ import {
   LANDMARKS_FETCH_SUCCESS,
   LANDMARKS_FETCH_FAIL,
   LANDMARKS_SHADOW_FETCH_SUCCESS,
-  LANDMARKS_SHADOW_CITIES
+  LANDMARKS_SHADOW_CITIES,
+  LANDMARKS_ALL_FETCH_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
   landmarksData: [],
   landmarksShadowData: [],
+  landmarksAllData: [],
+  activeLandmarksAll: [],
   activeLandmarks: [],
   activeLandmarksShadowData: [],
   shadowCities: false,
@@ -21,6 +24,9 @@ export default (state= INITIAL_STATE, action) => {
 
     case LANDMARKS_SHADOW_FETCH_SUCCESS:
       return { ...state, landmarksShadowData: action.payload, activeLandmarksShadowData: action.payload }
+
+    case LANDMARKS_ALL_FETCH_SUCCESS:
+      return { ...state, landmarksAllData: action.payload, activeLandmarksShadowData: action.payload }
 
     case LANDMARKS_FETCH_FAIL:
       return { ...state, error: action.payload };

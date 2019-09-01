@@ -5,7 +5,8 @@ import {
   LANDMARKS_FETCH_SUCCESS,
   LANDMARKS_FETCH_FAIL,
   LANDMARKS_SHADOW_CITIES,
-  LANDMARKS_SHADOW_FETCH_SUCCESS
+  LANDMARKS_SHADOW_FETCH_SUCCESS,
+  LANDMARKS_ALL_FETCH_SUCCESS
 } from './types';
 
 // SOFIA
@@ -19,6 +20,8 @@ export const getLandmarks = (country, city) => {
         console.log('firebase');
         const landmarks = [];
         const shadowLandmarks = [];
+        let allLandmarks = [];
+
         querySnapshot.forEach(doc => {
           console.log(doc)
           const dataDoc = doc.data();
@@ -41,9 +44,11 @@ export const getLandmarks = (country, city) => {
           } else {
             landmarks.push(landmarkData);
           }
-        })
+        });
 
-        if(isEmpty(landmarks)) {
+        allLandmarks = landmarks.concat(shadowLandmarks);
+
+        if(isEmpty(landmarks) || isEmpty(shadowLandmarks) || isEmpty(allLandmarks)) {
           dispatch({ type: LANDMARKS_FETCH_FAIL, payload: {errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
         }
 
@@ -55,9 +60,14 @@ export const getLandmarks = (country, city) => {
           return b.landmarkPoints - a.landmarkPoints;
         });
 
+        allLandmarks.sort(function(a, b) {
+          return b.landmarkPoints - a.landmarkPoints;
+        });
+
         dispatch({ type: LANDMARKS_FETCH_SUCCESS, payload: landmarks });
         dispatch({ type: LANDMARKS_SHADOW_FETCH_SUCCESS, payload: shadowLandmarks });
-        return landmarks;
+        dispatch({ type: LANDMARKS_ALL_FETCH_SUCCESS, payload: shadowLandmarks });
+        return allLandmarks;
       })
   }
 }

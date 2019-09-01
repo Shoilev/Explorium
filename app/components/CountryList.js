@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, ImageBackground, View, TouchableNativeFeedback, ActivityIndicator } from 'react-native';
+import { Text, ImageBackground, View, TouchableNativeFeedback, Animated, ActivityIndicator } from 'react-native';
 import { Section } from './common';
 import { createStyles } from '../assets/styles';
 import { CountriesStyles } from '../assets/styles/countries';
@@ -9,11 +9,26 @@ import { colors } from '../assets/styles/base';
 const styles = createStyles(CountriesStyles);
 
 export default class CountryList extends Component {
+  state = {
+    animatedPoins: new Animated.Value(0)
+  }
+
   render() {
     const { countryImage, country, countryIndex, countryPoints, countryOnline, appNavigation } = this.props;
     const color = countryColors[countryIndex % countryColors.length];
     const backgroundColor = color + 'Background';
     const backgroundWithOpacityColor = color + 'BackgroundOpacity';
+    let { animatedPoins } = this.state;
+
+    if(countryPoints || countryPoints === 0) {
+      Animated.timing(
+        animatedPoins,
+        {
+          toValue: 1,
+          duration: 1000,
+        }
+      ).start();
+    }
 
     return (
       <Section style={[styles.countryListCard, !countryOnline ? styles.countryListCardOffline : null]}>
@@ -23,8 +38,10 @@ export default class CountryList extends Component {
           <View style={[styles.overlay, styles[backgroundWithOpacityColor]]}>
             <Text style={styles.countryListTitle}>{country.toUpperCase()}</Text>
             {!countryOnline ? <Text style={styles.countryListOfflineLabel}>{'(Country not available)'}</Text> : null }
-            {countryPoints || countryPoints === 0 ? 
-              <Text style={[styles.countryListPoints, styles[backgroundColor]]}>{'Up to ' + countryPoints + ' pts'}</Text>
+            {countryPoints || countryPoints === 0 ?
+              <Animated.View style={{opacity: animatedPoins}}>
+                <Text style={[styles.countryListPoints, styles[backgroundColor]]}>{'Up to ' + countryPoints + ' pts'}</Text>
+              </Animated.View>
               :
               <ActivityIndicator color="#ffffff" />
             }

@@ -1,8 +1,10 @@
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
+  CONFIRM_PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
+  LOGIN_PASSWORD_FAIL,
   LOGIN_USER,
   LOGOUT_USER_FAIL,
   LOGOUT_USER_SUCCESS,
@@ -15,6 +17,7 @@ import {
 const INITIAL_STATE = {
   email: '',
   password: '',
+  confirmPassword: '',
   user: null,
   errorMessage: null,
   loading: false
@@ -26,12 +29,16 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, email: action.payload };
     case PASSWORD_CHANGED:
       return { ...state, password: action.payload };
+    case CONFIRM_PASSWORD_CHANGED:
+      return { ...state, confirmPassword: action.payload };
     case LOGIN_USER:
       return { ...state, loading: true, errorMessage: null };
     case LOGIN_USER_SUCCESS:
       return { ...state, ...INITIAL_STATE, user: action.payload };
     case LOGIN_USER_FAIL:
-      return { ...state, errorMessage: action.payload, password: '', loading: false };
+      return { ...state, errorMessage: action.payload, password: '', confirmPassword: '', loading: false };
+    case LOGIN_PASSWORD_FAIL:
+      return { ...state, errorMessage: action.payload, password: '', confirmPassword: '', loading: false };
     case LOGOUT_USER:
       return { ...state, loading: true, errorMessage: null };
     case LOGOUT_USER_SUCCESS:

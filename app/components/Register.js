@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TextInput, View, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { emailChanged, passwordChanged, signUpUser, emptyUserOrPassword, FBLoginOrRegister } from '../actions';
+import { emailChanged, passwordChanged, confirmPasswordChanged, signUpUser, emptyUserOrPassword, passwordNotMatch, FBLoginOrRegister } from '../actions';
 import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
 import { Auth } from '../assets/styles/auth';
@@ -14,9 +14,14 @@ const registerBackgroundSrc = images.registerBackground;
 
 class Register extends React.Component {
   onButtonPress() {
-    const { email, password } = this.props;
-    if(!email || !password) {
+    const { email, password, confirmPassword } = this.props;
+    if(!email || !password || !confirmPassword) {
       this.props.emptyUserOrPassword();
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      this.props.passwordNotMatch();
       return;
     }
 
@@ -34,6 +39,10 @@ class Register extends React.Component {
 
   onPasswordChange(text) {
     this.props.passwordChanged(text);
+  }
+
+  onConfirmPasswordChange(text) {
+    this.props.confirmPasswordChanged(text);
   }
 
   render() {
@@ -72,6 +81,19 @@ class Register extends React.Component {
             />
           </View>
 
+          <View style={styles.loginInput}>
+            <Icon style={styles.lockIcon} name="md-lock"/>
+            <TextInput
+              secureTextEntry
+              placeholder="Confirm Password"
+              placeholderTextColor="#ffffff"
+              autoCapitalize="none"
+              style={styles.textInput}
+              onChangeText={this.onConfirmPasswordChange.bind(this)}
+              value={this.props.confirmPassword}
+            />
+          </View>
+
           <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
             {Authentication.SignIn.buttonTittle}
           </Button>
@@ -90,15 +112,17 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => {
-  const { email, password, errorMessage, loading } = auth;
+  const { email, password, confirmPassword, errorMessage, loading } = auth;
 
-  return { email, password, errorMessage, loading };
+  return { email, password, confirmPassword, errorMessage, loading };
 };
 
 export default connect(mapStateToProps, {
   emailChanged,
   passwordChanged,
+  confirmPasswordChanged,
   signUpUser,
   FBLoginOrRegister,
-  emptyUserOrPassword
+  emptyUserOrPassword,
+  passwordNotMatch
 })(Register);

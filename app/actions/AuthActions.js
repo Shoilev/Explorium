@@ -4,8 +4,10 @@ import { Authentication } from '../resources/labels.json';
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
+  CONFIRM_PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
+  LOGIN_PASSWORD_FAIL,
   LOGIN_USER,
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
@@ -25,6 +27,13 @@ export const emailChanged = (text) => {
 export const passwordChanged = (text) => {
   return {
     type: PASSWORD_CHANGED,
+    payload: text
+  };
+};
+
+export const confirmPasswordChanged = (text) => {
+  return {
+    type: CONFIRM_PASSWORD_CHANGED,
     payload: text
   };
 };
@@ -113,6 +122,13 @@ export const emptyUserOrPassword = () => {
   return {
     type: LOGIN_USER_FAIL,
     payload: Authentication.errorMessage
+  }
+}
+
+export const passwordNotMatch = () => {
+  return {
+    type: LOGIN_PASSWORD_FAIL,
+    payload: Authentication.errorPasswordMessage
   }
 }
 

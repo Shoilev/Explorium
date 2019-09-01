@@ -59,9 +59,9 @@ class Friends extends Component {
           keyExtractor={(friends, index)=> 'friendList' + index}
           ListHeaderComponent={<HeaderSearch title={"Friends"} data={friendsData} />}
           stickyHeaderIndices={[0]}
-          initialNumToRender={100}
-          updateCellsBatchingPeriod={600}
-          maxToRenderPerBatch = {(friendsData.length - 100) / 2}
+          initialNumToRender={friendsData.length}
+          // updateCellsBatchingPeriod={100}
+          // maxToRenderPerBatch = {friendsData.length}
           windowSize={Dimensions.get('window').height*2}
         />
         <TouchableOpacity activeOpacity={0.5} style={styles.friendsInviteBtn} onPress={()=>this.globalShare()}>
