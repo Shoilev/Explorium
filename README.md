@@ -12,7 +12,8 @@ react-native run-android
 for physical debug use:
 adb devices
 adb shell input keyevent 82
+adb uninstall "com.exploriumapp"
 
-cd android && /gradlew build --warning-mode=all --stacktrace
+cd android && ./gradlew build --warning-mode=all --stacktrace
 cd android && ./gradlew clean
 cd android && ./gradlew bundleRelease

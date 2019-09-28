@@ -10,7 +10,6 @@ import com.facebook.appevents.AppEventsLogger;
 import se.bonniernews.rn3d.RN3DPackage;
 import com.rnfs.RNFSPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import com.rnziparchive.RNZipArchivePackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
@@ -50,7 +49,6 @@ public class MainApplication extends Application implements ReactApplication {
           new RN3DPackage(),
           new RNFSPackage(),
           new RNFetchBlobPackage(),
-          new RNZipArchivePackage(),
           new RNFirebasePackage(),
           new RNFirebaseAuthPackage(),
           new RNFirebaseFirestorePackage(),

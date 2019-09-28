@@ -31,6 +31,17 @@ allprojects {
             url "$rootDir/../node_modules/react-native/android"
         }
     }
+    afterEvaluate {
+        if (getPlugins().hasPlugin('android') ||
+            getPlugins().hasPlugin('android-library')) {
+
+            println name // for debugging
+
+            configure(android.lintOptions) {
+                 abortOnError false
+            }
+        }
+     }
 }
 
 
