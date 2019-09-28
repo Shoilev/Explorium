@@ -6,3 +6,4 @@ export * from './LandmarksActions';
 export * from './FriendsActions';
 export * from './GeoLocationActions';
 export * from './AchievementsActions';
+export * from './MessagesAlertAction';

@@ -28,6 +28,8 @@ export const GEO_LOCATION_COUNTRY_CITY_FAIL = 'geo_location_country_city_fail';
 export const GEO_LOCATION_VIDEO_URI = 'geo_location_video_uri';
 export const ACHIEVEMENTS_FETCH_SUCCESS = 'achievements_fetch_success';
 export const ACHIEVEMENTS_FETCH_FAIL = 'achievements_fetch_fail';
+export const MESSAGES_FETCH = 'messages_fetch';
+export const MESSAGES_FETCH_FAIL = 'messages_fech_fail';
 
 export const GET_USER = 'get_user';
 export const LOCAL_CITY_CHANGED = 'local_city_changed';

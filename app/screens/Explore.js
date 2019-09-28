@@ -3,7 +3,7 @@ import { ImageBackground, View, Text, Image, Animated, ActivityIndicator } from 
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import Video from 'react-native-video';
-import { requestLocationPermission } from '../actions';
+import { requestLocationPermission, getMessageAlert } from '../actions';
 import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
 import { ExploreStyle } from '../assets/styles/explore';
@@ -58,6 +58,7 @@ class Explore extends Component {
     });
 
     this.props.requestLocationPermission(true);
+    this.props.getMessageAlert();
   }
 
   componentDidMount() {
@@ -73,6 +74,7 @@ class Explore extends Component {
 
   render() {
     const { userLocatioVideoUri, userLocation } = this.props.userGeoLocation;
+    const { message, link } = this.props.messagesAlert;
     let { animateButton, animateText } = this.state;
 
     if(!isEmpty(userLocation)) {
@@ -133,33 +135,45 @@ class Explore extends Component {
                { !this.state.loader ? <ActivityIndicator color="#ffffff" size="large" />: null }
             </View>
 
-              <Animated.View style={[styles.exploreIntroLogo, {opacity: animateText}]}>
-                { this.state.loader ? <Image style={styles.exploreIntroLogo} source={exploreWhiteLogo} /> : null }
-              </Animated.View>
+            <Animated.View style={[styles.exploreIntroLogo, {opacity: animateText}]}>
+              { this.state.loader ? <Image style={styles.exploreIntroLogo} source={exploreWhiteLogo} /> : null }
+            </Animated.View>
 
-              <Animated.View style={{opacity: animateText}}>
-                { this.state.loader ? <Text style={styles.exploreCountryText}>Explore Bulgaria</Text> : null }
-              </Animated.View>
+            <Animated.View style={{opacity: animateText}}>
+              { this.state.loader ? <Text style={styles.exploreCountryText}>Explore Bulgaria</Text> : null }
+            </Animated.View>
 
-              <Animated.View style={{opacity: animateText}}>
-                { this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
-              </Animated.View>
+            <Animated.View style={{opacity: animateText}}>
+              { this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
+            </Animated.View>
 
-              { !isEmpty(userLocation) ? 
-                <Animated.View
-                  style={{opacity: animateButton}}
-                >
-                  <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
-                </Animated.View>
-              : null }
-            </View>
-          </ImageBackground>
+            { !isEmpty(userLocation) ? 
+              <Animated.View
+                style={{opacity: animateButton}}
+              >
+                <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
+              </Animated.View>
+            : null }
+
+            {message ? 
+              <Animated.View style={[{opacity: animateText}, styles.exploreMessageAlertWrap]}>
+                <View style={styles.exploreMessageAlert}>
+                  <Text style={styles.exploreMessageText}>{message}</Text>
+                  {link ? 
+                    <Button textStyle={styles.exploreMessageTextBtn} buttonStyle={styles.exploreMessageBtn} onPress={()=>{this.props.navigation.navigate(link)}}>Check here</Button>
+                  : null
+                  }
+                </View>
+              </Animated.View>
+            : null }
+          </View>
+        </ImageBackground>
       );
   }
 }
 
-const mapStateToProps = ({userGeoLocation}) => {
-  return { userGeoLocation };
+const mapStateToProps = ({userGeoLocation, messagesAlert}) => {
+  return { userGeoLocation, messagesAlert };
 };
 
-export default connect(mapStateToProps, { requestLocationPermission })(Explore);
+export default connect(mapStateToProps, { requestLocationPermission, getMessageAlert })(Explore);

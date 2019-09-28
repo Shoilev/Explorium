@@ -124,5 +124,40 @@ export const ExploreStyle = {
     width: 100,
     height: 57,
     opacity: 0.5
+  },
+  exploreMessageAlertWrap: {
+    position: 'absolute',
+    left: '10%',
+    bottom: 30,
+    width: '100%'
+  },
+  exploreMessageAlert: {
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    borderColor: 'rgba(255,255,255,0.8)',
+    borderRadius: 10,
+    padding: spacing.medium,
+    borderWidth: 2,
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: spacing.medium,
+  },
+  exploreMessageTextBtn: {
+    color: colors.black,
+    padding: 0,
+    margin: 0
+  },
+  exploreMessageBtn: {
+    width: '50%',
+    backgroundColor: colors.white,
+    paddingBottom: 3,
+    paddingTop: 3,
+    paddingRight: 5,
+    paddingLeft: 5,
+    marginBottom: 0,
+    marginTop: 3
+  },
+  exploreMessageText: {
+    color: colors.white
   }
 }
