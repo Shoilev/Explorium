@@ -173,6 +173,7 @@ dependencies {
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-android-location-services-dialog-box')
     implementation project(':react-native-video')
+    implementation project(':react-native-splash-screen')
 }
 
 // Run this once to be able to run the application with BUCK
