@@ -3,6 +3,7 @@ import { ImageBackground, View, Text, Image, Animated, ActivityIndicator } from 
 import firebase from 'react-native-firebase';
 import { connect } from 'react-redux';
 import Video from 'react-native-video';
+import SplashScreen from 'react-native-splash-screen';
 import { requestLocationPermission, getMessageAlert } from '../actions';
 import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
@@ -62,6 +63,7 @@ class Explore extends Component {
   }
 
   componentDidMount() {
+    SplashScreen.hide();
   }
 
   isVideoLoaded() {

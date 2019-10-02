@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, ImageBackground, Image } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import SplashScreen from 'react-native-splash-screen';
 import { emailChanged, passwordChanged, loginUser, emptyUserOrPassword, FBLoginOrRegister } from '../actions';
 import { Section, Button } from './common';
 import { createStyles } from '../assets/styles';
@@ -36,6 +37,10 @@ class Login extends Component {
 
   onPasswordChange(text) {
     this.props.passwordChanged(text);
+  }
+
+  componentDidMount() {
+    SplashScreen.hide();
   }
 
   render() {
