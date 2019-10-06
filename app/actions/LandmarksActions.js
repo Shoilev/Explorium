@@ -1,5 +1,7 @@
 import firebase from 'react-native-firebase';
 import {getLocationCountryAndCity}  from './GeoLocationActions';
+import {getCitiesPerCountry}  from './CitiesActions';
+import {getCountries}  from './CountriesActions';
 import { checkHaversineDistance, isEmpty } from '../helpers';
 import {
   LANDMARKS_FETCH_SUCCESS,
@@ -13,7 +15,7 @@ import {
 const LATITUDE = 42.684617;
 const LONGITUDE = 23.318993;
 
-export const getLandmarks = (country, city) => {
+export const getLandmarks = (country, city, cityPoints) => {
   return (dispatch) => {
     return firebase.firestore().collection('countries').doc(country).collection('cities').doc(city).collection('landmarks')
     .get().then(querySnapshot => {
@@ -31,12 +33,13 @@ export const getLandmarks = (country, city) => {
             landmarkName: dataDoc.name,
             landmarkImage: dataDoc.image,
             landmarkDescription: dataDoc.description,
-            landmarkPoints: dataDoc.points,
+            landmarkPoints: isShadowLandmark ? cityPoints / querySnapshot.size * 2 : cityPoints / querySnapshot.size,
             isShadowLandmark,
             coordinate: {
               latitude: dataDoc.latitude || LATITUDE,
               longitude: dataDoc.longitude || LONGITUDE
-            }
+            },
+            distance: dataDoc.distance || false
           };
 
           if(isShadowLandmark) {
@@ -75,18 +78,28 @@ export const getLandmarks = (country, city) => {
 export const getLandmarksByLocation = ( lat, long ) => {
   return (dispatch) => {
     return dispatch(getLocationCountryAndCity(lat, long)).then((result)=>{
-      return dispatch(getLandmarks(result.userCountry, result.userCity)).then((landmarkResult)=>{
-        landmarkResult.sort((a,b) => {
-          let distanceA = checkHaversineDistance({latitude: lat, longitude: long}, a.coordinate, true);
-          let distanceB = checkHaversineDistance({latitude: lat, longitude: long}, b.coordinate, true);
-          
-          if (distanceA < distanceB) {return -1;}
-          if (distanceA > distanceB) {return 1;}
-          return 0;
-        });
+      return firebase.firestore().collection('countries').doc(result.userCountry)
+      .get().then(doc => {
+        let countryRate = doc.data().rate || 1;
 
-        return landmarkResult;
-      });
+        return firebase.firestore().collection('countries').doc(result.userCountry).collection('cities').doc(result.userCity)
+        .get().then(doc => {
+          let cityPoints = doc.data().points * countryRate || 0;
+
+          return dispatch(getLandmarks(result.userCountry, result.userCity, cityPoints)).then((landmarkResult)=>{
+            landmarkResult.sort((a,b) => {
+              let distanceA = checkHaversineDistance({latitude: lat, longitude: long}, a.coordinate, false, true);
+              let distanceB = checkHaversineDistance({latitude: lat, longitude: long}, b.coordinate, false, true);
+              
+              if (distanceA < distanceB) {return -1;}
+              if (distanceA > distanceB) {return 1;}
+              return 0;
+            });
+  
+            return landmarkResult;
+          });
+        })
+      })
     })
   }
 }

@@ -23,7 +23,7 @@ class BaseMap extends Component {
 
   checkIn(landmark, userLocation) {
     const { achievementsData } = this.props.achievements;
-    const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate);
+    const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
 
     const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
     // const isAchieved = false;
@@ -130,7 +130,7 @@ class BaseMap extends Component {
             <Text style={styles.exploreDirectionBtnText}>Get Direction</Text>
           </TouchableOpacity>
           <Section style={styles.exploreButtonSection}>
-            { checkHaversineDistance(userLocation, landmarkData.coordinate)
+            { checkHaversineDistance(userLocation, landmarkData.coordinate, landmarkData.distance)
             ?
               <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation)} style={styles.exploreCheckInBtn}>
                 <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />

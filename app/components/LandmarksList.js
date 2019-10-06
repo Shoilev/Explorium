@@ -14,7 +14,8 @@ class LandmarksList extends Component {
   componentWillMount() {
     const country = this.props.navigation.getParam('country', '');
     const city = this.props.navigation.getParam('city', '');
-    this.props.getLandmarks(country, city);
+    const cityPoints = this.props.navigation.getParam('cityPoints', '0');
+    this.props.getLandmarks(country, city, cityPoints);
     this.props.getAchievementsPerUser();
   }
 

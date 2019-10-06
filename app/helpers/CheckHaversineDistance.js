@@ -1,4 +1,4 @@
-export const checkHaversineDistance = (coords1, coords2, compareDirection = false) => {
+export const checkHaversineDistance = (coords1, coords2, distance = false, compareDirection = false) => {
   function toRad(x) {
     return x * Math.PI / 180;
   }
@@ -25,6 +25,8 @@ export const checkHaversineDistance = (coords1, coords2, compareDirection = fals
     return d;
   }
 
-  return d < 0.05; // 50 meters
+  let finalDistance = distance > 0 ? distance/1000 : 0.05;
+
+  return d < finalDistance; // 50 meters is default
   // return d < 10000;
 }

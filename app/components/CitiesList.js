@@ -15,7 +15,8 @@ const itemWidth = sliderWidth / 1.3;
 class CitiesList extends Component {
   componentWillMount() {
     const country = this.props.navigation.getParam('country', '');
-    this.props.getCitiesPerCountry(country);
+    const countryRate = this.props.navigation.getParam('countryRate', '');
+    this.props.getCitiesPerCountry(country, countryRate);
   }
 
   renderItem (item, index, navigation) {
@@ -31,7 +32,7 @@ class CitiesList extends Component {
             <Text style={styles.citiesDescriptions}>{ item.cityShortDescription }</Text>
           </ScrollView>
 
-          <Button textStyle={styles.citiesTextBtn} onPress={()=>navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName})} buttonStyle={styles.citiesBtnStyle}>
+          <Button textStyle={styles.citiesTextBtn} onPress={()=>navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName, cityPoints: item.cityPoints})} buttonStyle={styles.citiesBtnStyle}>
             {App.explore}
           </Button>
         </View>
