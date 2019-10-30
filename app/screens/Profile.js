@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { logOutUser, getUser, getAchievementsPerUser } from '../actions';
+import { GetNextLevelXP } from '../controllers/LevelingController';
 import { connect } from 'react-redux';
 import { createStyles } from '../assets/styles';
 import { ProfileStyle } from '../assets/styles/profile';
@@ -22,6 +23,12 @@ class Profile extends Component {
 
   render() {
     const { achievementsData } = this.props.achievements;
+    console.log(achievementsData.experience)
+    let percent = (achievementsData.experience || 0) * 100 / GetNextLevelXP(achievementsData.level + 1);
+    console.log(percent);
+    let progressValue = {
+      width: percent + '%'
+    }
 
     return (
       <View style={[styles.container, styles.profileWrapper]}>
@@ -37,10 +44,19 @@ class Profile extends Component {
           Hello {"\n"} {this.props.user.userName || achievementsData.userNickname || this.props.user.userEmail}!
         </Text>
 
+        <View sytle={styles.profileXPWrapper}>
+          <View style={styles.profileXPStatusBar}>
+            <View style={[styles.profileXPProgress, progressValue]}></View>
+            <View style={styles.profileXPTarget}>
+              <Text style={styles.profileXPTargetText}>{achievementsData.experience || 0}/{GetNextLevelXP(achievementsData.level + 1)}</Text>
+            </View>
+          </View>
+        </View>
+
         <View style={styles.profileScore}>
           <Image style={styles.profileIcon} source={images.profileLevel} />
           <Text>Level:</Text>
-          <Text style={styles.profileRightScore}>{achievementsData.level}</Text>
+          <Text style={styles.profileRightScore}>{achievementsData.level + 1}</Text>
         </View>
         <View style={styles.profileScore}>
           <Image style={styles.profileIcon} source={images.profilePoints} />

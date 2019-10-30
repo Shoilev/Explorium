@@ -9,7 +9,7 @@ import {
 const INITIAL_STATE = {
   userLocation: {},
   userCountryAndCity: {},
-  userLocatioVideoUri: ''
+  userLocatioVideoUri: {}
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -163,19 +163,15 @@ class PanController extends React.Component{
 
         if (!cancel && horizontal && (!lockDirection || dir === 'x')) {
           let [xMin, xMax] = xBounds;
-          console.log(1)
           if (this.props.onReleaseX) {
-            console.log(2)
             cancel = false === this.props.onReleaseX({ vx, vy, dx, dy });
           }
           !cancel && this.handleResponderRelease(panX, xMin, xMax, vx, overshootX, xMode, snapSpacingX);
         }
 
         if (!cancel && vertical && (!lockDirection || dir === 'y')) {
-          console.log(3)
           let [yMin, yMax] = yBounds;
           if (this.props.onReleaseY) {
-            console.log(4)
             cancel = false === this.props.onReleaseY({ vx, vy, dx, dy });
           }
           !cancel && this.handleResponderRelease(panY, yMin, yMax, vy, overshootY, yMode, snapSpacingY);
@@ -188,7 +184,6 @@ class PanController extends React.Component{
 
   handleResponderMove(anim, delta, min, max, overshoot) {
     let val = anim._offset + delta;
-    console.log(5)
 
     // Fix for slider
     if(val > max)  {
@@ -228,15 +223,12 @@ class PanController extends React.Component{
   handleResponderRelease(anim, min, max, velocity, overshoot, mode, snapSpacing) {
     anim.flattenOffset();
 
-    console.log(6)
     if (anim._value < min) {
       if (this.props.onOvershoot) {
-        console.log(7)
         this.props.onOvershoot(); // TODO: what args should we pass to this
       }
       switch (overshoot) {
         case 'spring':
-        console.log(8)
           Animated.spring(anim, {
             ...this.props.overshootSpringConfig,
             toValue: min,
@@ -249,12 +241,10 @@ class PanController extends React.Component{
       }
     } else if (anim._value > max) {
       if (this.props.onOvershoot) {
-        console.log(9)
         this.props.onOvershoot(); // TODO: what args should we pass to this
       }
       switch (overshoot) {
         case 'spring':
-        console.log(10)
           Animated.spring(anim, {
             ...this.props.overshootSpringConfig,
             toValue: max,
@@ -268,17 +258,14 @@ class PanController extends React.Component{
     } else {
       switch (mode) {
         case 'snap':
-        console.log(11)
           this.handleSnappedScroll(anim, min, max, velocity, snapSpacing, overshoot);
           break;
 
         case 'decay':
-        console.log(12)
           this.handleMomentumScroll(anim, min, max, velocity, overshoot);
           break;
 
         case 'spring-origin':
-        console.log(13)
           Animated.spring(anim, {
             ...this.props.springOriginConfig,
             toValue: 0,
@@ -358,7 +345,6 @@ class PanController extends React.Component{
 
     this._listener = anim.addListener(({ value }) => {
       if (value > bounds[0] && value < bounds[1]) {
-        console.log('test')
         Animated.spring(anim, {
           toValue: endX,
           velocity: endV,

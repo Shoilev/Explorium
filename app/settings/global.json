@@ -1,4 +1,8 @@
 {
   "GOOGLE_MAPS_APIKEY": "AIzaSyAm4PPzAHVY94pF7D2H_XuTJSjiQYnsAdo",
-  "countryColors": ["orange", "yellow", "lightBlue", "darkBlue", "purple"]
+  "countryColors": ["orange", "yellow", "lightBlue", "darkBlue", "purple"],
+  "Leveling": {
+    "baseXP": 100,
+    "exponent": 1.1
+  }
 }

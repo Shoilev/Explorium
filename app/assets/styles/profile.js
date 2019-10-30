@@ -35,7 +35,7 @@ export const ProfileStyle = {
   },
   profileTitle: {
     color: colors.primeryBlue,
-    marginBottom: spacing.extraLarge * 2
+    marginBottom: spacing.extraLarge
   },
   profileIcon: {
     width: 25,
@@ -56,5 +56,36 @@ export const ProfileStyle = {
     position: 'absolute',
     right: 20,
     fontWeight: '700'
+  },
+  profileXPWrapper: {
+    flex: 1,
+    width: '100%',
+    position: 'relative'
+  },
+  profileXPStatusBar: {
+    width: 250,
+    height: 15,
+    flexDirection: 'row',
+    backgroundColor: colors.orange,
+    borderRadius: 10,
+    marginBottom: spacing.extraLarge * 2,
+  },
+  profileXPProgress: {
+    backgroundColor: colors.yellow,
+    borderRadius: 10
+  },
+  profileXPTarget: {
+    position: 'absolute',
+    right: 0,
+    top: 10
+  },
+  profileXPTarget: {
+    position: 'absolute',
+    top: -2,
+    width: '100%',
+  },
+  profileXPTargetText: {
+    textAlign: 'center',
+    color: colors.white
   }
 }

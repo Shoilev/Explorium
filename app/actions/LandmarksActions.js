@@ -33,7 +33,7 @@ export const getLandmarks = (country, city, cityPoints) => {
             landmarkName: dataDoc.name,
             landmarkImage: dataDoc.image,
             landmarkDescription: dataDoc.description,
-            landmarkPoints: isShadowLandmark ? cityPoints / querySnapshot.size * 2 : cityPoints / querySnapshot.size,
+            landmarkPoints: isShadowLandmark ? Math.floor(cityPoints / querySnapshot.size * 2) : Math.floor(cityPoints / querySnapshot.size),
             isShadowLandmark,
             coordinate: {
               latitude: dataDoc.latitude || LATITUDE,
@@ -51,7 +51,10 @@ export const getLandmarks = (country, city, cityPoints) => {
 
         allLandmarks = landmarks.concat(shadowLandmarks);
 
-        if(isEmpty(landmarks) || isEmpty(shadowLandmarks) || isEmpty(allLandmarks)) {
+        console.log('===========')
+        console.log(landmarks)
+        console.log(allLandmarks)
+        if(isEmpty(landmarks) || isEmpty(allLandmarks)) {
           dispatch({ type: LANDMARKS_FETCH_FAIL, payload: {errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
         }
 
@@ -80,8 +83,11 @@ export const getLandmarksByLocation = ( lat, long ) => {
     return dispatch(getLocationCountryAndCity(lat, long)).then((result)=>{
       return firebase.firestore().collection('countries').doc(result.userCountry)
       .get().then(doc => {
+        if(!doc.data() || !doc.data().isOnline) {
+          return dispatch({ type: LANDMARKS_FETCH_FAIL, payload: {errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
+        }
         let countryRate = doc.data().rate || 1;
-
+        
         return firebase.firestore().collection('countries').doc(result.userCountry).collection('cities').doc(result.userCity)
         .get().then(doc => {
           let cityPoints = doc.data().points * countryRate || 0;

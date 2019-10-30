@@ -10,7 +10,8 @@ export const LandmarksStyles = {
   landmarksShadowCities: {
     flex: 1,
     justifyContent: 'flex-end',
-    flexDirection:'row'
+    flexDirection:'row',
+    marginTop: spacing.extraLarge
   },
   landmarksShdowCitiesInner: {
     width: 170,
@@ -21,7 +22,6 @@ export const LandmarksStyles = {
     backgroundColor: colors.primeryBlue,
     borderRadius: 50,
     marginBottom: spacing.large,
-    marginTop: spacing.large
   },
   shadowCitiesLabel: {
     color: colors.white
@@ -47,7 +47,8 @@ export const LandmarksStyles = {
     alignItems:'center',
     justifyContent:'center',
     elevation: 6,
-    position: 'relative'
+    position: 'relative',
+    backgroundColor: colors.yellow
   },
   landmarksPointsWrap: {
     flex:1,
@@ -76,6 +77,15 @@ export const LandmarksStyles = {
     marginTop: spacing.medium,
     fontSize: fonts.baseSize * 3
   },
+  landmarksDescription: {
+    textAlign: 'center',
+    color: colors.primeryBlue,
+    marginTop: spacing.medium,
+    fontSize: fonts.baseSize * 3
+  },
+  landmarkScrollDescription: {
+    height: '15%',
+  },
   landmarksDetails: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -103,7 +113,8 @@ export const LandmarksStyles = {
     overflow: 'hidden',
     alignItems:'center',
     justifyContent:'center',
-    elevation: 6
+    backgroundColor: colors.yellow,
+    elevation: 6,
   },
   landmarkDetailsPoints: {
     textAlign: 'center',

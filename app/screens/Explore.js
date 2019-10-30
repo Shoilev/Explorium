@@ -66,8 +66,8 @@ class Explore extends Component {
     SplashScreen.hide();
   }
 
-  isVideoLoaded() {
-    this.setState({loader: true })
+  handleScreenInformation() {
+    this.setState({loader: true});
   }
 
   loadFallbackVideo() {
@@ -105,13 +105,13 @@ class Explore extends Component {
           <View style={styles.container}>
 
             { !isEmpty(userLocatioVideoUri) && !this.state.loadFallbackVideo ?
-              <Video source={ {uri:userLocatioVideoUri} }
+              <Video source={ {uri:userLocatioVideoUri.videoURI} }
               ref={(ref) => {
                 this.player = ref
               }}
               muted={true}
               repeat={true}
-              onReadyForDisplay={this.isVideoLoaded.bind(this)}
+              onLoadStart={this.handleScreenInformation.bind(this)}
               onError={this.loadFallbackVideo.bind(this)}
               resizeMode={"cover"}
               style={styles.exploreBackgroundVideo} />
@@ -125,7 +125,6 @@ class Explore extends Component {
               }}
               muted={true}
               repeat={true}
-              onReadyForDisplay={this.isVideoLoaded.bind(this)}
               onError={this.loadFallbackVideo.bind(this)}
               resizeMode={"cover"}
               style={styles.exploreBackgroundVideo} /> 
@@ -142,7 +141,7 @@ class Explore extends Component {
             </Animated.View>
 
             <Animated.View style={{opacity: animateText}}>
-              { this.state.loader ? <Text style={styles.exploreCountryText}>Explore Bulgaria</Text> : null }
+              { this.state.loader ? <Text style={styles.exploreCountryText}>{'Explore ' + userLocatioVideoUri.videoCountry}</Text> : null }
             </Animated.View>
 
             <Animated.View style={{opacity: animateText}}>

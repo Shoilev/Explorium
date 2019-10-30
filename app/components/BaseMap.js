@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import { requestLocationPermission, getUser, getAchievementsPerUser } from '../actions';
 import { isUserAchieved, checkHaversineDistance } from '../helpers';
+import { CheckInLeveling } from '../controllers/LevelingController';
 import { createStyles } from '../assets/styles';
 import { ExploreStyle } from '../assets/styles/explore';
 import { images } from '../assets/images';
@@ -26,17 +27,12 @@ class BaseMap extends Component {
     const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
 
     const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
-    // const isAchieved = false;
 
     if(isNearBy && !isAchieved) {
       // assign points to the customer
       const userUID = this.props.userUID;
 
-      const db = firebase.firestore().collection('users').doc(userUID);
-      db.update({
-        achievements: firebase.firestore.FieldValue.arrayUnion(landmark),
-        allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints)
-      });
+      CheckInLeveling(landmark, userUID, achievementsData);
 
       this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark})
     } else {
@@ -111,6 +107,7 @@ class BaseMap extends Component {
             </Marker> */}
 
             <Marker
+              tracksViewChanges={false}
               coordinate={landmarkDirection}
             >
               <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />

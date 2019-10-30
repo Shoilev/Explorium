@@ -67,12 +67,14 @@ class LandmarksList extends Component {
           keyExtractor={(item, index)=> 'landmarkKey' + index}
           ListHeaderComponent={
             <View style={styles.landmarksShadowCities}>
-              <View style={styles.landmarksShdowCitiesInner}>
-                <Text style={styles.shadowCitiesLabel}>{Screens.Countries.Landmarks.shadowCities}</Text>
-                <Switch
-                  value={ shadowCities }
-                  onValueChange={ this.handleShadowCities.bind(this) } />
-              </View>
+              {!isEmpty(landmarksShadowData) ?
+                <View style={styles.landmarksShdowCitiesInner}>
+                  <Text style={styles.shadowCitiesLabel}>{Screens.Countries.Landmarks.shadowCities}</Text>
+                  <Switch
+                    value={ shadowCities }
+                    onValueChange={ this.handleShadowCities.bind(this) } />
+                </View>
+              :null}
             </View>
           }
           numColumns={2}

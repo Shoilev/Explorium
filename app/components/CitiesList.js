@@ -9,14 +9,19 @@ import { getCitiesPerCountry } from '../actions';
 import { App } from '../resources/labels.json';
 
 const styles = createStyles(CitiesStyles);
-const sliderWidth = Dimensions.get('window').width;
-const itemWidth = sliderWidth / 1.3;
+const itemWidthValue = 1.3;
 
 class CitiesList extends Component {
   componentWillMount() {
     const country = this.props.navigation.getParam('country', '');
     const countryRate = this.props.navigation.getParam('countryRate', '');
     this.props.getCitiesPerCountry(country, countryRate);
+
+    this.setState({
+      viewport: {
+        width: Dimensions.get('window').width
+      }
+    })
   }
 
   renderItem (item, index, navigation) {
@@ -47,16 +52,27 @@ class CitiesList extends Component {
 
     if(citiesData && citiesData.length) {
       return (
-        <Carousel
-          ref={(c) => { this._carousel = c; }}
-          data={citiesData}
-          renderItem={({item, index}) => this.renderItem(item,index,navigation)}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          itemHeight={200}
-          windowSize={1}
-          firstItem={parseInt(citiesData.length / 2)}
-        />
+        <View
+          style={{flex:1}}
+          onLayout={() => {
+            this.setState({
+                viewport: {
+                    width: Dimensions.get('window').width,
+                }
+            });
+          }}
+        >
+          <Carousel
+            ref={(c) => { this._carousel = c; }}
+            data={citiesData}
+            renderItem={({item, index}) => this.renderItem(item,index,navigation)}
+            sliderWidth={this.state.viewport.width}
+            itemWidth={this.state.viewport.width / itemWidthValue}
+            itemHeight={200}
+            windowSize={1}
+            firstItem={parseInt(citiesData.length / 2)}
+            />
+          </View>
       );
     } else {
       return (

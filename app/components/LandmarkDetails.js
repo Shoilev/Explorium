@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, ActivityIndicator, Image } from 'react-native';
+import { View, ScrollView, Text, ImageBackground, ActivityIndicator, Image } from 'react-native';
 import { createStyles } from '../assets/styles';
 import { Section, Button } from '../components/common';
 import { LandmarksStyles } from '../assets/styles/landmarks';
@@ -30,9 +30,9 @@ export default class LandmarkDetails extends Component {
             }
           </ImageBackground>
           <Text style={styles.landmarksText}>{landmark.landmarkName}</Text>
-          <View>
-            <Text style={styles.landmarksText}>{landmark.landmarkDescription}</Text>
-          </View>
+          <ScrollView style={styles.landmarkScrollDescription}>
+            <Text style={styles.landmarksDescription}>{landmark.landmarkDescription}</Text>
+          </ScrollView>
           <Button textStyle={styles.landmarkDetailsBtnText} buttonStyle={styles.landmarkDetailsBtn} onPress={() => this.props.navigation.navigate('BaseMap', {landmark})} >{Components.LandmarkDetails.buttonTitle}</Button>
         </Section>
       );

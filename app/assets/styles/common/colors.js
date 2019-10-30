@@ -15,6 +15,7 @@ export const Colors = {
   orange: 'rgb(253, 129, 2)',
   lightBlue: 'rgb(3, 215, 219)',
   darkBlue: 'rgb(3, 146, 221)',
+  exploredBlueOpacity: 'rgba(4, 130, 178, 0.6)',
   primeryBlue: '#1a4e6c',
   purple: 'rgb(95, 98, 159)',
   grassGreen: '#6aa406'

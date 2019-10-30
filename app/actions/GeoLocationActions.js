@@ -70,7 +70,12 @@ export const requestLocationPermission = (requestCountry = false) => {
             Geolocation.getLatestLocation({ timeout: 6000 }).then(location => {
               return dispatch(getLocationCountryAndCity(location.latitude, location.longitude)).then(result=>{
                 let videoURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2F' + result.userCountry + '%2Fintro.mp4?alt=media';
-                dispatch({ type: GEO_LOCATION_VIDEO_URI, payload: videoURI });
+
+                let videoData = {
+                  videoURI,
+                  videoCountry: result.userCountry
+                }
+                dispatch({ type: GEO_LOCATION_VIDEO_URI, payload: videoData });
               });
             }).catch(err=>{
               let defaultVideoURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2Fintro.mp4?alt=media&token=6308c168-820c-4900-8654-6beaff5f84e1';

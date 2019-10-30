@@ -83,6 +83,7 @@ export const FBLoginOrRegister = () => {
       if(user.additionalUserInfo.isNewUser) {
         return firebase.firestore().collection('users').doc(user.user.uid).set({
           allPoints: 0,
+          experience: 0,
           level: 0,
           achievements: []
         });
