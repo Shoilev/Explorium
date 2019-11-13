@@ -1,4 +1,4 @@
-import { colors, spacing, fonts } from './base';
+import { colors, spacing, fonts, dimensions } from './base';
 
 export const ExploreStyle = {
   exploreTextBtn: {
@@ -170,16 +170,19 @@ export const ExploreStyle = {
   exploreMapContainer: {
     position: 'relative'
   },
-  exploreCarousel: {
-    position:'absolute',
-    bottom: spacing.extraLarge,
-    left: 0
-  },
   exploreItemWrapper: {
-    position: 'relative',
+    position: 'absolute',
     overflow: 'hidden',
+    zIndex: 100,
     height: 150,
-    borderRadius: 20
+    bottom: 0,
+    left: 20,
+    width: dimensions.screenWidth - 40,
+    backgroundColor: colors.black,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20
   },
   exploreMapItemImage: {
     width: '100%',
@@ -273,54 +276,11 @@ export const ExploreStyle = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
-    padding: 3,
-    width: 100,
-    height: 70,
-    borderRadius: 10
-  },
-  exploreShadowMarkerTitle: {
-    backgroundColor: colors.black,
-    padding: 3,
-    fontSize: fonts.baseSize + 1,
-    color: colors.white
-  },
-  exploreMarkerTitle: {
-    backgroundColor: colors.white,
-    padding: 3,
-    fontSize: fonts.baseSize + 1
+    width: 45,
+    height: 45
   },
   exploreMarkerImage: { 
     width: 45,
-    height: 45 
-  },
-  exploreMarkerIndex: {
-    fontSize: (fonts.baseSize * 2) + 2,
-    marginTop: -32,
-    fontWeight: '700',
-    color: colors.white
-  },
-  exploreMarkerPin: {
-    backgroundColor: colors.lightBlue,
-    borderColor: colors.white,
-    borderWidth: 2,
-    padding: 10,
-    borderRadius: 5,
-    color: colors.white
-  },
-  exploreMarkerShadowPin: {
-    backgroundColor: colors.black,
-    padding: 10,
-    borderRadius: 5,
-    color: colors.white
-  },
-  exploreSelectedMarker: {
-    textAlign: 'center',
-    alignItems: 'center',
-    borderColor: colors.white,
-    borderWidth: 2,
-    backgroundColor: colors.yellow,
-    fontSize: fonts.baseSize * 3,
-    fontWeight: '700'
+    height: 45
   }
 }

@@ -119,6 +119,7 @@ class BaseMap extends Component {
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={4}
               strokeColor="hotpink"
+              mode='WALKING'
             />
           </MapView>
 

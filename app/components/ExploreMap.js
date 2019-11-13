@@ -9,11 +9,9 @@ import {
 
 import {
   Animated as AnimatedMap,
-  AnimatedRegion,
   Marker,
 } from 'react-native-maps';
 import { connect } from 'react-redux';
-import Carousel from 'react-native-snap-carousel';
 import { isUserAchieved, isEmpty } from '../helpers';
 import { Button } from './common';
 import { getLandmarksByLocation, getAchievementsPerUser } from '../actions';
@@ -22,8 +20,9 @@ import { ExploreStyle } from '../assets/styles/explore';
 import { Screens } from '../resources/labels.json';
 
 const styles = createStyles(ExploreStyle);
+const markerImage =  require('../assets/images/pin-full.png');
+const markerShadowImage =  require('../assets/images/pin-full-shadow.png');
 const screen = Dimensions.get('window');
-const itemWidthValue = 1.3;
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
@@ -38,17 +37,9 @@ class ExploreMap extends React.Component {
     this.props.getAchievementsPerUser();
 
     this.setState({
-      selectedMarkerIndex: 0,
-      markers: [],
-      region: new AnimatedRegion({
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      }),
-      viewport: {
-        width: Dimensions.get('window').width
-      }
+      selectedMarkerIndex: null,
+      tracksViewChanges: true,
+      markers: []
     })
 
     this.props.getLandmarksByLocation(LATITUDE, LONGITUDE).then((landmarkResult)=>{
@@ -69,34 +60,20 @@ class ExploreMap extends React.Component {
     navigation.goBack();
   }
 
-  mapHandler(sliderIndex, triggerSlide) {
-    const { markers } = this.state;
-    let markerCoordinate = markers[sliderIndex].coordinate;
-
-    if(triggerSlide) {
-      this._carousel.snapToItem(sliderIndex, true, false);
-    }
-
-    this.setState({
-      selectedMarkerIndex: sliderIndex,
-      region: new AnimatedRegion({
-        latitude: markerCoordinate.latitude,
-        longitude: markerCoordinate.longitude,
-        latitudeDelta: 0.03,
-        longitudeDelta:  0.03 * ASPECT_RATIO,
-      })
-    });
-
-    // this.state.region.timing({
-    //   latitude: markerCoordinate.latitude,
-    //   longitude: markerCoordinate.longitude,
-    //   latitudeDelta: 0.03,
-    //   longitudeDelta: 0.03 * ASPECT_RATIO,
-    //   duration: 1000
-    // }).start();
+  stopTrackingViewChanges = () => {
+    this.setState(() => ({
+      tracksViewChanges: false,
+    }));
   }
 
-  renderItem(marker, i) {
+  handlerMarkerIndex(sliderIndex) {
+    var index = sliderIndex >= 0 ? sliderIndex : null;
+    this.setState({
+      selectedMarkerIndex: index,
+    })
+  }
+
+  renderItemCard(marker, i) {
     const { achievementsData } = this.props.achievements;
     let isAchieved = false;
     if(!isEmpty(achievementsData) && achievementsData.achievements) {
@@ -129,7 +106,7 @@ class ExploreMap extends React.Component {
 
   render() {
     const { landmarksData, landmarksAllData, error } = this.props.landmarks;
-    const { region, markers } = this.state;
+    const { markers, tracksViewChanges, selectedMarkerIndex } = this.state;
 
     if(error) {
       return (
@@ -151,7 +128,14 @@ class ExploreMap extends React.Component {
         <View style={[styles.container, styles.exploreMapContainer]}>
           <AnimatedMap
             style={styles.exploreMap}
-            region={region}
+            initialRegion={
+              {
+                latitude: LATITUDE,
+                longitude: LONGITUDE,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA,
+              }
+            }
             showsUserLocation={true}
             showsMyLocationButton={false}
             showsPointsOfInterest={false}
@@ -163,41 +147,28 @@ class ExploreMap extends React.Component {
             showsIndoorLevelPicker={false}
             pitchEnabled={false}
             toolbarEnabled={false}
-            moveOnMarkerPress={false}
+            moveOnMarkerPress={true}
+            onPress={this.handlerMarkerIndex.bind(this)}
           >
             {markers.map((marker,i) => (
               <Marker
                 key={i}
                 coordinate={marker.coordinate}
-                tracksViewChanges={false}
-                zIndex={this.state.selectedMarkerIndex == i ? 2 : 1}
-                // icon={marker.isShadowLandmark ? require('../assets/images/pin-full-shadow.png') : require('../assets/images/pin-full.png')}
-                onPress={(e)=>{e.stopPropagation(); this.mapHandler(i , true)}}
+                title={(i + 1) + '. ' + marker.landmarkName}
+                tracksViewChanges={tracksViewChanges}
+                zIndex={selectedMarkerIndex == i ? 2 : 1}
+                onPress={()=>{ this.handlerMarkerIndex(i)}}
               >
-                  <Text style={[marker.isShadowLandmark ? styles.exploreMarkerShadowPin : styles.exploreMarkerPin, this.state.selectedMarkerIndex == i ? styles.exploreSelectedMarker: null]}>{i+1}</Text>
+                <View style={styles.exploreMarker}>
+                  <Image  onLoad={this.stopTrackingViewChanges} style={styles.exploreMarkerImage} source={marker.isShadowLandmark ? markerShadowImage : markerImage}/>
+                </View>
               </Marker>
             ))}
           </AnimatedMap>
-          <View style={styles.exploreCarousel}
-              onLayout={() => {
-                this.setState({
-                    viewport: {
-                        width: Dimensions.get('window').width,
-                    }
-                });
-              }}
-            >
-              <Carousel
-                ref={(c) => { this._carousel = c; }}
-                data={markers}
-                renderItem={({item, index}) => this.renderItem(item,index)}
-                sliderWidth={this.state.viewport.width}
-                itemWidth={this.state.viewport.width / itemWidthValue}
-                useScrollView={true}
-                windowSize={1}
-                onSnapToItem={(sliderIndex) => this.mapHandler(sliderIndex, false)}
-              />
-          </View>
+
+         { selectedMarkerIndex !== null  ?
+            this.renderItemCard( markers[selectedMarkerIndex], selectedMarkerIndex)
+          : null} 
         </View>
       );
     }
