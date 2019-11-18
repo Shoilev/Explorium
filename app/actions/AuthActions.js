@@ -88,7 +88,7 @@ export const FBLoginOrRegister = () => {
           achievements: []
         });
       }
-      console.log('sadsadas')
+
       loginUserSuccess(dispatch, user)
     })
     .catch((error) => {

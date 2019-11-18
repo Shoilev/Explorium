@@ -9,10 +9,39 @@ import { createStyles } from '../assets/styles';
 
 const styles = createStyles();
 
+const requestAdditionalUserData = () => {
+  const userUID = firebase.auth().currentUser.uid;
+
+  return firebase.firestore().collection('users').doc(userUID)
+  .get().then(doc => {
+    if(doc.exists) {
+      const userData = doc.data();
+
+      if(!userData.userHomeLocale) {
+        return  true;
+      }
+
+      return false;
+    }
+
+    return false;
+  })
+}
+
 export default class AuthLoading extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      this.props.navigation.navigate(user ? 'App' : 'Auth')
+      if(user) {
+        requestAdditionalUserData().then(premission=>{
+          if(premission) {
+            this.props.navigation.navigate('UserInfo');
+          } else {
+            this.props.navigation.navigate('App');
+          }
+        });
+      } else {
+        this.props.navigation.navigate('Auth');
+      }
     })
   }
 

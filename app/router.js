@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
 import { createStyles } from './assets/styles';
 import { Screens } from './resources/labels.json';
+import AnimatedCircleBarComponent from './components/common/AnimatedNavigationBarComponent';
 
 // components
 import Login from './components/Login';
@@ -34,56 +35,55 @@ export const Tabs = createBottomTabNavigator({
     screen: Explore,
     navigationOptions: {
       tabBarLabel: Screens.Explore.title,
-      tabBarIcon: <Image style={{width: 40, height: 40}} source={require("./assets/images/explore.png")}/>
+      tabBarIcon: <Image style={{width: 30, height: 30, marginBottom: 5}} source={require("./assets/images/explore.png")}/>
     },
   },
   'Countries': {
     screen: Countries,
     navigationOptions: {
       tabBarLabel: Screens.Countries.title,
-      tabBarIcon: <Image style={{width: 35, height: 35}} source={require("./assets/images/countries.png")}/>
+      tabBarIcon: <Image style={{width: 25, height: 25, marginBottom: 5}} source={require("./assets/images/countries.png")}/>
     },
   },
   'Achievements': {
     screen: Achievements,
     navigationOptions: {
       tabBarLabel: Screens.Achievements.title,
-      tabBarIcon: <Image style={{width: 35, height: 35}} source={require("./assets/images/achievements.png")}/>
+      tabBarIcon: <Image style={{width: 25, height: 25, marginBottom: 5}} source={require("./assets/images/achievements.png")}/>
     },
   },
   'Friends': {
     screen: Friends,
     navigationOptions: {
       tabBarLabel: Screens.Friends.title,
-      tabBarIcon: <Image style={{width: 40, height: 40}} source={require("./assets/images/friends.png")}/>
+      tabBarIcon: <Image style={{width: 30, height: 30}} source={require("./assets/images/friends.png")}/>
     },
   },
   'Profile': {
     screen: Profile,
     navigationOptions: {
       tabBarLabel: Screens.Profile.title,
-      tabBarIcon: <Image style={{width: 35, height: 35}} source={require("./assets/images/profile.png")}/>
+      tabBarIcon: <Image style={{width: 25, height: 25, marginBottom: 5}} source={require("./assets/images/profile.png")}/>
     },
   },
 },{
   initialRouteName: Screens.Explore.title,
   animationEnabled: true,
   tabBarOptions: {
-    activeTintColor: 'tomato',
-    inactiveTintColor: '#1c4f6d',
+    // activeTintColor: 'tomato',
+    // inactiveTintColor: '#1c4f6d',
     labelStyle: {
       fontSize: 11,
-      paddingTop: 12
     },
     style : {
-      height: 65,
       borderTopWidth: 1,
-      borderTopColor: '#1a4e6c',
+      borderTopColor: '#f2f2f2',
       color: '#1a4e6c',
       paddingBottom: 5,
-      paddingTop: 15
-    }
+      paddingTop: 5
+    },
   },
+  tabBarComponent: AnimatedCircleBarComponent,
   headerMode: "none",
   mode: "modal",
 });

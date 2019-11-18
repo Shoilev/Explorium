@@ -17,7 +17,6 @@ class Friends extends Component {
     this.props.getFriends();
   }
 
-  
   globalShare = async () => {
     try {
       const result = await Share.share({
@@ -47,10 +46,10 @@ class Friends extends Component {
   }
 
   render() {
-    const { friendsData, activeFriends } = this.props.friends;
+    const { friendsData, activeFriends, errorMessage } = this.props.friends;
     const { navigation } = this.props;
 
-    if(friendsData && friendsData.length > 0) {
+    if(!isEmpty(friendsData)) {
       return (
       <View style={styles.friendsContainer}>
         <FlatList
@@ -69,7 +68,15 @@ class Friends extends Component {
         </TouchableOpacity>
       </View>
       );
-    } else {
+    }
+    else if(!isEmpty(errorMessage)) {
+      return (
+        <View style={styles.container}>
+          <Text>{errorMessage}</Text>
+        </View>
+      )
+    }
+    else {
       return (
         <View style={styles.container}>
           <ActivityIndicator />

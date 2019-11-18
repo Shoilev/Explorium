@@ -1,9 +1,11 @@
-import firebase from 'react-native-firebase';
 import { PermissionsAndroid } from 'react-native';
 import Contacts from 'react-native-contacts';
+import { isEmpty } from '../helpers';
+import { Screens } from '../resources/labels.json';
 import {
   FRIENDS_FETCH_SUCCESS,
-  FRIENDS_UPDATE
+  FRIENDS_UPDATE,
+  FRIENDS_FETCH_FAILED
 } from './types';
 
 export const getFriends = () => {
@@ -12,17 +14,21 @@ export const getFriends = () => {
       PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
       {
         'title': 'Contacts',
-        'message': 'This app would like to view your contacts.'
+        'message': Screens.Friends.premissionMessage
       }
     ).then(() => {
       Contacts.getAll((err, contacts) => {
         if (err === 'denied'){
           // error
           console.log('Contacts premission denied: ' +  err);
-          dispatch({ type: FRIENDS_FETCH_SUCCESS, payload: [] })
+          dispatch({ type: FRIENDS_FETCH_FAILED, payload: Screens.Friends.errorPremissionMessage });
         } else {
-          // contacts returned in Array
           console.log('Contact premission approved!')
+          
+          if(isEmpty(contacts)) {
+            dispatch({ type: FRIENDS_FETCH_FAILED, payload: Screens.Friends.errorFetchMessage });
+          }
+
           let contactResult = contacts.filter(({hasThumbnail, thumbnailPath, phoneNumbers, familyName, givenName, middleName}) =>  {
             if( givenName.length > 0 && phoneNumbers && phoneNumbers.length > 0 ) {
               return {
@@ -36,7 +42,6 @@ export const getFriends = () => {
             }
           });
           contactResult.sort((a,b) => a.givenName.toLocaleLowerCase().localeCompare(b.givenName.toLocaleLowerCase()))
-          console.log(contactResult)
 
           dispatch({ type: FRIENDS_FETCH_SUCCESS, payload: contactResult })
         }

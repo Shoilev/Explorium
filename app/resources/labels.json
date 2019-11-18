@@ -46,7 +46,10 @@
       "headerTitle": "Your Achievements"
     },
     "Friends": {
-      "title": "Friends"
+      "title": "Friends",
+      "premissionMessage": "This app would like to view your contacts.",
+      "errorPremissionMessage": "Contacts premission denied.",
+      "errorFetchMessage": "Not found contacts in your phone."
     },
     "Profile": {
       "title": "Profile"

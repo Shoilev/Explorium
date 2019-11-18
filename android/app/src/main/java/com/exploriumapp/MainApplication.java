@@ -23,6 +23,7 @@ import com.github.reactnativecommunity.location.RNLocationPackage;
 import com.showlocationservicesdialogbox.LocationServicesDialogBoxPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.horcrux.svg.SvgPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +59,8 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeContacts(),
           new LocationServicesDialogBoxPackage(),
           new ReactVideoPackage(),
-          new SplashScreenReactPackage()
+          new SplashScreenReactPackage(),
+          new SvgPackage()
       );
     }
 

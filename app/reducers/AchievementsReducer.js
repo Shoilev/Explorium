@@ -14,7 +14,7 @@ export default (state= INITIAL_STATE, action) => {
     case ACHIEVEMENTS_FETCH_SUCCESS:
       return { ...state, achievementsData: action.payload, error: false };
     case ACHIEVEMENTS_FETCH_FAIL:
-      return { ...state, activeCountries: action.payload, error: true };
+      return { ...state, achievementsData: action.payload, error: true };
     default:
       return state;
   }

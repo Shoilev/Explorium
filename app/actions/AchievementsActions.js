@@ -12,6 +12,7 @@ export const getAchievementsPerUser = () => {
     .onSnapshot(documentSnapshot => {
       console.log('achievements');
       const userAchievements = documentSnapshot.data();
+
       return dispatch({ type: ACHIEVEMENTS_FETCH_SUCCESS, payload: userAchievements })
     }, (err) => {
       console.log('document not found');

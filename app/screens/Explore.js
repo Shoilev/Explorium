@@ -16,24 +16,6 @@ const styles = createStyles(ExploreStyle);
 const exploreumSrc = images.exploreumBackground;
 const exploreWhiteLogo = images.whiteLogo;
 
-const requestAdditionalUserData = (nav) => {
-  const userUID = firebase.auth().currentUser.uid;
-
-  return firebase.firestore().collection('users').doc(userUID)
-  .get().then(doc => {
-    if(doc.exists) {
-      const userData = doc.data();
-
-      if(!userData.userHomeLocale) {
-        return  true;
-      }
-
-      return false;
-    }
-    return false;
-  })
-}
-
 class Explore extends Component {
   state = {
     loader: false,
@@ -50,14 +32,6 @@ class Explore extends Component {
   }
 
   componentWillMount() {
-    const { navigation } = this.props;
-
-    requestAdditionalUserData().then(premission=>{
-      if(premission) {
-        navigation.navigate('UserInfo')
-      }
-    });
-
     this.props.requestLocationPermission(true);
     this.props.getMessageAlert();
   }
@@ -148,13 +122,9 @@ class Explore extends Component {
               { this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
             </Animated.View>
 
-            { !isEmpty(userLocation) ? 
-              <Animated.View
-                style={{opacity: animateButton}}
-              >
-                <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
-              </Animated.View>
-            : null }
+            <Animated.View style={{opacity: animateButton}}>
+              <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
+            </Animated.View>
 
             {message ? 
               <Animated.View style={[{opacity: animateText}, styles.exploreMessageAlertWrap]}>
