@@ -72,7 +72,7 @@ export const getLandmarks = (country, city, cityPoints) => {
 
         dispatch({ type: LANDMARKS_FETCH_SUCCESS, payload: landmarks });
         dispatch({ type: LANDMARKS_SHADOW_FETCH_SUCCESS, payload: shadowLandmarks });
-        dispatch({ type: LANDMARKS_ALL_FETCH_SUCCESS, payload: shadowLandmarks });
+        dispatch({ type: LANDMARKS_ALL_FETCH_SUCCESS, payload: allLandmarks });
         return allLandmarks;
       })
   }
@@ -101,7 +101,7 @@ export const getLandmarksByLocation = ( lat, long ) => {
               if (distanceA > distanceB) {return 1;}
               return 0;
             });
-  
+
             return landmarkResult;
           });
         })

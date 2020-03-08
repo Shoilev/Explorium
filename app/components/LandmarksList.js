@@ -24,14 +24,15 @@ class LandmarksList extends Component {
     this.props.switchToShadowCities(value);
   }
 
-  renderItem(item, index, navigation, achievementsData) {
+  renderItem(item, index, navigation, achievementsData, landmarksAllData) {
     let isAchieved = false;
+
     if(!isEmpty(achievementsData) && achievementsData.achievements) {
       isAchieved = isUserAchieved(achievementsData.achievements, item);
     }
 
     return (
-      <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved})}>
+      <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved, landmarksCount: landmarksAllData.length})}>
           <ImageBackground source={{uri: item.landmarkImage}} style={[styles.backgroundImage, styles.landmarkImage]}>
             <View style={styles.landmarksPointsWrap}><Text style={styles.landmarkPoints}>{item.landmarkPoints} points</Text></View>
             { isAchieved ?
@@ -51,7 +52,7 @@ class LandmarksList extends Component {
 
   render() {
     //activeLandmarks is available if we decide to implement live search in the near future.
-    const { landmarksData, landmarksShadowData, shadowCities } = this.props.landmarks;
+    const { landmarksData, landmarksShadowData, shadowCities, landmarksAllData } = this.props.landmarks;
     const { achievementsData } = this.props.achievements;
     const { navigation } = this.props;
 
@@ -63,7 +64,7 @@ class LandmarksList extends Component {
         <FlatList
           data={shadowCities && !isEmpty(landmarksShadowData) ? landmarksShadowData : landmarksData}
           style={shadowCities ? [styles.landmarkShadowActive, styles.landmarksRow]: styles.landmarksRow}
-          renderItem={({item, index}) => this.renderItem(item,index,navigation, achievementsData)}
+          renderItem={({item, index}) => this.renderItem(item, index, navigation, achievementsData, landmarksAllData)}
           keyExtractor={(item, index)=> 'landmarkKey' + index}
           ListHeaderComponent={
             <View style={styles.landmarksShadowCities}>

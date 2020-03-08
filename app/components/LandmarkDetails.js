@@ -11,6 +11,7 @@ export default class LandmarkDetails extends Component {
 
   render() {
     const landmark = this.props.navigation.getParam('landmark', '');
+    const landmarksCount = this.props.navigation.getParam('landmarksCount', 0);
     const isAchieved = this.props.navigation.getParam('isAchieved', '');
 
     if(landmark) {
@@ -33,7 +34,7 @@ export default class LandmarkDetails extends Component {
           <ScrollView style={styles.landmarkScrollDescription}>
             <Text style={styles.landmarksDescription}>{landmark.landmarkDescription}</Text>
           </ScrollView>
-          <Button textStyle={styles.landmarkDetailsBtnText} buttonStyle={styles.landmarkDetailsBtn} onPress={() => this.props.navigation.navigate('BaseMap', {landmark})} >{Components.LandmarkDetails.buttonTitle}</Button>
+          <Button textStyle={styles.landmarkDetailsBtnText} buttonStyle={styles.landmarkDetailsBtn} onPress={() => this.props.navigation.navigate('BaseMap', {landmark, landmarksCount})} >{Components.LandmarkDetails.buttonTitle}</Button>
         </Section>
       );
     } else {

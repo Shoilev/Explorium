@@ -58,6 +58,14 @@
   "Components": {
     "LandmarkDetails": {
       "buttonTitle": "Get direction"
+    },
+    "CheckIn": {
+      "errorMessageFarAway": "You are too far away from the landmark",
+      "errorMessageAlreadyChecked": "You have already checked this landmark",
+      "errorMessageCheckedAndFarAway": "You are too far away from the landmark and also you have already checked this landmark",
+      "errorMessageNotPossible": "Check in is not possible",
+      "errorMessageButton": "You are too far away",
+      "buttonLabel": "Check in"
     }
   }
 }

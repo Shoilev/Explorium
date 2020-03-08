@@ -6,23 +6,28 @@ import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import { requestLocationPermission, getUser, getAchievementsPerUser } from '../actions';
 import { isUserAchieved, checkHaversineDistance } from '../helpers';
-import { CheckInLeveling } from '../controllers/LevelingController';
+import { checkInLeveling } from '../controllers/LevelingController';
+import { getDiscount  } from '../controllers/DiscountController';
 import { createStyles } from '../assets/styles';
 import { ExploreStyle } from '../assets/styles/explore';
 import { images } from '../assets/images';
-import { Button, Section } from './common';
+import { Section } from './common';
 import { GOOGLE_MAPS_APIKEY  } from '../settings/global.json';
+import { Components } from '../resources/labels.json';
 
 const styles = createStyles(ExploreStyle);
 
 class BaseMap extends Component {
   componentWillMount() {
-    this.props.requestLocationPermission();
+    this.setState({
+      checkInLoader: false
+    });
+    this.props.requestLocationPermission(true);
     this.props.getUser();
     this.props.getAchievementsPerUser();
   }
 
-  checkIn(landmark, userLocation) {
+  checkIn(landmark, userLocation, userCountryAndCity, landmarksCount) {
     const { achievementsData } = this.props.achievements;
     const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
 
@@ -31,25 +36,31 @@ class BaseMap extends Component {
     if(isNearBy && !isAchieved) {
       // assign points to the customer
       const userUID = this.props.userUID;
+      this.setState({
+        checkInLoader: true
+      });
 
-      CheckInLeveling(landmark, userUID, achievementsData);
-
-      this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark})
+      checkInLeveling(landmark, userUID, achievementsData).then((levelData)=>{
+        getDiscount(true, userUID, achievementsData, userCountryAndCity.userCity, landmarksCount).then((discountData)=>{
+          this.setState({
+            checkInLoader: false
+          });
+          this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark, levelData, discountData})
+        });
+      });
     } else {
-      // Show error
-      // Move to resources
       let errorMessage = '';
 
       if (!isNearBy && isAchieved) {
-        errorMessage = 'You are too far away from the landmark and also you have already checked this landmark';
+        errorMessage = Components.CheckIn.errorMessageCheckedAndFarAway;
       } else if (!isNearBy) {
-        errorMessage = 'You are too far away from the landmark';
+        errorMessage = Components.CheckIn.errorMessageFarAway;
       } else {
-        errorMessage = 'You have already checked this landmark';
+        errorMessage = Components.CheckIn.errorMessageAlreadyChecked;
       }
 
       Alert.alert(
-        'Check in is not possible',
+        Components.CheckIn.errorMessageNotPossible,
         errorMessage,
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
@@ -73,8 +84,9 @@ class BaseMap extends Component {
   }
 
   render() {
-    const { userLocation } = this.props.userGeoLocation;
+    const { userLocation, userCountryAndCity } = this.props.userGeoLocation;
     const landmarkData = this.props.navigation.getParam('landmark');
+    const landmarksCount = this.props.navigation.getParam('landmarksCount');
     const { latitude, longitude } = landmarkData.coordinate;
 
     const landmarkDirection = {
@@ -119,7 +131,7 @@ class BaseMap extends Component {
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={4}
               strokeColor="hotpink"
-              mode='WALKING'
+              mode='walking'
             />
           </MapView>
 
@@ -130,14 +142,17 @@ class BaseMap extends Component {
           <Section style={styles.exploreButtonSection}>
             { checkHaversineDistance(userLocation, landmarkData.coordinate, landmarkData.distance)
             ?
-              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation)} style={styles.exploreCheckInBtn}>
+              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount)} style={styles.exploreCheckInBtn}>
                 <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
-                <Text style={styles.exploreCheckInTextBtn}>Check in</Text>
+                <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.buttonLabel}</Text>
+                {this.state.checkInLoader ?
+                  <ActivityIndicator color="#ffffff"/>
+                : null}
               </TouchableOpacity>
             :
-              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation)} style={[styles.exploreCheckInBtn, styles.exploreCheckInDisabledBtn]}>
+              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount)} style={[styles.exploreCheckInBtn, styles.exploreCheckInDisabledBtn]}>
                 <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
-                <Text style={styles.exploreCheckInTextBtn}>You are too far away</Text>
+                <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.errorMessageButton}</Text>
               </TouchableOpacity>
             }
           </Section>

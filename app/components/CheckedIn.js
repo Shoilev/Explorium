@@ -45,6 +45,8 @@ export default class CheckedIn extends Component {
   render() {
     const user = this.props.navigation.getParam('user', {});
     const landmark = this.props.navigation.getParam('landmark', {});
+    const discountData = this.props.navigation.getParam('discountData', false);
+    console.log(discountData)
 
     return (
       <View style={[styles.container, styles.checkedInContainer]}>
@@ -53,6 +55,8 @@ export default class CheckedIn extends Component {
         <Text style={styles.checkedInTitle}>Congratulations!</Text>
         <Text style={styles.checkedInDescription}>You have successfully checked in.</Text>
         <Text style={styles.checkedInLandmark}>{landmark.landmarkName}</Text>
+
+        {discountData && discountData.render ? <Text>{discountData.userExplorePercent ? discountData.userExplorePercent + '/75': discountData.discountInfo[0].name}</Text> : null}
 
         <Text style={styles.checkedInShareText}>Share with friends</Text>
         <TouchableHighlight style={styles.checkedInShareIcon} onPress={this.shareLinkWithShareDialog.bind(this)}>

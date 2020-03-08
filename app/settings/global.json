@@ -4,5 +4,9 @@
   "Leveling": {
     "baseXP": 100,
     "exponent": 1.1
+  },
+  "Discount": {
+    "explorePercentRate": 75,
+    "validHoursPeriod": 12
   }
 }

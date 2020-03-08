@@ -50,9 +50,9 @@ class ExploreMap extends React.Component {
   }
 
   goToLandmark(landmarkData, isAchieved) {
-    const { navigation } = this.props;
+    const { navigation, landmarks } = this.props;
 
-    navigation.navigate('LandmarkDetails',{landmark: landmarkData, isAchieved})
+    navigation.navigate('LandmarkDetails',{landmark: landmarkData, isAchieved, landmarksCount: landmarks.landmarksAllData.length})
   }
 
   gotBack() {

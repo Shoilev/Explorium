@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextInput, View, ImageBackground } from 'react-native';
+import { Text, TextInput, View, ImageBackground, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { emailChanged, passwordChanged, confirmPasswordChanged, signUpUser, emptyUserOrPassword, passwordNotMatch, FBLoginOrRegister } from '../actions';
@@ -46,68 +46,78 @@ class Register extends React.Component {
   }
 
   render() {
-    return (
-      <ImageBackground source={registerBackgroundSrc} style={styles.backgroundImage}>
-        <Section style={styles.register}>
-          <Text style={styles.registerTitle}>{Authentication.SignIn.title}</Text>
+    if(this.props.loading) {
+      return (
+        <ImageBackground source={registerBackgroundSrc} style={styles.backgroundImage}>
+          <Section style={styles.register}>
+            <ActivityIndicator />
+          </Section>
+        </ImageBackground>
+      );
+    } else {
+      return (
+        <ImageBackground source={registerBackgroundSrc} style={styles.backgroundImage}>
+          <Section style={styles.register}>
+            <Text style={styles.registerTitle}>{Authentication.SignIn.title}</Text>
 
-          {this.props.errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {this.props.errorMessage}
-          </Text>}
+            {this.props.errorMessage &&
+            <Text style={{ color: 'red' }}>
+              {this.props.errorMessage}
+            </Text>}
 
-          <View style={styles.loginInput}>
-            <Icon style={styles.emailIcon} name="ios-mail"/>
-            <TextInput
-              placeholder="Email"
-              placeholderTextColor="#ffffff"
-              autoCapitalize="none"
-              style={styles.textInput}
-              onChangeText={this.onEmailChange.bind(this)}
-              value={this.props.email}
-            />
-          </View>
+            <View style={styles.loginInput}>
+              <Icon style={styles.emailIcon} name="ios-mail"/>
+              <TextInput
+                placeholder="Email"
+                placeholderTextColor="#ffffff"
+                autoCapitalize="none"
+                style={styles.textInput}
+                onChangeText={this.onEmailChange.bind(this)}
+                value={this.props.email}
+              />
+            </View>
 
-          <View style={styles.loginInput}>
-            <Icon style={styles.lockIcon} name="md-lock"/>
-            <TextInput
-              secureTextEntry
-              placeholder="Password"
-              placeholderTextColor="#ffffff"
-              autoCapitalize="none"
-              style={styles.textInput}
-              onChangeText={this.onPasswordChange.bind(this)}
-              value={this.props.password}
-            />
-          </View>
+            <View style={styles.loginInput}>
+              <Icon style={styles.lockIcon} name="md-lock"/>
+              <TextInput
+                secureTextEntry
+                placeholder="Password"
+                placeholderTextColor="#ffffff"
+                autoCapitalize="none"
+                style={styles.textInput}
+                onChangeText={this.onPasswordChange.bind(this)}
+                value={this.props.password}
+              />
+            </View>
 
-          <View style={styles.loginInput}>
-            <Icon style={styles.lockIcon} name="md-lock"/>
-            <TextInput
-              secureTextEntry
-              placeholder="Confirm Password"
-              placeholderTextColor="#ffffff"
-              autoCapitalize="none"
-              style={styles.textInput}
-              onChangeText={this.onConfirmPasswordChange.bind(this)}
-              value={this.props.confirmPassword}
-            />
-          </View>
+            <View style={styles.loginInput}>
+              <Icon style={styles.lockIcon} name="md-lock"/>
+              <TextInput
+                secureTextEntry
+                placeholder="Confirm Password"
+                placeholderTextColor="#ffffff"
+                autoCapitalize="none"
+                style={styles.textInput}
+                onChangeText={this.onConfirmPasswordChange.bind(this)}
+                value={this.props.confirmPassword}
+              />
+            </View>
 
-          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
-            {Authentication.SignIn.buttonTittle}
-          </Button>
+            <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
+              {Authentication.SignIn.buttonTittle}
+            </Button>
 
-          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
-            {'FB LOGIN'}
-          </Button>
+            <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
+              {'FB LOGIN'}
+            </Button>
 
-          <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Login')}>
-            {Authentication.SignIn.additionalLinkTitle}
-          </Button>
-        </Section>
-      </ImageBackground>
-    )
+            <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Login')}>
+              {Authentication.SignIn.additionalLinkTitle}
+            </Button>
+          </Section>
+        </ImageBackground>
+      )
+    }
   }
 }
 
