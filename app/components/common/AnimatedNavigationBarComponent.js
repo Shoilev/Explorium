@@ -73,7 +73,7 @@ class AnimatedCircleBarComponent extends React.Component {
     this.data = [
       { x: 0, y: platformZeroPoint },
       { x: 10, y: platformZeroPoint },
-      { x: screenWidth / (routes.length * 2), y: 20 },
+      { x: screenWidth / (routes.length * 2), y: 35 },
       { x: screenWidth / routes.length - 10, y: platformZeroPoint },
       { x: screenWidth / routes.length, y: platformZeroPoint },
     ];
@@ -317,12 +317,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'relative',
     borderTopWidth: 2,
-    borderTopColor: '#f2f2f2',
+    borderTopColor: '#f2f2f2'
   },
   text: {},
   item: {
     flex: 1,
-    height,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    backgroundColor: '#e8e8e8',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
   },

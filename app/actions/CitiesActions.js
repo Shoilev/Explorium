@@ -5,7 +5,7 @@ import {
 
 export const getCitiesPerCountry = (country, countryRate) => {
   return (dispatch) => {
-    firebase.firestore().collection('countries').doc(country).collection('cities')
+    return firebase.firestore().collection('countries').doc(country).collection('cities')
     .get().then(querySnapshot => {
       console.log('firebase');
       const citites = [];
@@ -24,6 +24,7 @@ export const getCitiesPerCountry = (country, countryRate) => {
       })
 
       dispatch({ type: CITIES_PER_COUNTRY_FETCH_SUCCESS, payload: citites });
+      return citites;
     })
   }
 }

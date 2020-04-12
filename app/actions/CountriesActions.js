@@ -26,13 +26,14 @@ export const getCountries = () => {
             return b.countryPoints - a.countryPoints;
           })
           return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: dataWithPoints })
-        }).catch(err=>{console.log(err)});
+        }).catch(err=>{
+          console.log(err);
+          countries.sort(function(a, b) {
+            return a.countryName.localeCompare(b.countryName);
+          });
 
-        countries.sort(function(a, b) {
-          return a.countryName.localeCompare(b.countryName);
+          return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: countries })
         });
-
-        return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: countries })
       })
   }
 }

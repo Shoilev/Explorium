@@ -3,28 +3,44 @@ import { colors, spacing, fonts, dimensions } from './base';
 export const CitiesStyles = {
   citiesSlide: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    borderRadius:30,
+    borderRadius: 10,
     overflow: 'hidden',
-    textAlign: 'center',
     marginTop: spacing.extraLarge,
     marginBottom: spacing.extraLarge * 2,
     marginLeft: spacing.medium,
-    marginRight: spacing.medium,
+    marginRight: spacing.extraLarge,
+    backgroundColor: colors.white,
     elevation: 6,
   },
-  citiesImageWrap: {
-    width: dimensions.fullWidth,
-    height: '40%',
+  citiesSlideWrapper: {
     flex: 1,
     alignItems: 'center',
-    borderBottomWidth: 5,
-    borderBottomColor: colors.yellow,
-    overflow: 'hidden'
+    width: dimensions.fullWidth
+  },
+  citiesImage: {
+    zIndex: 10,
+    alignItems: 'center',
+    backgroundColor: colors.orange,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    width: '100%',
+    height: '40%'
+  },
+  citiesPoints: {
+    position: 'absolute',
+    bottom: spacing.medium * -1,
+    color: colors.white,
+    backgroundColor: colors.yellow,
+    fontSize: fonts.baseSize * 2.5,
+    paddingLeft: spacing.medium,
+    paddingRight: spacing.medium,
+    paddingTop: 2,
+    paddingBottom: 2,
+    borderRadius: 10,
+    zIndex: 20
   },
   citiesDetails: {
-    padding: spacing.extraLarge * 2,
+    padding: spacing.extraLarge,
     paddingTop: spacing.extraLarge,
     maxHeight: '60%',
     flex: 1,
@@ -47,18 +63,6 @@ export const CitiesStyles = {
     flex:1,
     color: '#1e324d',
     fontSize: fonts.baseSize * 2.5
-  },
-  citiesPoints: {
-    position: 'absolute',
-    bottom: spacing.medium,
-    color: colors.white,
-    backgroundColor: colors.yellow,
-    fontSize: fonts.baseSize * 2,
-    paddingLeft: spacing.medium,
-    paddingRight: spacing.medium,
-    paddingTop: 2,
-    paddingBottom: 2,
-    borderRadius: 10
   },
   citiesTextBtn: {
     color: colors.orange,

@@ -3,6 +3,7 @@ import { View, FlatList, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import CountryList from '../components/CountryList';
 import HeaderSearch from '../components/HeaderSearch';
+import { HeaderBar } from '../components/common';
 import { getCountries } from '../actions';
 import { createStyles } from '../assets/styles';
 import { CountriesStyles } from '../assets/styles/countries';
@@ -25,18 +26,22 @@ class Countries extends Component {
 
     if(countriesData && countriesData.length) {
       return (
-        <FlatList
-          data={activeCountries}
-          renderItem={({item, index}) => this.renderItem(item,index,navigation)}
-          keyExtractor={(country, index)=> index.toString()}
-          ListHeaderComponent={<HeaderSearch title={"Countries"} data={countriesData} />}
-          stickyHeaderIndices={[0]}
-        />
+        <View>
+          <HeaderBar headerBarNav={navigation} headerBarStyle={{zIndex: 99, position:'absolute', top:0 ,left: 0, width:'100%'}}>{'Countries'}</HeaderBar>
+          <FlatList
+            data={activeCountries}
+            renderItem={({item, index}) => this.renderItem(item,index,navigation)}
+            keyExtractor={(country, index)=> index.toString()}
+            ListHeaderComponent={<HeaderSearch title={"Countries"} data={countriesData} />}
+            stickyHeaderIndices={[0]}
+            style={{marginTop:80}}
+          />
+        </View>
       )
     } else {
       return (
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator color="rgb(255, 126, 41)" size="large"/>
         </View>
       );
     }

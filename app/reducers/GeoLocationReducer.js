@@ -3,13 +3,13 @@ import {
   GEO_LOCATION_USER_FAIL,
   GEO_LOCATION_COUNTRY_CITY_SUCCESS,
   GEO_LOCATION_COUNTRY_CITY_FAIL,
-  GEO_LOCATION_VIDEO_URI
+  GEO_LOCATION_IMAGE_URI
 } from '../actions/types';
 
 const INITIAL_STATE = {
   userLocation: {},
   userCountryAndCity: {},
-  userLocatioVideoUri: {}
+  userLocatioImageUri: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -22,8 +22,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, userCountryAndCity: action.payload};
     case GEO_LOCATION_COUNTRY_CITY_FAIL:
       return { ...state, userLocation: action.payload };
-    case GEO_LOCATION_VIDEO_URI:
-      return { ...state, userLocatioVideoUri: action.payload };
+    case GEO_LOCATION_IMAGE_URI:
+      return { ...state, userLocatioImageUri: action.payload };
     default:
       return state;
   }

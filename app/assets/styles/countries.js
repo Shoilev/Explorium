@@ -15,7 +15,7 @@ export const CountriesStyles = {
     textAlign: 'center'
   },
   countryListCardOffline: {
-    opacity: 0.6
+    opacity: 0.5
   },
   countryListTitle: {
     color: colors.white,
@@ -28,7 +28,7 @@ export const CountriesStyles = {
     paddingRight: spacing.medium,
     paddingTop: spacing.small,
     paddingBottom: spacing.small,
-    fontSize: fonts.baseSize * 2,
+    fontSize: fonts.baseSize * 2.5,
     color: colors.white,
     borderRadius: 10
   },

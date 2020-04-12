@@ -48,7 +48,7 @@ export default class AuthLoading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
         <StatusBar barStyle="default" />
       </View>
     );

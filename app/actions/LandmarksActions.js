@@ -3,6 +3,7 @@ import {getLocationCountryAndCity}  from './GeoLocationActions';
 import {getCitiesPerCountry}  from './CitiesActions';
 import {getCountries}  from './CountriesActions';
 import { checkHaversineDistance, isEmpty } from '../helpers';
+import { GOOGLE_MAPS_APIKEY, DefaultLocationData  } from '../settings/global.json';
 import {
   LANDMARKS_FETCH_SUCCESS,
   LANDMARKS_FETCH_FAIL,
@@ -31,7 +32,7 @@ export const getLandmarks = (country, city, cityPoints) => {
           const landmarkData = {
             id: doc.id,
             landmarkName: dataDoc.name,
-            landmarkImage: dataDoc.image,
+            landmarkImage: dataDoc.image + '&key=' + GOOGLE_MAPS_APIKEY,
             landmarkDescription: dataDoc.description,
             landmarkPoints: isShadowLandmark ? Math.floor(cityPoints / querySnapshot.size * 2) : Math.floor(cityPoints / querySnapshot.size),
             isShadowLandmark,
@@ -39,6 +40,7 @@ export const getLandmarks = (country, city, cityPoints) => {
               latitude: dataDoc.latitude || LATITUDE,
               longitude: dataDoc.longitude || LONGITUDE
             },
+            viewport: dataDoc.viewport,
             distance: dataDoc.distance || false
           };
 
@@ -84,7 +86,19 @@ export const getLandmarksByLocation = ( lat, long ) => {
       return firebase.firestore().collection('countries').doc(result.userCountry)
       .get().then(doc => {
         if(!doc.data() || !doc.data().isOnline) {
-          return dispatch({ type: LANDMARKS_FETCH_FAIL, payload: {errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
+          return firebase.firestore().collection('countries').doc(DefaultLocationData.country).get().then(doc=>{
+            let countryRate = doc.data().rate || 1;
+
+            return firebase.firestore().collection('countries').doc(DefaultLocationData.country).collection('cities').doc(DefaultLocationData.city).get()
+            .then(doc => {
+              let cityPoints = doc.data().points * countryRate || 0;
+              return dispatch(getLandmarks(DefaultLocationData.country, DefaultLocationData.city, cityPoints)).then((landmarkResult)=>{    
+                return dispatch({ type: LANDMARKS_FETCH_FAIL, payload: { errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
+              })
+            }).catch(e=>{
+              return dispatch({ type: LANDMARKS_FETCH_FAIL, payload: {errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
+            })
+          });
         }
         let countryRate = doc.data().rate || 1;
         

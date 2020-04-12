@@ -5,7 +5,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import { requestLocationPermission, getUser, getAchievementsPerUser } from '../actions';
-import { isUserAchieved, checkHaversineDistance } from '../helpers';
+import { isUserAchieved, checkHaversineDistance, checkBounds } from '../helpers';
 import { checkInLeveling } from '../controllers/LevelingController';
 import { getDiscount  } from '../controllers/DiscountController';
 import { createStyles } from '../assets/styles';
@@ -29,7 +29,10 @@ class BaseMap extends Component {
 
   checkIn(landmark, userLocation, userCountryAndCity, landmarksCount) {
     const { achievementsData } = this.props.achievements;
-    const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
+    console.log("=====================================")
+    // const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
+    const isNearBy = checkBounds(landmark.viewport, userLocation);
+    console.log(isNearBy)
 
     const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
 
@@ -140,13 +143,13 @@ class BaseMap extends Component {
             <Text style={styles.exploreDirectionBtnText}>Get Direction</Text>
           </TouchableOpacity>
           <Section style={styles.exploreButtonSection}>
-            { checkHaversineDistance(userLocation, landmarkData.coordinate, landmarkData.distance)
+            { checkBounds(landmarkData.viewport, userLocation)
             ?
               <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount)} style={styles.exploreCheckInBtn}>
                 <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
                 <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.buttonLabel}</Text>
                 {this.state.checkInLoader ?
-                  <ActivityIndicator color="#ffffff"/>
+                  <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
                 : null}
               </TouchableOpacity>
             :

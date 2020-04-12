@@ -75,14 +75,15 @@ const baseStyles = {
   },
   searchInput: {
     color: colors.primeryBlue,
-    height: 40,
-    borderWidth: 1,
-    marginTop: spacing.medium,
+    height: 50,
+    elevation: 10,
     paddingLeft: spacing.medium,
     paddingTop: spacing.small,
     paddingBottom: spacing.small,
     borderRadius: 10,
-    marginBottom: spacing.medium,
+    backgroundColor: colors.white,
+    marginTop: spacing.extraLarge,
+    marginBottom: spacing.extraLarge,
     marginLeft: spacing.medium,
     marginRight: spacing.medium,
     fontSize: fonts.baseSize * 3
@@ -94,6 +95,31 @@ const baseStyles = {
   menuTab: {
     fontSize: fonts.baseSize * 8,
     color: colors.primeryBlue
+  },
+  headerBar: {
+    height: 90,
+    backgroundColor: colors.orange,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerBarTitle: {
+    color: '#fff',
+    fontSize: fonts.baseSize * 4,
+    fontWeight: 'bold',
+    marginTop: 25
+  },
+  headerBarBackIconWrapper: {
+    position: 'absolute',
+    top: '50%',
+    left: 20
+  },
+  headerBarBackIcon: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 4
+  },
+  explorePointsIcon: {
+    fontSize: fonts.baseSize * 2.5,
+    color: colors.white,
   }
 }
 

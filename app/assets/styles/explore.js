@@ -2,15 +2,16 @@ import { colors, spacing, fonts, dimensions } from './base';
 
 export const ExploreStyle = {
   exploreTextBtn: {
-    color: colors.white
+    color: colors.white,
+    fontSize: fonts.baseSize * 3
   },
   exploreBtnStyle: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: colors.white,
-    borderRadius: 15,
-    paddingTop: spacing.small,
-    paddingBottom: spacing.small,
+    position: 'relative',
+    zIndex: 100,
+    backgroundColor: colors.orange,
+    borderRadius: 10,
+    paddingTop: 7,
+    paddingBottom: 7,
     marginTop: spacing.medium
   },
   exploreBaseMapWrap: {
@@ -99,63 +100,55 @@ export const ExploreStyle = {
     height: 40,
     marginRight: spacing.small
   },
-  exploreBackgroundVideo: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-    opacity: 0.5
-  },
   exploreIntroText: {
-    fontSize: fonts.baseSize * 4,
+    fontSize: fonts.baseSize * 3,
     color: colors.white,
-    marginBottom: spacing.extraLarge
+    marginBottom: spacing.extraLarge,
+    backgroundColor: 'rgba(255, 126, 41, 0.8)'
   },
   exploreCountryText: {
-    fontSize: fonts.baseSize * 8,
+    marginTop: spacing.extraLarge * 3,
+    backgroundColor: 'rgba(255, 126, 41, 0.8)',
+    fontSize: fonts.baseSize * 6,
     color: colors.white,
+    paddingLeft: spacing.small,
+    paddingRight: spacing.small,
     marginBottom: spacing.small,
     textAlign: 'center'
   },
-  exploreIntroLogo: {
-    position: 'absolute',
-    top: 30,
-    width: 100,
-    height: 57,
-    opacity: 0.5
-  },
   exploreMessageAlertWrap: {
     position: 'absolute',
-    left: '10%',
-    bottom: 30,
+    left: '5%',
+    bottom: 40,
     width: '100%'
   },
   exploreMessageAlert: {
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderColor: 'rgba(255,255,255,0.8)',
-    borderRadius: 10,
+    elevation: 6,
+    backgroundColor: colors.blue,
+    borderRadius: 15,
     padding: spacing.medium,
-    borderWidth: 2,
-    width: '80%',
+    width: '90%',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: spacing.medium,
   },
   exploreMessageTextBtn: {
-    color: colors.black,
+    color: colors.orange,
+    fontSize: fonts.baseSize * 2.2,
     padding: 0,
     margin: 0
   },
   exploreMessageBtn: {
-    width: '50%',
-    backgroundColor: colors.white,
+    backgroundColor: colors.transparent,
     paddingBottom: 3,
     paddingTop: 3,
-    paddingRight: 5,
-    paddingLeft: 5,
+    paddingRight: 8,
+    paddingLeft: 8,
     marginBottom: 0,
-    marginTop: 3
+    marginTop: 3,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.orange
   },
   exploreMessageText: {
     color: colors.white
@@ -282,5 +275,80 @@ export const ExploreStyle = {
   exploreMarkerImage: { 
     width: 45,
     height: 45
+  },
+  exploreMainImage: {
+    alignItems: 'center',
+    height: 260,
+    width:'100%',
+    backgroundColor: colors.orange,
+    borderBottomLeftRadius: 44,
+    borderBottomRightRadius: 44,
+    marginBottom: spacing.large
+  },
+  exploreErrorMsg: {
+    marginTop: spacing.extraLarge * 4,
+    color: colors.white,
+    backgroundColor: colors.orange,
+    fontSize: fonts.baseSize * 4,
+    paddingLeft: 5,
+    paddingRight: 5
+  },
+  exploreBtnCountryWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 70,
+    height: 45,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
+    backgroundColor: colors.orange
+  },
+  exploreBtnCountryTextStyle: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 2
+  },
+  exploreIconCountry: {
+    fontSize: fonts.baseSize * 5,
+    color: colors.white
+  },
+  exploreCarouselItemWrapper: {
+    flex: 1,
+    height: 150
+  },
+  exploreCarouselItem: {
+    flex: 1,
+    height: 150,
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  exploreCarouselImage: {
+    width: '95%',
+    height: 100,
+    borderRadius: 15,
+    backgroundColor: colors.orange
+  },
+  exploreCarouselPoints: {
+    position:'absolute',
+    top: 89,
+    color: colors.white,
+    fontWeight:'bold',
+    fontSize: fonts.baseSize * 2.5,
+    paddingLeft: spacing.medium,
+    paddingRight: spacing.medium,
+    paddingTop: spacing.small - 2,
+    paddingBottom: spacing.small - 2,
+    backgroundColor: colors.yellow,
+    borderRadius: 10
+  },
+  exploreCarouselTitle: {
+    color: '#160442',
+    textAlign: 'center',
+    padding: spacing.medium
+  },
+  exploreAttractionTitle: {
+    fontSize: fonts.baseSize * 4,
+    fontWeight: 'bold',
+    color: '#17034A',
+    padding: 10,
+    paddingBottom: 20
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, ImageBackground, View, TouchableNativeFeedback, Animated, ActivityIndicator } from 'react-native';
 import { Section } from './common';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStyles } from '../assets/styles';
 import { CountriesStyles } from '../assets/styles/countries';
 import { countryColors } from '../settings/global.json';
@@ -40,7 +41,7 @@ export default class CountryList extends Component {
             {!countryOnline ? <Text style={styles.countryListOfflineLabel}>{'(Country not available)'}</Text> : null }
             {countryPoints || countryPoints === 0 ?
               <Animated.View style={{opacity: animatedPoins}}>
-                <Text style={[styles.countryListPoints, styles[backgroundColor]]}>{'Up to ' + countryPoints + ' pts'}</Text>
+                <Text style={[styles.countryListPoints, styles[backgroundColor]]}><Icon style={styles.explorePointsIcon} name="star"/>{' Up to ' + countryPoints + ' pts'}</Text>
               </Animated.View>
               :
               <ActivityIndicator color="#ffffff" />

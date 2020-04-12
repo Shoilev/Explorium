@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Share, Image, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import HeaderSearch from '../components/HeaderSearch';
+import { HeaderBar } from '../components/common';
 import { getFriends } from '../actions';
 import FriendList from '../components/FriendList';
 import { createStyles } from '../assets/styles';
@@ -52,6 +53,7 @@ class Friends extends Component {
     if(!isEmpty(friendsData)) {
       return (
       <View style={styles.friendsContainer}>
+        <HeaderBar headerBarNav={navigation}>{'Friends'}</HeaderBar>
         <FlatList
           data={activeFriends}
           renderItem={({item, index}) => this.renderItem(item,index,navigation)}
@@ -72,6 +74,7 @@ class Friends extends Component {
     else if(!isEmpty(errorMessage)) {
       return (
         <View style={styles.container}>
+          <HeaderBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={navigation}>{'Friends'}</HeaderBar>
           <Text>{errorMessage}</Text>
         </View>
       )
@@ -79,7 +82,8 @@ class Friends extends Component {
     else {
       return (
         <View style={styles.container}>
-          <ActivityIndicator />
+          <HeaderBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={navigation}>{'Friends'}</HeaderBar>
+          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
         </View>
       )
     }

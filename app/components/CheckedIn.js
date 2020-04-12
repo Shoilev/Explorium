@@ -47,6 +47,7 @@ export default class CheckedIn extends Component {
     const landmark = this.props.navigation.getParam('landmark', {});
     const discountData = this.props.navigation.getParam('discountData', false);
     console.log(discountData)
+    console.log(user)
 
     return (
       <View style={[styles.container, styles.checkedInContainer]}>

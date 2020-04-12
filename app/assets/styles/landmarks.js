@@ -19,7 +19,7 @@ export const LandmarksStyles = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: colors.primeryBlue,
+    backgroundColor: colors.orange,
     borderRadius: 50,
     marginBottom: spacing.large,
   },
@@ -37,18 +37,25 @@ export const LandmarksStyles = {
     alignItems: 'center',
     marginLeft: spacing.small,
     marginRight: spacing.small,
-    marginBottom: spacing.extraLarge
+    marginBottom: spacing.extraLarge,
+    elevation: 6,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: colors.white
+  },
+  landmarkBoxSpace: {
+    marginRight: spacing.extraLarge
   },
   landmarkImage: {
-    height: (dimensions.screenWidth - 60) / COLUMNS_NUM,
-    borderRadius: 20,
-    overflow: 'hidden',
+    height: (dimensions.screenWidth - 60) / 3,
     flex:1,
     alignItems:'center',
     justifyContent:'center',
-    elevation: 6,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     position: 'relative',
-    backgroundColor: colors.yellow
+    zIndex: 10,
+    backgroundColor: colors.orange
   },
   landmarksPointsWrap: {
     flex:1,
@@ -56,8 +63,9 @@ export const LandmarksStyles = {
     alignItems:'center',
     justifyContent:'center',
     position: 'absolute',
-    bottom: 20,
+    bottom: spacing.medium * -1,
     borderRadius: 30,
+    zIndex: 20,
     backgroundColor: colors.yellow,
   },
   landmarkPoints: {
@@ -74,7 +82,8 @@ export const LandmarksStyles = {
     overflow: 'hidden',
     textAlign: 'center',
     color: colors.primeryBlue,
-    marginTop: spacing.medium,
+    marginTop: spacing.large,
+    marginBottom: spacing.medium,
     fontSize: fonts.baseSize * 3
   },
   landmarksDescription: {
@@ -97,11 +106,11 @@ export const LandmarksStyles = {
     alignItems:'center',
     justifyContent:'center',
     position: 'absolute',
-    bottom: 20,
+    bottom: spacing.medium * -1,
     paddingLeft: spacing.medium,
     paddingRight: spacing.medium,
-    paddingTop: spacing.small,
-    paddingBottom: spacing.small,
+    paddingTop: spacing.small - 2,
+    paddingBottom: spacing.small - 2,
     borderRadius: 20,
     backgroundColor: colors.yellow,
   },
@@ -110,7 +119,6 @@ export const LandmarksStyles = {
     height: '20%',
     maxHeight: '30%',
     borderRadius: 20,
-    overflow: 'hidden',
     alignItems:'center',
     justifyContent:'center',
     backgroundColor: colors.yellow,
@@ -120,7 +128,7 @@ export const LandmarksStyles = {
     textAlign: 'center',
     color: colors.white,
     fontWeight: 'bold',
-    fontSize: fonts.baseSize * 3
+    fontSize: fonts.baseSize * 2.5
   },
   landmarkDetailsBtn: {
     backgroundColor: colors.orange,
@@ -162,6 +170,6 @@ export const LandmarksStyles = {
     fontSize: fonts.baseSize * 3
   },
   landmarkShadowActive: {
-    backgroundColor: '#1f1f1f'
+    backgroundColor: colors.primeryBlue
   }
 }

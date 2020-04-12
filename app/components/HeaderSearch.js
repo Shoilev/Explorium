@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { createStyles } from '../assets/styles';
 import { connect } from 'react-redux';
 import { updateCountries, updateFriends } from '../actions';

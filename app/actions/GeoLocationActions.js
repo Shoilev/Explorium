@@ -10,7 +10,7 @@ import {
   GEO_LOCATION_USER_FAIL,
   GEO_LOCATION_COUNTRY_CITY_SUCCESS,
   GEO_LOCATION_COUNTRY_CITY_FAIL,
-  GEO_LOCATION_VIDEO_URI
+  GEO_LOCATION_IMAGE_URI
 } from './types';
 
 Geolocation.configure({
@@ -64,29 +64,66 @@ export const requestLocationPermission = (requestCountry = false) => {
       }
     }).then(granted => {
       console.log(granted);
+      const defaultImageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2FBulgaria.jpg?alt=media';
       if(granted) {
           if(requestCountry) {
             console.log('Request country');
             Geolocation.getLatestLocation({ timeout: 6000 }).then(location => {
+              console.log(location)
               return dispatch(getLocationCountryAndCity(location.latitude, location.longitude)).then(result=>{
-                let videoURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2F' + result.userCountry + '%2Fintro.mp4?alt=media';
+                console.log(result.userCity)
+                console.log('result.userCity')
+                let imageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2F'+ result.userCountry + '.jpg?alt=media';
+                console.log('image')
+                console.log(imageURI)
 
-                let videoData = {
-                  videoURI,
-                  videoCountry: result.userCountry
+                let imageData = {
+                  imageURI,
+                  defaultImageURI: defaultImageURI,
+                  imageCountry: result.userCountry,
+                  imageCity: result.userCity,
+                  errorMsg: false
                 }
-                dispatch({ type: GEO_LOCATION_VIDEO_URI, payload: videoData });
+
+                dispatch({ type: GEO_LOCATION_IMAGE_URI, payload: imageData });
               });
             }).catch(err=>{
-              let defaultVideoURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2Fintro.mp4?alt=media&token=6308c168-820c-4900-8654-6beaff5f84e1';
-              dispatch({ type: GEO_LOCATION_VIDEO_URI, payload: defaultVideoURI });
-            })
+              let imageData = {
+                imageURI: defaultImageURI,
+                defaultImageURI: defaultImageURI,
+                imageCountry: 'Bulgaria',
+                imageCity: 'Sofia',
+                errorMsg: 'Please turn on your location!'
+              };
+
+              dispatch({ type: GEO_LOCATION_IMAGE_URI, payload: imageData });
+            });
           }
 
+          let isLoaded = false;
           Geolocation.subscribeToLocationUpdates(location => {
             console.log(location);
             console.log('You can use the Location');
-            dispatch({ type: GEO_LOCATION_FETCH_SUCCESS, payload: location[0]})
+            dispatch({ type: GEO_LOCATION_FETCH_SUCCESS, payload: location[0]});
+
+            if(!isLoaded) {
+              dispatch(getLocationCountryAndCity(location[0].latitude, location[0].longitude)).then(result=>{
+                console.log(result.userCity)
+                console.log('result.userCity')
+                let imageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2F'+ result.userCountry + '.jpg?alt=media';
+  
+                let imageData = {
+                  imageURI,
+                  defaultImageURI: defaultImageURI,
+                  imageCountry: result.userCountry,
+                  imageCity: result.userCity,
+                  errorMsg: false
+                }
+  
+                dispatch({ type: GEO_LOCATION_IMAGE_URI, payload: imageData });
+                isLoaded = true;
+              })
+            }
           });
       } else {
         dispatch({ type: GEO_LOCATION_USER_FAIL, payload: {} })
@@ -97,16 +134,34 @@ export const requestLocationPermission = (requestCountry = false) => {
   }
 }
 
+const getLocationDetails = (location) => {
+  return (dispatch) => {
+    return dispatch(getLocationCountryAndCity(location.latitude, location.longitude)).then(result=>{
+      console.log(result.userCity)
+      console.log('result.userCity')
+      let imageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2F'+ result.userCity + '.jpg?alt=media';
+
+      let imageData = {
+        imageURI,
+        imageCountry: result.userCountry,
+        imageCity: result.userCity,
+        errorMsg: false
+      }
+
+      dispatch({ type: GEO_LOCATION_IMAGE_URI, payload: imageData });
+    })
+ }
+}
+
 export const getLocationCountryAndCity = ( lat, long ) => {
   return (dispatch) => {
     const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&key='+ GOOGLE_MAPS_APIKEY;
-    console.log(url);
     return fetch(url, {
-      method: 'POST',
+      method: 'GET',
       headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-      },
+      }
     })
     .then((response) => response.json())
     .then((responseData) => {

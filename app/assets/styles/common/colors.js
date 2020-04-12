@@ -1,6 +1,6 @@
 export const Colors = {
   yellowOpacity: 'rgba(246, 202, 23, 0.5)',
-  orangeOpacity: 'rgba(253, 129, 2, 0.5)',
+  orangeOpacity: 'rgba(255, 126, 41, 0.5)',
   lightBlueOpacity: 'rgba(3, 215, 219, 0.5)',
   darkBlueOpacity: 'rgba(3, 146, 221, 0.5)',
   purpleOpacity: 'rgba(95, 98, 159, 0.5)',
@@ -12,11 +12,12 @@ export const Colors = {
   darkGray: 'rgb(20, 22, 54)',
   black: '#000000',
   yellow: 'rgb(246, 202, 23)',
-  orange: 'rgb(253, 129, 2)',
+  orange: 'rgb(255, 126, 41)',
+  blue: 'rgb(54, 67, 255)',
   lightBlue: 'rgb(3, 215, 219)',
   darkBlue: 'rgb(3, 146, 221)',
   exploredBlueOpacity: 'rgba(4, 130, 178, 0.6)',
-  primeryBlue: '#1a4e6c',
+  primeryBlue: '#160442',
   purple: 'rgb(95, 98, 159)',
   grassGreen: '#6aa406'
 };

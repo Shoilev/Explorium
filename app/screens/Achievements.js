@@ -65,7 +65,7 @@ class Achievements extends Component {
     } else {
       return (
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
         </View>
       );
     }

@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
-import { ImageBackground, View, Text, Image, Animated, ActivityIndicator } from 'react-native';
-import firebase from 'react-native-firebase';
+import { ImageBackground, Image, View, Text, Dimensions, Animated, StatusBar, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import Video from 'react-native-video';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Geolocation from 'react-native-location';
 import SplashScreen from 'react-native-splash-screen';
-import { requestLocationPermission, getMessageAlert } from '../actions';
+import Carousel from 'react-native-snap-carousel';
+import { requestLocationPermission, getMessageAlert, getLandmarksByLocation, getAchievementsPerUser } from '../actions';
 import { createStyles } from '../assets/styles';
-import { images } from '../assets/images';
 import { ExploreStyle } from '../assets/styles/explore';
 import { Button } from '../components/common';
-import { isEmpty } from '../helpers';
+import { isEmpty, isUserAchieved } from '../helpers';
 import { Screens, App } from '../resources/labels.json';
+import { DefaultLocationData  } from '../settings/global.json';
 
 const styles = createStyles(ExploreStyle);
-const exploreumSrc = images.exploreumBackground;
-const exploreWhiteLogo = images.whiteLogo;
 
 class Explore extends Component {
   state = {
-    loader: false,
-    loadFallbackVideo: false,
-    animateButton: new Animated.Value(0),
-    animateText: new Animated.Value(0)
+    animateButton: new Animated.Value(1),
+    animatedMessageBox: new Animated.Value(40) //-20
+  }
+
+  goToLandmark(landmarkData, isAchieved) {
+    const { navigation, landmarks } = this.props;
+
+    navigation.navigate('LandmarkDetails', {landmark: landmarkData, isAchieved, landmarksCount: landmarks.landmarksAllData.length})
   }
 
   onButtonPress() {
@@ -34,26 +37,54 @@ class Explore extends Component {
   componentWillMount() {
     this.props.requestLocationPermission(true);
     this.props.getMessageAlert();
+
+    this.setState({
+      viewport: {
+        width: Dimensions.get('window').width
+      }
+    });
+    this.props.getAchievementsPerUser();
+
+    Geolocation.getLatestLocation({ timeout: 6000 }).then(location => {
+      this.props.getLandmarksByLocation(location.latitude, location.longitude);
+    }).catch((error) => {
+      this.props.getLandmarksByLocation(DefaultLocationData.latitude, DefaultLocationData.longitude); // Sofia
+    })
+
   }
 
   componentDidMount() {
     SplashScreen.hide();
   }
 
-  handleScreenInformation() {
-    this.setState({loader: true});
-  }
+  _onError = () => { this.setState({ exploreBackgroundImageFailed: true }); }
 
-  loadFallbackVideo() {
-    this.setState({loadFallbackVideo : true});
+  _renderItem (item, index, navigation) {
+    const { achievementsData } = this.props.achievements;
+    let isAchieved = false;
+    if(!isEmpty(achievementsData) && achievementsData.achievements) {
+      isAchieved = isUserAchieved(achievementsData.achievements, item);
+    }
+
+    return (
+      <View style={styles.exploreCarouselItemWrapper}>
+        <TouchableOpacity onPress={()=>{this.goToLandmark(item, isAchieved)}} style={styles.exploreCarouselItem}>
+          <Image imageStyle={{ borderRadius: 15 }} style={styles.exploreCarouselImage} source={{uri: item.landmarkImage}}/>
+          <Text style={styles.exploreCarouselPoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.landmarkPoints + ' points'}</Text>
+          <Text style={styles.exploreCarouselTitle}>{item.landmarkName}</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
 
   render() {
-    const { userLocatioVideoUri, userLocation } = this.props.userGeoLocation;
+    const { userLocatioImageUri, userLocation } = this.props.userGeoLocation;
     const { message, link } = this.props.messagesAlert;
-    let { animateButton, animateText } = this.state;
+    const { landmarksData, landmarksAllData, error } = this.props.landmarks;
+    const exploreBackgroundImage = this.state.exploreBackgroundImageFailed ? userLocatioImageUri.defaultImageURI: userLocatioImageUri.imageURI;
+    let { animateButton, animatedMessageBox } = this.state;
 
-    if(!isEmpty(userLocation)) {
+    if(!isEmpty(userLocation) && !isEmpty(userLocatioImageUri)) {
       Animated.timing(
         animateButton,
         {
@@ -63,88 +94,101 @@ class Explore extends Component {
       ).start();
     }
 
-    if(this.state.loader) {
+    if(!isEmpty(message)) {
       Animated.timing(
-        animateText,
+        animatedMessageBox,
         {
-          toValue: 1,
-          duration: 800,
+          toValue: 40,
+          duration: 600,
         }
       ).start();
     }
 
       return (
-        // quests screen based on your location
-        <ImageBackground source={exploreumSrc} style={styles.backgroundImage}>
-          <View style={styles.container}>
+        <View style={[styles.container, {justifyContent: 'flex-start'}]}>
+          <StatusBar translucent backgroundColor={'transparent'}/>
+          <ImageBackground source={{uri: exploreBackgroundImage}} onError={this._onError} imageStyle={{ borderBottomLeftRadius: 44, borderBottomRightRadius: 44 }} style={styles.exploreMainImage}>
 
-            { !isEmpty(userLocatioVideoUri) && !this.state.loadFallbackVideo ?
-              <Video source={ {uri:userLocatioVideoUri.videoURI} }
-              ref={(ref) => {
-                this.player = ref
-              }}
-              muted={true}
-              repeat={true}
-              onLoadStart={this.handleScreenInformation.bind(this)}
-              onError={this.loadFallbackVideo.bind(this)}
-              resizeMode={"cover"}
-              style={styles.exploreBackgroundVideo} />
-              : null
-            }
-
-            { this.state.loadFallbackVideo ? 
-              <Video source={ {uri:'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/video%2Fintro.mp4?alt=media&token=6308c168-820c-4900-8654-6beaff5f84e1'} }
-              ref={(ref) => {
-                this.player = ref
-              }}
-              muted={true}
-              repeat={true}
-              onError={this.loadFallbackVideo.bind(this)}
-              resizeMode={"cover"}
-              style={styles.exploreBackgroundVideo} /> 
-              :
-              null
-            }
+            {userLocatioImageUri.errorMsg && userLocatioImageUri.errorMsg.length >= 0 ? <Text style={styles.exploreErrorMsg}>{userLocatioImageUri.errorMsg}</Text> : null }
 
             <View style={styles.exploreLoadingWrapper}>
-               { !this.state.loader ? <ActivityIndicator color="#ffffff" size="large" />: null }
+                { !userLocatioImageUri.imageURI ? <ActivityIndicator color="#ffffff" size="large" />: null }
             </View>
 
-            <Animated.View style={[styles.exploreIntroLogo, {opacity: animateText}]}>
-              { this.state.loader ? <Image style={styles.exploreIntroLogo} source={exploreWhiteLogo} /> : null }
+            {/* <Animated.View style={{opacity: animateText}}>
+              { !userLocatioImageUri.errorMsg ? <Text style={styles.exploreCountryText}>{'Explore ' + userLocatioImageUri.imageCountry}</Text> : null }
+            </Animated.View> */}
+
+            {/* <Animated.View style={{opacity: animateText}}>
+              { !userLocatioImageUri.errorMsg ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
+            </Animated.View> */}
+
+            <Animated.View style={{zIndex: 20, position:'absolute', right: 0, top: 70, opacity: animateButton}}>
+              {!userLocatioImageUri.errorMsg ?
+                <TouchableOpacity activeOpacity={0.5} onPress={()=>{this.props.navigation.navigate('Countries')}} style={styles.exploreBtnCountryWrapper}>
+                  <Icon style={styles.exploreIconCountry} name="globe"/>
+                  <Text style={styles.exploreBtnCountryTextStyle}>
+                    {Screens.Countries.title}
+                  </Text>
+                </TouchableOpacity>
+              : null }
             </Animated.View>
 
-            <Animated.View style={{opacity: animateText}}>
-              { this.state.loader ? <Text style={styles.exploreCountryText}>{'Explore ' + userLocatioVideoUri.videoCountry}</Text> : null }
+            <Animated.View style={{zIndex: 20, position:'absolute', bottom: 20, opacity: animateButton}}>
+              {!userLocatioImageUri.errorMsg && userLocatioImageUri.imageCity ?
+                <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.title + ' ' + userLocatioImageUri.imageCity}</Button>
+              : null }
             </Animated.View>
+          </ImageBackground>
 
-            <Animated.View style={{opacity: animateText}}>
-              { this.state.loader ? <Text style={styles.exploreIntroText}>{Screens.Explore.introTitle}</Text> : null }
-            </Animated.View>
-
-            <Animated.View style={{opacity: animateButton}}>
-              <Button textStyle={styles.exploreTextBtn} buttonStyle={styles.exploreBtnStyle} onPress={this.onButtonPress.bind(this)}>{Screens.Explore.buttonTitle}</Button>
-            </Animated.View>
-
-            {message ? 
-              <Animated.View style={[{opacity: animateText}, styles.exploreMessageAlertWrap]}>
-                <View style={styles.exploreMessageAlert}>
-                  <Text style={styles.exploreMessageText}>{message}</Text>
-                  {link ? 
-                    <Button textStyle={styles.exploreMessageTextBtn} buttonStyle={styles.exploreMessageBtn} onPress={()=>{this.props.navigation.navigate(link)}}>Check here</Button>
-                  : null
-                  }
-                </View>
-              </Animated.View>
-            : null }
+          {!isEmpty(landmarksAllData) ?
+            <View
+              onLayout={() => {
+                this.setState({
+                    viewport: {
+                        width: Dimensions.get('window').width,
+                    }
+                });
+              }}
+            >
+              <Text style={styles.exploreAttractionTitle}>{error.errorMessage ? 'We recommend you to visit ' + DefaultLocationData.city : 'Top attractions in ' + userLocatioImageUri.imageCity}</Text>
+              <Carousel
+                ref={(c) => { this._carousel = c; }}
+                data={landmarksAllData}
+                layout={'default'}
+                renderItem={({item, index}) => this._renderItem(item,index,this.props.navigation)}
+                sliderWidth={this.state.viewport.width}
+                itemWidth={this.state.viewport.width / 2.5}
+                inactiveSlideScale={1}
+                inactiveSlideOpacity={1}
+                itemHeight={150}
+                windowSize={1}
+                loop={true}
+                firstItem={0}
+              />
+            </View>
+          : 
+          <View style={{height: 140, justifyContent:'center', alignItems:'center'}}>
+            <ActivityIndicator color="rgb(255, 126, 41)" size="large" />
           </View>
-        </ImageBackground>
+          }
+
+          <Animated.View style={[styles.exploreMessageAlertWrap, {bottom: animatedMessageBox}]}>
+            <View style={styles.exploreMessageAlert}>
+              <Text style={styles.exploreMessageText}>{message}</Text>
+              {link ? 
+                <Button textStyle={styles.exploreMessageTextBtn} buttonStyle={styles.exploreMessageBtn} onPress={()=>{this.props.navigation.navigate(link)}}>Check here</Button>
+              : null
+              }
+            </View>
+          </Animated.View>
+        </View>
       );
   }
 }
 
-const mapStateToProps = ({userGeoLocation, messagesAlert}) => {
-  return { userGeoLocation, messagesAlert };
+const mapStateToProps = ({userGeoLocation, messagesAlert, landmarks, achievements}) => {
+  return { userGeoLocation, messagesAlert, landmarks, achievements };
 };
 
-export default connect(mapStateToProps, { requestLocationPermission, getMessageAlert })(Explore);
+export default connect(mapStateToProps, { requestLocationPermission, getMessageAlert, getLandmarksByLocation, getAchievementsPerUser })(Explore);

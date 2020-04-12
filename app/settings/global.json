@@ -8,5 +8,11 @@
   "Discount": {
     "explorePercentRate": 75,
     "validHoursPeriod": 12
+  },
+  "DefaultLocationData": {
+    "country": "Bulgaria",
+    "city": "Sofia",
+    "latitude": "42.6846",
+    "longitude": "23.319"
   }
 }

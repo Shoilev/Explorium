@@ -30,3 +30,19 @@ export const checkHaversineDistance = (coords1, coords2, distance = false, compa
   return d < finalDistance; // 50 meters is default
   // return d < 10000;
 }
+
+export const checkBounds = (landmarkBounds, userLocation) => {
+  var eastBound = userLocation.longitude < landmarkBounds.northeast.lng;
+  var westBound = userLocation.longitude > landmarkBounds.southwest.lng;
+  var inLong;
+
+  if (landmarkBounds.northeast.lng < landmarkBounds.southwest.lng) {
+      inLong = eastBound || westBound;
+  } else {
+      inLong = eastBound && westBound;
+  }
+
+  var inLat = userLocation.latitude > landmarkBounds.southwest.lat && userLocation.latitude < landmarkBounds.northeast.lat;
+
+  return inLat && inLong;
+}

@@ -28,7 +28,7 @@ class Profile extends Component {
     if(isEmpty(achievementsData)) {
       return (
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
         </View>
       );
     } else {
@@ -70,6 +70,13 @@ class Profile extends Component {
             <Text>Points:</Text>
             <Text style={styles.profileRightScore}>{achievementsData.allPoints}</Text>
           </View>
+
+          <TouchableOpacity
+            style={[styles.button, styles.profileBtn]}
+            onPress={()=>{this.props.navigation.navigate('Friends')}}
+          >
+            <Text style={styles.profileBtnText}> Friends </Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.button, styles.profileBtn]}

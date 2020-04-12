@@ -120,7 +120,7 @@ class ExploreMap extends React.Component {
     } else if(isEmpty(landmarksData) || isEmpty(landmarksAllData) && isEmpty(markers)) {
       return(
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
         </View>
       )
     } else {

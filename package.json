@@ -16,6 +16,7 @@
     "react-native-contacts": "^3.1.4",
     "react-native-fbsdk": "^0.8.0",
     "react-native-firebase": "^5.3.1",
+    "react-native-fontawesome": "^7.0.0",
     "react-native-fs": "^2.13.3",
     "react-native-location": "^2.2.0",
     "react-native-maps": "^0.24.2",
@@ -36,7 +37,7 @@
     "babel-jest": "23.6.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
-    "react-native-vector-icons": "^6.1.0",
+    "react-native-vector-icons": "^6.6.0",
     "react-test-renderer": "16.6.0-alpha.8af6728"
   },
   "jest": {
