@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import FontAwesome, { Icons, SolidIcons, RegularIcons, BrandIcons } from 'react-native-fontawesome';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import IconIon from 'react-native-vector-icons/Ionicons';
 import { Image } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator, StackViewTransitionConfigs  } from 'react-navigation';
 import { createStyles } from './assets/styles';
@@ -29,6 +26,7 @@ import BaseMap from './components/BaseMap';
 import ExploreMap from './components/ExploreMap';
 import CheckedIn from './components/CheckedIn';
 import UserInfo from './components/UserInfo';
+import { colors } from './assets/styles/base';
 
 const styles = createStyles();
 
@@ -219,7 +217,7 @@ export const Tabs = createBottomTabNavigator({
   animationEnabled: true,
   tabBarOptions: {
     activeTintColor: 'rgb(255, 126, 41)',
-    inactiveTintColor: '#78849E',
+    inactiveTintColor: colors.navGray,
     labelStyle: {
       fontSize: 12
     },

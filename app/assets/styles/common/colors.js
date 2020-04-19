@@ -7,6 +7,7 @@ export const Colors = {
   darkGreyOpacity: 'rgba(20, 22, 54, 0.4)',
   transparent: 'transparent',
   white: '#ffffff',
+  navGray: '#78849E',
   gray: '#DDDDDD',
   lightGray: '#f7f7f7',
   darkGray: 'rgb(20, 22, 54)',

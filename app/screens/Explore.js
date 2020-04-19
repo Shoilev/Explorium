@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ImageBackground, Image, View, Text, Dimensions, Animated, StatusBar, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Geolocation from 'react-native-location';
 import SplashScreen from 'react-native-splash-screen';
 import Carousel from 'react-native-snap-carousel';
@@ -126,7 +127,7 @@ class Explore extends Component {
             <Animated.View style={{zIndex: 20, position:'absolute', right: 0, top: 70, opacity: animateButton}}>
               {!userLocatioImageUri.errorMsg ?
                 <TouchableOpacity activeOpacity={0.5} onPress={()=>{this.props.navigation.navigate('Countries')}} style={styles.exploreBtnCountryWrapper}>
-                  <Icon style={styles.exploreIconCountry} name="globe"/>
+                  <FontAwesome5 style={styles.exploreIconCountry} name={'globe-europe'} solid />
                   <Text style={styles.exploreBtnCountryTextStyle}>
                     {Screens.Countries.title}
                   </Text>

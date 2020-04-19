@@ -86,6 +86,12 @@ export const LandmarksStyles = {
     marginBottom: spacing.medium,
     fontSize: fonts.baseSize * 3
   },
+  landmarkTitle: {
+    color: colors.orange,
+    marginTop: spacing.medium,
+    marginBottom: spacing.medium,
+    fontSize: fonts.baseSize * 4
+  },
   landmarksDescription: {
     textAlign: 'center',
     color: colors.primeryBlue,
@@ -112,13 +118,14 @@ export const LandmarksStyles = {
     paddingTop: spacing.small - 2,
     paddingBottom: spacing.small - 2,
     borderRadius: 20,
+    zIndex: 20,
     backgroundColor: colors.yellow,
   },
   landmarkDetailsImage: {
-    flex: 1,
-    height: '20%',
-    maxHeight: '30%',
-    borderRadius: 20,
+    height: 260,
+    width:'100%',
+    borderBottomRightRadius: 44,
+    borderBottomLeftRadius: 44,
     alignItems:'center',
     justifyContent:'center',
     backgroundColor: colors.yellow,
@@ -132,11 +139,16 @@ export const LandmarksStyles = {
   },
   landmarkDetailsBtn: {
     backgroundColor: colors.orange,
-    borderRadius: 5,
+    borderRadius: 10,
     marginTop: spacing.large
   },
   landmarkDetailsBtnText: {
-    color: colors.white
+    color: colors.white,
+    fontWeight: 'bold'
+  },
+  landmarkDetailsBtnIcon: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 4
   },
   landmarkExploredLabelWrapper: {
     position:'absolute',
@@ -144,10 +156,13 @@ export const LandmarksStyles = {
     flexDirection: 'row',
     justifyContent:'center',
     alignItems: 'center',
+    borderBottomLeftRadius: 44,
+    borderBottomRightRadius: 44,
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+    zIndex: 10,
     backgroundColor: 'rgba(4, 130, 178, 0.6)'
   },
   landmarkExploredImage: {
@@ -171,5 +186,21 @@ export const LandmarksStyles = {
   },
   landmarkShadowActive: {
     backgroundColor: colors.primeryBlue
+  },
+  landmarkHeaderBar: {
+    backgroundColor: 'transparent'
+  },
+  landmarkHeaderBarIcon: {
+    position: 'absolute',
+    top: 50,
+    left: 0,
+    zIndex: 30,
+    backgroundColor: colors.orange,
+    width: 70,
+    height: 45,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 }

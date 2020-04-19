@@ -57,7 +57,7 @@
   },
   "Components": {
     "LandmarkDetails": {
-      "buttonTitle": "Get direction"
+      "buttonTitle": "GO Explore"
     },
     "CheckIn": {
       "errorMessageFarAway": "You are too far away from the landmark",
