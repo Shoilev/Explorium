@@ -71,8 +71,18 @@ class Explore extends Component {
       <View style={styles.exploreCarouselItemWrapper}>
         <TouchableOpacity onPress={()=>{this.goToLandmark(item, isAchieved)}} style={styles.exploreCarouselItem}>
           <Image imageStyle={{ borderRadius: 15 }} style={styles.exploreCarouselImage} source={{uri: item.landmarkImage}}/>
-          <Text style={styles.exploreCarouselPoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.landmarkPoints + ' points'}</Text>
+          <Text style={[styles.explorePoints, styles.exploreCarouselPoints]}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.landmarkPoints + ' points'}</Text>
           <Text style={styles.exploreCarouselTitle}>{item.landmarkName}</Text>
+
+          { isAchieved ?
+          <View style={styles.exploreExploredLabelImage}>
+            <Image style={styles.exploreExploredImage} source={require('../assets/images/checked-icon.png')} />
+            <Text style={styles.exploreExploredLabel}>
+              {Screens.Countries.Landmarks.exploredLabel}
+            </Text>
+          </View>
+          : null
+          }
         </TouchableOpacity>
       </View>
     );

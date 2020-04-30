@@ -75,15 +75,15 @@ const baseStyles = {
   },
   searchInput: {
     color: colors.primeryBlue,
-    height: 50,
+    height: 45,
     elevation: 10,
     paddingLeft: spacing.medium,
     paddingTop: spacing.small,
     paddingBottom: spacing.small,
     borderRadius: 10,
     backgroundColor: colors.white,
-    marginTop: spacing.extraLarge,
-    marginBottom: spacing.extraLarge,
+    marginTop: spacing.large,
+    marginBottom: spacing.large,
     marginLeft: spacing.medium,
     marginRight: spacing.medium,
     fontSize: fonts.baseSize * 3
@@ -97,7 +97,7 @@ const baseStyles = {
     color: colors.primeryBlue
   },
   headerBar: {
-    height: 90,
+    height: 80,
     backgroundColor: colors.orange,
     justifyContent: 'center',
     alignItems: 'center',
@@ -120,6 +120,18 @@ const baseStyles = {
   explorePointsIcon: {
     fontSize: fonts.baseSize * 2.5,
     color: colors.white,
+  },
+  explorePoints: {
+    textAlign: 'center',
+    color: colors.white,
+    fontWeight:'bold',
+    fontSize: fonts.baseSize * 2.2,
+    paddingLeft: spacing.medium,
+    paddingRight: spacing.medium,
+    paddingTop: 3,
+    paddingBottom: 3,
+    backgroundColor: colors.yellow,
+    borderRadius: 10
   }
 }
 

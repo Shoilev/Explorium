@@ -41,7 +41,7 @@ export default class CountryList extends Component {
             {!countryOnline ? <Text style={styles.countryListOfflineLabel}>{'(Country not available)'}</Text> : null }
             {countryPoints || countryPoints === 0 ?
               <Animated.View style={{opacity: animatedPoins}}>
-                <Text style={[styles.countryListPoints, styles[backgroundColor]]}><Icon style={styles.explorePointsIcon} name="star"/>{' Up to ' + countryPoints + ' pts'}</Text>
+                <Text style={[styles.explorePoints, styles[backgroundColor]]}><Icon style={styles.explorePointsIcon} name="star"/>{' Up to ' + countryPoints + ' pts'}</Text>
               </Animated.View>
               :
               <ActivityIndicator color="#ffffff" />

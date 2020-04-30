@@ -43,7 +43,7 @@ class LandmarksList extends Component {
     return (
       <TouchableOpacity activeOpacity={0.8} style={[styles.landmarksBox, index % 2 === 0 ? styles.landmarkBoxSpace : {}]} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved, landmarksCount: landmarksAllData.length})}>
           <ImageBackground source={{uri: item.landmarkImage}} imageStyle={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20}} style={[styles.backgroundImage, styles.landmarkImage]}>
-            <View style={styles.landmarksPointsWrap}><Text style={styles.landmarkPoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.landmarkPoints} points</Text></View>
+            <View style={styles.landmarksPointsWrap}><Text style={styles.explorePoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.landmarkPoints} points</Text></View>
             { isAchieved ?
               <View style={styles.landmarkExploredLabelWrapper}>
                 <Image style={styles.landmarkExploredImage} source={require('../assets/images/checked-icon.png')} />

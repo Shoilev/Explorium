@@ -10,7 +10,7 @@ import { getCitiesPerCountry } from '../actions';
 import { App } from '../resources/labels.json';
 
 const styles = createStyles(CitiesStyles);
-const itemWidthValue = 1.5;
+const itemWidthValue = 1.4;
 
 class CitiesList extends Component {
   componentWillMount() {
@@ -35,7 +35,7 @@ class CitiesList extends Component {
       <Section style={styles.citiesSlide}>
         <TouchableOpacity onPress={()=>{navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName, cityPoints: item.cityPoints})}} style={styles.citiesSlideWrapper}>
           <ImageBackground source={{uri: item.cityImage}} imageStyle={{ borderBottomLeftRadius: 40, borderBottomRightRadius: 40, height: '100%' }} style={styles.citiesImage}>
-            <Text style={styles.citiesPoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.cityPoints + ' points'}</Text>
+            <Text style={[styles.explorePoints, styles.citiesPoints]}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.cityPoints + ' points'}</Text>
           </ImageBackground>
           <View style={styles.citiesDetails}>
             <Text style={styles.cititesTitle}>{ item.cityName }</Text>

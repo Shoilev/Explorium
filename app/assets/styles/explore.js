@@ -224,6 +224,20 @@ export const ExploreStyle = {
     bottom: 0,
     backgroundColor: colors.exploredBlueOpacity
   },
+  exploreExploredLabelImage: {
+    position:'absolute',
+    flex:1,
+    flexDirection: 'row',
+    justifyContent:'center',
+    alignItems: 'center',
+    top: 0,
+    left: 0,
+    backgroundColor: colors.exploredBlueOpacity,
+    width: '100%',
+    height: 100,
+    borderRadius: 15,
+    zIndex: 15
+  },
   exploreExploredImage: {
     width: 25,
     height: 25,
@@ -312,7 +326,8 @@ export const ExploreStyle = {
   },
   exploreCarouselItemWrapper: {
     flex: 1,
-    height: 150
+    height: 150,
+    marginLeft: spacing.medium
   },
   exploreCarouselItem: {
     flex: 1,
@@ -321,7 +336,7 @@ export const ExploreStyle = {
     textAlign: 'center'
   },
   exploreCarouselImage: {
-    width: '95%',
+    width: '100%',
     height: 100,
     borderRadius: 15,
     backgroundColor: colors.orange
@@ -329,15 +344,7 @@ export const ExploreStyle = {
   exploreCarouselPoints: {
     position:'absolute',
     top: 89,
-    color: colors.white,
-    fontWeight:'bold',
-    fontSize: fonts.baseSize * 2.5,
-    paddingLeft: spacing.medium,
-    paddingRight: spacing.medium,
-    paddingTop: spacing.small - 2,
-    paddingBottom: spacing.small - 2,
-    backgroundColor: colors.yellow,
-    borderRadius: 10
+    zIndex: 20
   },
   exploreCarouselTitle: {
     color: '#160442',

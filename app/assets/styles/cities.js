@@ -3,12 +3,12 @@ import { colors, spacing, fonts, dimensions } from './base';
 export const CitiesStyles = {
   citiesSlide: {
     flex: 1,
-    borderRadius: 10,
+    borderRadius: 20,
     overflow: 'hidden',
     marginTop: spacing.extraLarge,
     marginBottom: spacing.extraLarge * 2,
-    marginLeft: spacing.medium,
-    marginRight: spacing.extraLarge,
+    marginLeft: spacing.small,
+    marginRight: spacing.small,
     backgroundColor: colors.white,
     elevation: 6,
   },
@@ -29,14 +29,7 @@ export const CitiesStyles = {
   citiesPoints: {
     position: 'absolute',
     bottom: spacing.medium * -1,
-    color: colors.white,
-    backgroundColor: colors.yellow,
-    fontSize: fonts.baseSize * 2.5,
-    paddingLeft: spacing.medium,
-    paddingRight: spacing.medium,
-    paddingTop: 2,
-    paddingBottom: 2,
-    borderRadius: 10,
+    fontSize: fonts.baseSize * 2.3,
     zIndex: 20
   },
   citiesDetails: {
@@ -65,15 +58,13 @@ export const CitiesStyles = {
     fontSize: fonts.baseSize * 2.5
   },
   citiesTextBtn: {
-    color: colors.orange,
+    color: colors.white,
   },
   citiesBtnStyle: {
-    backgroundColor: colors.white,
-    borderWidth: 2,
-    borderColor: colors.orange,
-    borderRadius: 15,
-    paddingTop: 2,
-    paddingBottom: 2,
+    backgroundColor: colors.orange,
+    borderRadius: 10,
+    paddingTop: spacing.small,
+    paddingBottom: spacing.small,
     marginTop: spacing.extraLarge
   }
 }

@@ -68,15 +68,6 @@ export const LandmarksStyles = {
     zIndex: 20,
     backgroundColor: colors.yellow,
   },
-  landmarkPoints: {
-    textAlign: 'center',
-    color: colors.white,
-    fontSize: fonts.baseSize * 2.5,
-    paddingTop: 1,
-    paddingBottom: 1,
-    paddingLeft: 8,
-    paddingRight: 8
-  },
   landmarksText: {
     height: 40,
     overflow: 'hidden',
@@ -122,7 +113,7 @@ export const LandmarksStyles = {
     backgroundColor: colors.yellow,
   },
   landmarkDetailsImage: {
-    height: 260,
+    height: 220,
     width:'100%',
     borderBottomRightRadius: 44,
     borderBottomLeftRadius: 44,
@@ -192,7 +183,7 @@ export const LandmarksStyles = {
   },
   landmarkHeaderBarIcon: {
     position: 'absolute',
-    top: 50,
+    top: 40,
     left: 0,
     zIndex: 30,
     backgroundColor: colors.orange,

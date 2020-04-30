@@ -9,7 +9,7 @@ export const CountriesStyles = {
     marginBottom: spacing.medium,
     marginLeft: spacing.medium,
     marginRight: spacing.medium,
-    height: 120,
+    height: 100,
     borderRadius:20,
     overflow: 'hidden',
     textAlign: 'center'
@@ -22,15 +22,6 @@ export const CountriesStyles = {
     textAlign: 'center',
     fontSize: fonts.baseSize * 6,
     fontWeight: 'bold'
-  },
-  countryListPoints: {
-    paddingLeft: spacing.medium,
-    paddingRight: spacing.medium,
-    paddingTop: spacing.small,
-    paddingBottom: spacing.small,
-    fontSize: fonts.baseSize * 2.5,
-    color: colors.white,
-    borderRadius: 10
   },
   countryListOfflineLabel: {
     color: colors.white,

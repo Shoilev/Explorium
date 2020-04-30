@@ -21,16 +21,12 @@ export const checkInLeveling = (landmark, userUID, userAchievements) => {
 
   let isLevelUp = checkLevelUp(currentLevel, currentExperience);
 
-  console.log(currentLevel)
-  console.log(userAchievements.experience)
-  console.log(landmark.landmarkPoints)
-  console.log(currentExperience)
-  console.log(isLevelUp)
+  let landmarkData = {...landmark, timestamp: Date.now()}
 
   if(isLevelUp) {
     let xp = currentExperience - getExperience(currentLevel + 1);
     return db.update({
-      achievements: firebase.firestore.FieldValue.arrayUnion(landmark),
+      achievements: firebase.firestore.FieldValue.arrayUnion(landmarkData),
       allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints),
       level: firebase.firestore.FieldValue.increment(1),
       experience: xp
@@ -42,7 +38,7 @@ export const checkInLeveling = (landmark, userUID, userAchievements) => {
     });
   } else {
     return db.update({
-      achievements: firebase.firestore.FieldValue.arrayUnion(landmark),
+      achievements: firebase.firestore.FieldValue.arrayUnion(landmarkData),
       allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints),
       experience: firebase.firestore.FieldValue.increment(landmark.landmarkPoints)
     }).then(()=>{

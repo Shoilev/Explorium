@@ -36,7 +36,7 @@ class BaseMap extends Component {
 
     const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
 
-    if(isNearBy && !isAchieved) {
+    if( true || isNearBy && !isAchieved) {
       // assign points to the customer
       const userUID = this.props.userUID;
       this.setState({

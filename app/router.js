@@ -181,9 +181,9 @@ export const Tabs = createBottomTabNavigator({
       tabBarLabel: Screens.Achievements.title,
       tabBarIcon:({ focused }) => (
         focused ?
-        <Image style={{width: 45, height: 39, marginBottom: 1}} source={require('./assets/images/trophySelected.png')} />
+        <Image style={{width: 40, height: 35, marginBottom: 1}} source={require('./assets/images/trophySelected.png')} />
         :
-        <Image style={{width: 31, height: 27, marginBottom: 5}} source={require('./assets/images/trophy.png')} />
+        <Image style={{width: 28, height: 25, marginBottom: 5}} source={require('./assets/images/trophy.png')} />
       ),
     },
   },
@@ -206,9 +206,9 @@ export const Tabs = createBottomTabNavigator({
       tabBarLabel: Screens.Profile.title,
       tabBarIcon:({ focused }) => (
         focused ?
-        <Image style={{width: 32, height: 44, marginBottom: 1}} source={require('./assets/images/profileSelected.png')} />
+        <Image style={{width: 25, height: 35, marginBottom: 1}} source={require('./assets/images/profileSelected.png')} />
         :
-        <Image style={{width: 22, height: 30, marginBottom: 5}} source={require('./assets/images/profile.png')} />
+        <Image style={{width: 19, height: 26, marginBottom: 5}} source={require('./assets/images/profile.png')} />
       ),
     },
   },
