@@ -1,5 +1,4 @@
 import { colors, spacing, fonts } from './base';
-import { auth } from 'react-native-firebase';
 
 export const AchievementsStyle = {
   achievementsListCard: {

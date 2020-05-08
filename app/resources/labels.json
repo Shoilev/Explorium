@@ -10,7 +10,8 @@
         "buttonNegative": "Cancel",
         "buttonPositive": "OK"
       }
-    }
+    },
+    "shareMessage": "Join us and download our app! https://exploreum.app/#download"
   },
   "Authentication": {
     "LogIn": {
@@ -44,6 +45,9 @@
     "Achievements": {
       "title": "Leaderboard",
       "headerTitle": "Your Achievements"
+    },
+    "Leaderboard": {
+      "title": "Leaderboard"
     },
     "Friends": {
       "title": "Friends",

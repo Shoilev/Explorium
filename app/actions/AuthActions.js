@@ -79,13 +79,15 @@ export const FBLoginOrRegister = () => {
       // If you need to do anything with the user, do it here
       // The user will be logged in automatically by the
       // `onAuthStateChanged` listener we set up in App.js earlier
-      console.log(user.user.uid)
       if(user.additionalUserInfo.isNewUser) {
         return firebase.firestore().collection('users').doc(user.user.uid).set({
           allPoints: 0,
           experience: 0,
           level: 0,
-          achievements: []
+          achievements: [],
+          id: user.user.uid,
+          email: user.user.email,
+          photoURL: user.user.photoURL
         });
       }
 
@@ -111,7 +113,9 @@ export const signUpUser = ({ email, password }) => {
         return firebase.firestore().collection('users').doc(cred.user.uid).set({
           allPoints: 0,
           level: 0,
-          achievements: []
+          achievements: [],
+          id: cred.user.uid,
+          email: cred.user.email
         });
       })
       .then(()=>this.props.navigation.navigate('App'))

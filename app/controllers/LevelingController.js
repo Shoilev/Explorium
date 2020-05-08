@@ -14,10 +14,12 @@ function checkLevelUp(currentLevel, currentExperience) {
   return currentExperience >= experience
 }
 
-export const checkInLeveling = (landmark, userUID, userAchievements) => {
+export const checkInLeveling = (landmark, userUID, userAchievements, boostShare) => {
   const db = firebase.firestore().collection('users').doc(userUID);
+  const rankingDate = new Date(Date.now()).getMonth().toString() + '/' + new Date(Date.now()).getFullYear().toString();
   let currentLevel = userAchievements.level;
-  let currentExperience = (userAchievements.experience || 0) + landmark.landmarkPoints;
+  let comingPoints =  boostShare ? landmark.landmarkPoints * 2 : landmark.landmarkPoints;
+  let currentExperience = (userAchievements.experience || 0) + comingPoints;
 
   let isLevelUp = checkLevelUp(currentLevel, currentExperience);
 
@@ -27,23 +29,25 @@ export const checkInLeveling = (landmark, userUID, userAchievements) => {
     let xp = currentExperience - getExperience(currentLevel + 1);
     return db.update({
       achievements: firebase.firestore.FieldValue.arrayUnion(landmarkData),
-      allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints),
+      allPoints: firebase.firestore.FieldValue.increment(comingPoints),
       level: firebase.firestore.FieldValue.increment(1),
+      ranking: firebase.firestore.FieldValue.arrayUnion(rankingDate),
       experience: xp
     }).then(()=>{
       return {
-        allPoints: landmark.landmarkPoints + userAchievements.allPoints,
+        allPoints: comingPoints + userAchievements.allPoints,
         isLevelUp
       }
     });
   } else {
     return db.update({
       achievements: firebase.firestore.FieldValue.arrayUnion(landmarkData),
-      allPoints: firebase.firestore.FieldValue.increment(landmark.landmarkPoints),
-      experience: firebase.firestore.FieldValue.increment(landmark.landmarkPoints)
+      allPoints: firebase.firestore.FieldValue.increment(comingPoints),
+      experience: firebase.firestore.FieldValue.increment(comingPoints),
+      ranking: firebase.firestore.FieldValue.arrayUnion(rankingDate)
     }).then(()=>{
       return {
-        allPoints: landmark.landmarkPoints + userAchievements.allPoints,
+        allPoints: comingPoints + userAchievements.allPoints,
         isLevelUp
       }
     });

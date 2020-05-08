@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Image, ImageBackground, ActivityIndicator } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { logOutUser, getUser, getAchievementsPerUser } from '../actions';
 import { GetNextLevelXP } from '../controllers/LevelingController';
 import { connect } from 'react-redux';
@@ -24,6 +25,16 @@ class Profile extends Component {
 
   render() {
     const { achievementsData } = this.props.achievements;
+    let boostShare = false;
+
+    if(achievementsData.boostShareExpire && achievementsData.boostShareExpire.seconds) {
+      let boostShareExpire = new Date(achievementsData.boostShareExpire.seconds * 1000);
+      boostShareExpire = boostShareExpire.setMonth(boostShareExpire.getMonth() + 1);
+
+      if(boostShareExpire > Date.now()) {
+        boostShare = true;
+      }
+    }
 
     if(isEmpty(achievementsData)) {
       return (
@@ -50,6 +61,12 @@ class Profile extends Component {
           <Text style={[styles.title, styles.profileTitle]}>
             Hello {"\n"} {this.props.user.userName || achievementsData.userNickname || this.props.user.userEmail}!
           </Text>
+
+          {boostShare ? 
+          <View>
+            <Text style={styles.exploreBoostText}><FontAwesome5 style={styles.exploreBoostIcon} name={'rocket'} solid /> x2 Boost xp</Text>
+          </View>
+          : null }
 
           <View sytle={styles.profileXPWrapper}>
             <View style={styles.profileXPStatusBar}>

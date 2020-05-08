@@ -8,6 +8,7 @@ import FriendsReducer from './FriendsReducer';
 import GeoLocationReducer from './GeoLocationReducer';
 import AchievementsReducer from './AchievementsReducer';
 import MessagesAlertReducer from './MessagesAlertReducer';
+import LeaderboardReducer from './LeaderboardReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   friends: FriendsReducer,
   userGeoLocation: GeoLocationReducer,
   achievements: AchievementsReducer,
-  messagesAlert: MessagesAlertReducer
+  messagesAlert: MessagesAlertReducer,
+  leaderboard: LeaderboardReducer
 });

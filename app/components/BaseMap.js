@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { requestLocationPermission, getUser, getAchievementsPerUser } from '../actions';
 import { isUserAchieved, checkHaversineDistance, checkBounds } from '../helpers';
 import { checkInLeveling } from '../controllers/LevelingController';
@@ -27,7 +28,7 @@ class BaseMap extends Component {
     this.props.getAchievementsPerUser();
   }
 
-  checkIn(landmark, userLocation, userCountryAndCity, landmarksCount) {
+  checkIn(landmark, userLocation, userCountryAndCity, landmarksCount, boostShare) {
     const { achievementsData } = this.props.achievements;
     console.log("=====================================")
     // const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
@@ -43,7 +44,7 @@ class BaseMap extends Component {
         checkInLoader: true
       });
 
-      checkInLeveling(landmark, userUID, achievementsData).then((levelData)=>{
+      checkInLeveling(landmark, userUID, achievementsData, boostShare).then((levelData)=>{
         getDiscount(true, userUID, achievementsData, userCountryAndCity.userCity, landmarksCount).then((discountData)=>{
           this.setState({
             checkInLoader: false
@@ -88,9 +89,20 @@ class BaseMap extends Component {
 
   render() {
     const { userLocation, userCountryAndCity } = this.props.userGeoLocation;
+    const { achievementsData } = this.props.achievements;
     const landmarkData = this.props.navigation.getParam('landmark');
     const landmarksCount = this.props.navigation.getParam('landmarksCount');
     const { latitude, longitude } = landmarkData.coordinate;
+    let boostShare = false;
+
+    if(achievementsData.boostShareExpire && achievementsData.boostShareExpire.seconds) {
+      let boostShareExpire = new Date(achievementsData.boostShareExpire.seconds * 1000);
+      boostShareExpire = boostShareExpire.setMonth(boostShareExpire.getMonth() + 1);
+
+      if(boostShareExpire > Date.now()) {
+        boostShare = true;
+      }
+    }
 
     const landmarkDirection = {
       latitude,
@@ -145,18 +157,24 @@ class BaseMap extends Component {
           <Section style={styles.exploreButtonSection}>
             { checkBounds(landmarkData.viewport, userLocation)
             ?
-              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount)} style={styles.exploreCheckInBtn}>
+            <View>
+              {boostShare ? <Text style={styles.exploreBoostText}><FontAwesome5 style={styles.exploreBoostIcon} name={'rocket'} solid /> x2 Boost xp</Text>: null}
+              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount, boostShare)} style={styles.exploreCheckInBtn}>
                 <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
                 <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.buttonLabel}</Text>
                 {this.state.checkInLoader ?
                   <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
                 : null}
               </TouchableOpacity>
+            </View>
             :
-              <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount)} style={[styles.exploreCheckInBtn, styles.exploreCheckInDisabledBtn]}>
-                <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
-                <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.errorMessageButton}</Text>
-              </TouchableOpacity>
+              <View>
+                {boostShare ? <Text style={styles.exploreBoostText}><FontAwesome5 style={styles.exploreBoostIcon} name={'rocket'} solid /> x2 Boost xp</Text> : null}
+                <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount, boostShare)} style={[styles.exploreCheckInBtn, styles.exploreCheckInDisabledBtn]}>
+                  <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
+                  <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.errorMessageButton}</Text>
+                </TouchableOpacity>
+              </View>
             }
           </Section>
         </View>

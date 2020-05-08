@@ -23,7 +23,7 @@ class Friends extends Component {
       const result = await Share.share({
         title: 'Exploreum',
         message: INVITE_MESSAGE,
-        url: 'https://www.google.com'
+        url: 'https://exploreum.app/#download'
       });
 
       if (result.action === Share.sharedAction) {
@@ -75,7 +75,7 @@ class Friends extends Component {
       return (
         <View style={styles.container}>
           <HeaderBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={navigation}>{'Friends'}</HeaderBar>
-          <Text>{errorMessage}</Text>
+          <Text style={styles.friendErrroMessage}>{errorMessage}</Text>
         </View>
       )
     }

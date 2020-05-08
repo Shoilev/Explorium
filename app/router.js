@@ -26,6 +26,8 @@ import BaseMap from './components/BaseMap';
 import ExploreMap from './components/ExploreMap';
 import CheckedIn from './components/CheckedIn';
 import UserInfo from './components/UserInfo';
+import FriendsShareGame from './components/FriendsShareGame';
+import BoostSuccess from './components/BoostSuccess';
 import { colors } from './assets/styles/base';
 
 const styles = createStyles();
@@ -122,7 +124,20 @@ const ExploreStack = createStackNavigator(
         headerTitleStyle: { color: '#1a4e6c' }
       }),
       headerMode: 'screen',
-    }
+    },
+    BoostSuccess: {
+      screen: BoostSuccess,
+      navigationOptions: ({navigation}) => ({
+        title: 'Successful boost',
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+      }),
+      headerMode: 'float',
+    },
   },
   {
     headerMode: 'none',
@@ -316,6 +331,14 @@ const AppStack = createStackNavigator(
       screen: UserInfo,
       navigationOptions: ({navigation}) => ({
         title: 'Additional User Info',
+        header: null
+      }),
+      headerMode: 'screen',
+    },
+    FriendsShareGame: {
+      screen: FriendsShareGame,
+      navigationOptions: ({navigation}) => ({
+        title: 'Boost Game',
         header: null
       }),
       headerMode: 'screen',

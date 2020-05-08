@@ -151,6 +151,7 @@ export const ExploreStyle = {
     borderColor: colors.orange
   },
   exploreMessageText: {
+    textAlign: 'center',
     color: colors.white
   },
   exploreMap: {

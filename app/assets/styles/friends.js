@@ -32,11 +32,17 @@ export const FriendsStyle = {
   friendsRightBtn: {
     position: 'absolute',
     top: 0,
+    flexDirection: 'row',
     right: spacing.extraLarge * 2
   },
   friendsWAIcon: {
     width: 30,
     height: 30,
+  },
+  friendsSMSIcon: {
+    fontSize: fonts.baseSize * 5.5,
+    color: colors.orange,
+    marginRight: spacing.medium
   },
   friendsContainer: {
     flex: 1,
@@ -68,5 +74,39 @@ export const FriendsStyle = {
     resizeMode: 'contain',
     width: 50,
     height: 50,
+  },
+  friendsShareText: {
+    width: '90%',
+    marginLeft: '5%',
+    marginTop: spacing.large,
+    textAlign: 'center',
+    fontSize: fonts.baseSize * 3
+  },
+  friendsShareWrapper: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: spacing.large
+  },
+  friendShareCircle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.gray,
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    marginRight: spacing.extraLarge
+  },
+  friendShareCircleChecked: {
+    backgroundColor: colors.orange
+  },
+  firendsShareUser: {
+    fontSize: fonts.baseSize * 4,
+    color: colors.white
+  },
+  firendsShareUserChecked: {
+    marginLeft: spacing.small
+  },
+  friendErrroMessage: {
+    fontSize: fonts.baseSize * 4
   }
 }

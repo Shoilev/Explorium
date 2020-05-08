@@ -117,6 +117,15 @@ const baseStyles = {
     color: colors.white,
     fontSize: fonts.baseSize * 4
   },
+  headerBarCloseIconWrapper: {
+    position: 'absolute',
+    top: '50%',
+    right: 20
+  },
+  headerBarCloseIcon: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 5
+  },
   explorePointsIcon: {
     fontSize: fonts.baseSize * 2.5,
     color: colors.white,
@@ -132,6 +141,16 @@ const baseStyles = {
     paddingBottom: 3,
     backgroundColor: colors.yellow,
     borderRadius: 10
+  },
+  exploreBoostText: {
+    fontSize: fonts.baseSize * 3.5,
+    color: colors.orange,
+    marginBottom: spacing.extraLarge,
+    fontWeight: '700'
+  },
+  exploreBoostIcon: {
+    fontSize: fonts.baseSize * 6,
+    color: colors.orange
   }
 }
 

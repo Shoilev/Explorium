@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
-import { Text, View, Linking, TouchableOpacity, Image, TouchableNativeFeedback } from 'react-native';
+import { Text, View, TouchableOpacity, Image, TouchableNativeFeedback } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Section, Button } from './common';
 import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
+import { inviteWAFriend, inviteSMSFriend } from '../helpers';
 import { FriendsStyle } from '../assets/styles/friends';
 import { countryColors } from '../settings/global.json';
 
 const styles = createStyles(FriendsStyle);
-const INVITE_MESSAGE = 'Join us and download our app!';
 
 export default class FriendList extends React.PureComponent {
-  inviteWAFriend(phoneNumber) {
-    Linking.openURL('whatsapp://send?text=' + INVITE_MESSAGE+ '&phone='+ phoneNumber.toString());
-  };
 
   render() {
-    const { friend, friendIndex, appNavigation } = this.props;
+    const { friend, friendIndex, appNavigation, shareGame } = this.props;
     const friendColor = countryColors[friendIndex % countryColors.length] + 'Background';
+    const firendShareGame = shareGame || false;
     let friendName = '';
     let friendShortName = '';
 
@@ -35,7 +34,7 @@ export default class FriendList extends React.PureComponent {
 
     return (
       <View style={{alignItems: 'flex-start'}}>
-        <TouchableNativeFeedback activeOpacity={0.5} onPress={()=>this.inviteWAFriend(friend.phoneNumbers[0].number)} background={TouchableNativeFeedback.Ripple('#fff')}>
+        <TouchableNativeFeedback activeOpacity={0.5} onPress={()=>this.inviteWAFriend(friend.phoneNumbers[0].number, firendShareGame)} background={TouchableNativeFeedback.Ripple('#fff')}>
           <View style={styles.friendsList}>
               <View style={[styles.frendsItemLeft, styles[friendColor]]}>
                 <Text style={styles.friendsText}>{friendShortName}</Text>
@@ -45,7 +44,10 @@ export default class FriendList extends React.PureComponent {
               <Text style={styles.friendsItemNumber}>{ friend.phoneNumbers && friend.phoneNumbers.length > 0 ? friend.phoneNumbers[0].number: 'None'}</Text>
             </View>
             <View style={styles.friendsRightBtn}>
-              <TouchableOpacity style={styles.friendsBtn} activeOpacity={0.5} onPress={()=>this.inviteWAFriend(friend.phoneNumbers[0].number)}>
+              <TouchableOpacity style={styles.friendsBtn} activeOpacity={0.5} onPress={()=>inviteSMSFriend(friend.phoneNumbers[0].number, firendShareGame, appNavigation)}>
+                <FontAwesome5 style={styles.friendsSMSIcon} name={'sms'} solid />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.friendsBtn} activeOpacity={0.5} onPress={()=>inviteWAFriend(friend.phoneNumbers[0].number, firendShareGame, appNavigation)}>
                 <Image style={styles.friendsWAIcon} source={images.whatsAppIcon} />
               </TouchableOpacity>
             </View>
