@@ -13,5 +13,6 @@ export const images = {
   checkedIconLarge: require('./images/checked-icon-large.png'),
   directionImage: require('./images/direction_icon.png'),
   linkIcon: require('./images/link_icon.png'),
-  whatsAppIcon: require('./images/whatsapp_icon.png')
+  whatsAppIcon: require('./images/whatsapp_icon.png'),
+  avatarDefault : require('./images/avatarDefault.png')
 }

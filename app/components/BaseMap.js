@@ -4,6 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { requestLocationPermission, getUser, getAchievementsPerUser } from '../actions';
 import { isUserAchieved, checkHaversineDistance, checkBounds } from '../helpers';
@@ -44,13 +45,15 @@ class BaseMap extends Component {
         checkInLoader: true
       });
 
-      checkInLeveling(landmark, userUID, achievementsData, boostShare).then((levelData)=>{
-        getDiscount(true, userUID, achievementsData, userCountryAndCity.userCity, landmarksCount).then((discountData)=>{
+      checkInLeveling(landmark, userUID, achievementsData, boostShare).then((levelData) => {
           this.setState({
             checkInLoader: false
           });
-          this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark, levelData, discountData})
-        });
+          this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark, levelData});
+
+        // The first parameter decides whether or not to store the discount data in the database
+        // getDiscount(false, userUID, achievementsData, userCountryAndCity.userCity, landmarksCount).then((discountData)=>{
+        // });
       });
     } else {
       let errorMessage = '';
@@ -137,41 +140,51 @@ class BaseMap extends Component {
               tracksViewChanges={false}
               coordinate={landmarkDirection}
             >
-              <Image style={{ width: 45, height: 45 }} source={require('../assets/images/pin-full.png')} />
+              <FontAwesome5 style={{fontSize: 36, color: '#3643FF' }} name={'map-marker'} solid />
             </Marker>
 
             <MapViewDirections
-              origin={userLocation}
+              origin={{latitude: userLocation.latitude, longitude: userLocation.longitude}} //this cause the blinking issue
               destination={landmarkDirection}
               apikey={GOOGLE_MAPS_APIKEY}
-              strokeWidth={4}
-              strokeColor="hotpink"
+              strokeWidth={5}
+              strokeColor="#FF7E29"
               mode='walking'
             />
           </MapView>
 
+          <TouchableOpacity onPress={()=>this.props.navigation.goBack(null)} style={styles.exploreBaseMapBackBtn}>
+            <Icon style={styles.exploreBaseMapBackIcon} name="arrow-left"/>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={()=>this.openGoogleMaps(longitude,latitude)} style={styles.exploreDirectionBtn}>
-            <Image style={styles.exploreDirectionIcon} source={images.directionImage} />
+            <FontAwesome5 style={styles.exploreDirectionIcon} name={'directions'} solid />
             <Text style={styles.exploreDirectionBtnText}>Get Direction</Text>
           </TouchableOpacity>
+
           <Section style={styles.exploreButtonSection}>
-            { checkBounds(landmarkData.viewport, userLocation)
+            { true ||  checkBounds(landmarkData.viewport, userLocation)
             ?
             <View>
-              {boostShare ? <Text style={styles.exploreBoostText}><FontAwesome5 style={styles.exploreBoostIcon} name={'rocket'} solid /> x2 Boost xp</Text>: null}
+              {this.state.checkInLoader ?
+                <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
+              : null}
+
+              {boostShare ? 
+                <Text style={styles.exploreBoostText}><FontAwesome5 style={styles.exploreBoostIcon} name={'rocket'} solid />x2 Boost XP</Text>
+              :
+              null}
+
               <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount, boostShare)} style={styles.exploreCheckInBtn}>
-                <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
+                <FontAwesome5 style={styles.exploreCheckInIcon} name={'check-circle'} regular />
                 <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.buttonLabel}</Text>
-                {this.state.checkInLoader ?
-                  <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
-                : null}
               </TouchableOpacity>
             </View>
             :
               <View>
                 {boostShare ? <Text style={styles.exploreBoostText}><FontAwesome5 style={styles.exploreBoostIcon} name={'rocket'} solid /> x2 Boost xp</Text> : null}
                 <TouchableOpacity onPress={()=>this.checkIn(landmarkData, userLocation, userCountryAndCity, landmarksCount, boostShare)} style={[styles.exploreCheckInBtn, styles.exploreCheckInDisabledBtn]}>
-                  <Image style={styles.exploreCheckInIcon} source={images.checkedIconLarge} />
+                  <FontAwesome5 style={styles.exploreCheckInIcon} name={'check-circle'} regular />
                   <Text style={styles.exploreCheckInTextBtn}>{Components.CheckIn.errorMessageButton}</Text>
                 </TouchableOpacity>
               </View>

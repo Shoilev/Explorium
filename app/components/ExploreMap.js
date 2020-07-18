@@ -12,6 +12,7 @@ import {
   Marker,
 } from 'react-native-maps';
 import { connect } from 'react-redux';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { isUserAchieved, isEmpty } from '../helpers';
 import { Button } from './common';
 import { getLandmarksByLocation, getAchievementsPerUser } from '../actions';
@@ -160,7 +161,9 @@ class ExploreMap extends React.Component {
                 onPress={()=>{ this.handlerMarkerIndex(i)}}
               >
                 <View style={styles.exploreMarker}>
-                  <Image  onLoad={this.stopTrackingViewChanges} style={styles.exploreMarkerImage} source={marker.isShadowLandmark ? markerShadowImage : markerImage}/>
+                  {/* <Image  onLoad={this.stopTrackingViewChanges} style={styles.exploreMarkerImage} source={marker.isShadowLandmark ? markerShadowImage : markerImage}/> */}
+                  <FontAwesome5 onLoad={this.stopTrackingViewChanges} style={marker.isShadowLandmark ? styles.exploreShadowMarkerIcon : styles.exploreMarkerIcon} name={'map-marker'} solid />
+                  <Text style={styles.exploreMarkerIndex}>{i+1}</Text>
                 </View>
               </Marker>
             ))}

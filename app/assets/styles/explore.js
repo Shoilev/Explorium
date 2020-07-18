@@ -66,39 +66,44 @@ export const ExploreStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#0078b4',
-    padding: spacing.large,
-    paddingTop: spacing.small,
-    paddingBottom: spacing.small,
-    marginBottom: spacing.large,
-    borderRadius: 20
+    backgroundColor: colors.blue,
+    padding: spacing.extraLarge * 2,
+    paddingTop: spacing.medium,
+    paddingBottom: spacing.medium,
+    marginBottom: spacing.extraLarge * 2.5,
+    borderRadius: 10,
+    overflow: 'hidden'
   },
   exploreCheckInDisabledBtn: {
     backgroundColor: colors.gray,
   },
   exploreCheckInTextBtn: {
     color: colors.white,
-    fontSize: fonts.baseSize * 4,
+    fontSize: fonts.baseSize * 3,
     fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
   exploreDirectionBtn: {
     position: 'absolute',
-    top: 20,
+    top: 40,
     right: 20,
     justifyContent: 'center',
     alignItems: 'center'
   },
   exploreDirectionBtnText: {
-    color: colors.primeryBlue
+    color: colors.blue,
+    fontWeight: '700'
   },
   exploreDirectionIcon: {
-    width: 60,
-    height: 60,
+    fontSize: fonts.baseSize * 10,
+    color: colors.blue
   },
   exploreCheckInIcon: {
-    width: 40,
-    height: 40,
-    marginRight: spacing.small
+    position: 'absolute',
+    fontSize: fonts.baseSize * 12,
+    color: colors.white,
+    left: 10,
+    opacity: 0.25
   },
   exploreIntroText: {
     fontSize: fonts.baseSize * 3,
@@ -287,6 +292,11 @@ export const ExploreStyle = {
     width: 45,
     height: 45
   },
+  exploreMarkerIndex: {
+    marginTop: -30,
+    color: colors.white,
+    fontWeight: '700'
+  },
   exploreMarkerImage: { 
     width: 45,
     height: 45
@@ -358,5 +368,33 @@ export const ExploreStyle = {
     color: '#17034A',
     padding: 10,
     paddingBottom: 20
+  },
+  exploreBoostWrapper: {
+    backgroundColor: colors.orange,
+    padding: spacing.medium
+  },
+  exploreBaseMapBackBtn: {
+    position:'absolute',
+    top: 40,
+    left: 0,
+    width: 70,
+    height: 45,
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+    backgroundColor: colors.orange,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  exploreBaseMapBackIcon: {
+    fontSize: fonts.baseSize * 4,
+    color: colors.white
+  },
+  exploreShadowMarkerIcon: {
+    fontSize: fonts.baseSize * 6,
+    color: colors.primeryBlue
+  },
+  exploreMarkerIcon: {
+    fontSize: fonts.baseSize * 6,
+    color: colors.orange,
   }
 }

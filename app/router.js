@@ -25,9 +25,11 @@ import LandmarkDetails from './components/LandmarkDetails';
 import BaseMap from './components/BaseMap';
 import ExploreMap from './components/ExploreMap';
 import CheckedIn from './components/CheckedIn';
+import LevelUp from './components/LevelUp';
 import UserInfo from './components/UserInfo';
 import FriendsShareGame from './components/FriendsShareGame';
 import BoostSuccess from './components/BoostSuccess';
+import AvatarList from './components/AvatarList';
 import { colors } from './assets/styles/base';
 
 const styles = createStyles();
@@ -115,6 +117,19 @@ const ExploreStack = createStackNavigator(
       }),
       headerMode: 'float',
     },
+    LevelUp: {
+      screen: LevelUp,
+      navigationOptions: ({navigation}) => ({
+        title: 'Level Up',
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+      }),
+      headerMode: 'float',
+    },
     BaseMap: {
       screen: BaseMap,
       navigationOptions: ({navigation}) => ({
@@ -158,6 +173,19 @@ const ProfileStack = createStackNavigator(
   {
     Profile: {
       screen: Profile
+    },
+    AvatarList: {
+      screen: AvatarList,
+      navigationOptions: ({navigation}) => ({
+        title: 'Choose Avatar',
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+      }),
+      headerMode: 'float',
     },
     Friends: {
       screen: Friends,

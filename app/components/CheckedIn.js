@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableHighlight, Image } from 'react-native';
+import { Text, View, TouchableHighlight, Image, BackHandler} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ShareDialog } from 'react-native-fbsdk';
 import { Button } from './common';
 import { createStyles } from '../assets/styles';
@@ -9,7 +11,16 @@ const styles = createStyles(CheckedInStyle);
 
 export default class CheckedIn extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  handleBackButton() {
+    return true;
   }
 
   shareLinkWithShareDialog() {
@@ -45,26 +56,43 @@ export default class CheckedIn extends Component {
   render() {
     const user = this.props.navigation.getParam('user', {});
     const landmark = this.props.navigation.getParam('landmark', {});
-    const discountData = this.props.navigation.getParam('discountData', false);
-    console.log(discountData)
-    console.log(user)
+    const levelData = this.props.navigation.getParam('levelData', false);
+    // const discountData = this.props.navigation.getParam('discountData', false);
 
     return (
       <View style={[styles.container, styles.checkedInContainer]}>
-        <Image style={styles.checkedInImage} source={require('../assets/images/congratulations.png')} />
-        <Text style={styles.checkedInPoints}>{landmark.landmarkPoints} points</Text>
-        <Text style={styles.checkedInTitle}>Congratulations!</Text>
-        <Text style={styles.checkedInDescription}>You have successfully checked in.</Text>
-        <Text style={styles.checkedInLandmark}>{landmark.landmarkName}</Text>
+        <View style={styles.checkedInCircleTop}></View>
+        <View style={styles.checkedInCircleBottom}></View>
 
-        {discountData && discountData.render ? <Text>{discountData.userExplorePercent ? discountData.userExplorePercent + '/75': discountData.discountInfo[0].name}</Text> : null}
+        <View style={styles.checkedInContent}>
+          <Image style={styles.checkedInLandmarkImage} source={{uri: landmark.landmarkImage}} />
+          <View style={styles.exploredImageWrapper}>
+            <View style={styles.exploredImageFirstCircle}>
+              <View style={styles.exploredImageSecondCircle}>
+                <View style={styles.exploredImageThirdCircle}>
+                  <Image style={styles.exploredImageInCircle} source={require('../assets/images/checked-icon.png')} />
+                </View>
+              </View>
+            </View>
+          </View>
+          <Text style={styles.checkedInPoints}><Icon style={styles.explorePointsIcon} name="star"/>{landmark.landmarkPoints} points</Text>
+          <Text style={styles.checkedInLandmark}>{landmark.landmarkName}</Text>
+          <Text style={styles.checkedInTitle}>Congratulations!</Text>
+          <Text style={styles.checkedInDescription}>You have successfully checked in.</Text>
 
-        <Text style={styles.checkedInShareText}>Share with friends</Text>
-        <TouchableHighlight style={styles.checkedInShareIcon} onPress={this.shareLinkWithShareDialog.bind(this)}>
-          <Image source={require('../assets/images/fb-icon.png')} style={{height:35, width:35}} />
-        </TouchableHighlight>
+          {/* {discountData && discountData.render ? <Text>{discountData.userExplorePercent ? discountData.userExplorePercent + '/75': discountData.discountInfo[0].name}</Text> : null} */}
 
-        <Button textStyle={styles.checkedInButtonText} buttonStyle={styles.checkedInButton} onPress={()=>this.props.navigation.navigate('Explore')} >Continue Exploring</Button>
+          <Text style={styles.checkedInShareText}>Tell your friends about us:</Text>
+          <TouchableHighlight style={styles.checkedInShareIcon} onPress={this.shareLinkWithShareDialog.bind(this)}>
+            <FontAwesome5 style={styles.checkedInFBIcon} name={'facebook-square'} solid />
+          </TouchableHighlight>
+        </View>
+
+        {true || levelData.isLevelUp ?
+          <Button textStyle={styles.checkedInButtonText} buttonStyle={styles.checkedInButton} onPress={()=>this.props.navigation.navigate('LevelUp',{levelData, user})} >Continue</Button>
+          :
+          <Button textStyle={styles.checkedInButtonText} buttonStyle={styles.checkedInButton} onPress={()=>this.props.navigation.navigate('Explore')} >Continue</Button>
+        }
       </View>
     );
   }

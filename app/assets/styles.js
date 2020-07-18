@@ -143,13 +143,14 @@ const baseStyles = {
     borderRadius: 10
   },
   exploreBoostText: {
-    fontSize: fonts.baseSize * 3.5,
+    fontSize: fonts.baseSize * 3,
     color: colors.orange,
-    marginBottom: spacing.extraLarge,
-    fontWeight: '700'
+    marginBottom: spacing.small,
+    fontWeight: '700',
+    textAlign:'center'
   },
   exploreBoostIcon: {
-    fontSize: fonts.baseSize * 6,
+    fontSize: fonts.baseSize * 4,
     color: colors.orange
   }
 }

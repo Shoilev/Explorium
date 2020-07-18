@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, FlatList, Text, Switch, ImageBackground, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStyles } from '../assets/styles';
 import { LandmarksStyles } from '../assets/styles/landmarks';
@@ -8,6 +9,7 @@ import { getLandmarks, getAchievementsPerUser, switchToShadowCities } from '../a
 import { HeaderBar } from './common';
 import { isUserAchieved, isEmpty } from '../helpers';
 import { Screens } from '../resources/labels.json';
+import { stopUpload } from 'react-native-fs';
 
 const styles = createStyles(LandmarksStyles);
 
@@ -33,7 +35,7 @@ class LandmarksList extends Component {
     this.props.switchToShadowCities(value);
   }
 
-  renderItem(item, index, navigation, achievementsData, landmarksAllData) {
+  renderItem(item, index, navigation, achievementsData, landmarksAllData, shadowCities) {
     let isAchieved = false;
 
     if(!isEmpty(achievementsData) && achievementsData.achievements) {
@@ -41,7 +43,7 @@ class LandmarksList extends Component {
     }
 
     return (
-      <TouchableOpacity activeOpacity={0.8} style={[styles.landmarksBox, index % 2 === 0 ? styles.landmarkBoxSpace : {}]} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved, landmarksCount: landmarksAllData.length})}>
+      <TouchableOpacity activeOpacity={0.8} style={[styles.landmarksBox, index % 2 === 0 ? styles.landmarkBoxSpace : {}, shadowCities ? styles.landmarkBoxShadowActive : {}]} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved, landmarksCount: landmarksAllData.length})}>
           <ImageBackground source={{uri: item.landmarkImage}} imageStyle={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20}} style={[styles.backgroundImage, styles.landmarkImage]}>
             <View style={styles.landmarksPointsWrap}><Text style={styles.explorePoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.landmarkPoints} points</Text></View>
             { isAchieved ?
@@ -54,7 +56,7 @@ class LandmarksList extends Component {
               : null
             }
           </ImageBackground>
-          <Text style={styles.landmarksText}>{item.landmarkName}</Text>
+          <Text style={[styles.landmarksText, shadowCities ? styles.landmarksTextShadowActive : {} ]}>{item.landmarkName}</Text>
       </TouchableOpacity>
     );
   }
@@ -68,25 +70,23 @@ class LandmarksList extends Component {
 
     if(!isEmpty(landmarksData) && !this.state.loading) {
       return (
-        <View style={{flex:1}}>
-          <HeaderBar headerBarNav={navigation}>{headerTitle}</HeaderBar>
+        <View style={[{flex:1}, shadowCities ? styles.landmarkShadowActive : {}]}>
+          <HeaderBar headerBarStyle={shadowCities ? styles.landmarksHeaderBarActive: {}} headerBarNav={navigation}>{headerTitle}</HeaderBar>
+          <View style={styles.landmarksShadowCities}>
+            {!isEmpty(landmarksShadowData) ?
+                <TouchableOpacity activeOpacity={0.5} onPress={()=>this.handleShadowCities(!shadowCities)} style={[styles.landmarkShadowIconButton, shadowCities ? styles.landmarkShadowButtonActive : {}]}>
+                  <FontAwesome5 style={[styles.landmarkShadowIcon, shadowCities ? styles.landmarkShadowActiveIcon : {}]} name={'user-secret'} solid />
+                  <Text style={[styles.shadowCitiesLabel, shadowCities ? styles.landmarkShadowActiveIcon : {}]}>
+                    {'Turn '+ (shadowCities ? 'OFF ' : 'ON ') + Screens.Countries.Landmarks.shadowCities}
+                  </Text>
+                </TouchableOpacity>
+            :null}
+          </View>
           <FlatList
             data={shadowCities && !isEmpty(landmarksShadowData) ? landmarksShadowData : landmarksData}
-            style={shadowCities ? [styles.landmarkShadowActive, styles.landmarksRow]: styles.landmarksRow}
-            renderItem={({item, index}) => this.renderItem(item, index, navigation, achievementsData, landmarksAllData)}
+            style={styles.landmarksRow}
+            renderItem={({item, index}) => this.renderItem(item, index, navigation, achievementsData, landmarksAllData, shadowCities)}
             keyExtractor={(item, index)=> 'landmarkKey' + index}
-            ListHeaderComponent={
-              <View style={styles.landmarksShadowCities}>
-                {!isEmpty(landmarksShadowData) ?
-                  <View style={styles.landmarksShdowCitiesInner}>
-                    <Text style={styles.shadowCitiesLabel}>{Screens.Countries.Landmarks.shadowCities}</Text>
-                    <Switch
-                      value={ shadowCities }
-                      onValueChange={ this.handleShadowCities.bind(this) } />
-                  </View>
-                :null}
-              </View>
-            }
             numColumns={2}
             />
         </View>

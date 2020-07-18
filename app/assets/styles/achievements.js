@@ -47,5 +47,18 @@ export const AchievementsStyle = {
     color: colors.primeryBlue,
     textTransform: 'uppercase',
     fontWeight: 'bold'
+  },
+  tabHeaderView: {
+    height: 80,
+    justifyContent: 'flex-end',
+    backgroundColor: colors.orange,
+  },
+  tabBarLabel: {
+    textTransform: 'capitalize',
+    fontSize: fonts.baseSize * 3.2,
+  },
+  tabBarIndicator: {
+    backgroundColor: colors.yellow,
+    height: 4
   }
 }

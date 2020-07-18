@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Image, ImageBackground, ActivityIndicator } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { SvgUri } from 'react-native-svg';
 import { logOutUser, getUser, getAchievementsPerUser } from '../actions';
 import { GetNextLevelXP } from '../controllers/LevelingController';
 import { connect } from 'react-redux';
@@ -13,11 +14,11 @@ import { isEmpty } from '../helpers';
 const styles = createStyles(ProfileStyle);
 
 class Profile extends Component {
-
+  
   handleLogOut = () => {
     this.props.logOutUser()
   }
-
+  
   componentWillMount() {
     this.props.getUser();
     this.props.getAchievementsPerUser();
@@ -25,7 +26,10 @@ class Profile extends Component {
 
   render() {
     const { achievementsData } = this.props.achievements;
+    const userAvatar = !isEmpty(achievementsData.userAvatar) ? achievementsData.userAvatar : 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/avatars%2FavatarDefault.svg?alt=media';
     let boostShare = false;
+
+    console.log(achievementsData)
 
     if(achievementsData.boostShareExpire && achievementsData.boostShareExpire.seconds) {
       let boostShareExpire = new Date(achievementsData.boostShareExpire.seconds * 1000);
@@ -51,16 +55,19 @@ class Profile extends Component {
       return (
         <View style={[styles.container, styles.profileWrapper]}>
           <ImageBackground source={images.profileBackground} style={styles.profileBackgroundImage}>
-            {this.props.user.userPhoto ? 
-            <Image style={styles.profileImageFb} source={{
-              uri:
-                this.props.user.userPhoto,
-            }} /> :
-            <Image style={styles.profileImage} source={images.userProfile} /> }
+              <SvgUri
+                width="180"
+                height="180"
+                uri={userAvatar}
+                style={styles.profileImage}
+              />
           </ImageBackground>
+
           <Text style={[styles.title, styles.profileTitle]}>
-            Hello {"\n"} {this.props.user.userName || achievementsData.userNickname || this.props.user.userEmail}!
+            Hello {"\n"} { achievementsData.userNickname || this.props.user.userName || this.props.user.userEmail}!
           </Text>
+
+          <Text onPress={()=>{this.props.navigation.navigate('AvatarList')}}>Edit Profil picture</Text>
 
           {boostShare ? 
           <View>

@@ -4,13 +4,11 @@ import android.app.Application;
 
 import com.facebook.CallbackManager;
 import com.facebook.react.ReactApplication;
-import se.bonniernews.rn3d.RN3DPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.appevents.AppEventsLogger;
-import se.bonniernews.rn3d.RN3DPackage;
 import com.rnfs.RNFSPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -50,9 +48,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RN3DPackage(),
-            new RNGestureHandlerPackage(),
-            new ReanimatedPackage(),
+          new RNGestureHandlerPackage(),
+          new ReanimatedPackage(),
           new FBSDKPackage(mCallbackManager),
           new RNFSPackage(),
           new RNFetchBlobPackage(),

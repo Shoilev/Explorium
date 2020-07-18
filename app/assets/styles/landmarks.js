@@ -2,29 +2,54 @@ import { colors, spacing, fonts, dimensions } from './base';
 const COLUMNS_NUM = 2;
 
 export const LandmarksStyles = {
+  landmarksHeaderBarActive: {
+    backgroundColor: colors.shadowDarkBlue
+  },
   landmarksContainer: {
     flex: 1,
     justifyContent: 'center',
     position: 'relative'
   },
   landmarksShadowCities: {
-    flex: 1,
+    position: 'absolute',
+    right: 0,
+    top: spacing.extraLarge * 2,
     justifyContent: 'flex-end',
     flexDirection:'row',
-    marginTop: spacing.extraLarge
+    marginTop: 0,
+    position: 'relative',
+    height: 20,
+    zIndex: 100
   },
-  landmarksShdowCitiesInner: {
-    width: 170,
+  landmarkShadowIconButton: {
+    width: 83,
     height: 40,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
     backgroundColor: colors.orange,
-    borderRadius: 50,
-    marginBottom: spacing.large,
+    paddingLeft: spacing.medium,
+    borderBottomLeftRadius: 12,
+    borderTopLeftRadius: 12,
+    marginBottom: 0,
+    zIndex: 120
+  },
+  landmarkShadowButtonActive: {
+    backgroundColor: colors.shadowDarkBlue
+  },
+  landmarkShadowIcon: {
+    fontSize: fonts.baseSize * 5,
+    color: colors.white
+  },
+  landmarkShadowActiveIcon: {
+    color: colors.orange
   },
   shadowCitiesLabel: {
-    color: colors.white
+    color: colors.white,
+    fontSize: fonts.baseSize * 2.2,
+    lineHeight: fonts.baseSize * 2.2,
+    width: 50,
+    textAlign: 'center'
   },
   landmarksRow: {
     flex: 1,
@@ -42,6 +67,9 @@ export const LandmarksStyles = {
     borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: colors.white
+  },
+  landmarkBoxShadowActive: {
+    backgroundColor: colors.darkGray
   },
   landmarkBoxSpace: {
     marginRight: spacing.extraLarge
@@ -76,6 +104,9 @@ export const LandmarksStyles = {
     marginTop: spacing.large,
     marginBottom: spacing.medium,
     fontSize: fonts.baseSize * 3
+  },
+  landmarksTextShadowActive: {
+    color: colors.white
   },
   landmarkTitle: {
     color: colors.orange,
@@ -147,14 +178,18 @@ export const LandmarksStyles = {
     flexDirection: 'row',
     justifyContent:'center',
     alignItems: 'center',
-    borderBottomLeftRadius: 44,
-    borderBottomRightRadius: 44,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     zIndex: 10,
     backgroundColor: 'rgba(4, 130, 178, 0.6)'
+  },
+  landmarkDetailedExploredWrapper: {
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40
   },
   landmarkExploredImage: {
     width: 25,
@@ -176,7 +211,7 @@ export const LandmarksStyles = {
     fontSize: fonts.baseSize * 3
   },
   landmarkShadowActive: {
-    backgroundColor: colors.primeryBlue
+    backgroundColor: colors.shadowBlue
   },
   landmarkHeaderBar: {
     backgroundColor: 'transparent'

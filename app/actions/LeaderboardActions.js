@@ -3,24 +3,36 @@ import {
   LEADERBOARD_FETCH_SUCCESS,
   LEADERBOARD_FETCH_FAIL
 } from './types';
+import { isEmpty } from '../helpers';
 
 export const getLeaderboard = () => {
   return (dispatch) => {
 
     return firebase.firestore().collection("users")
-    .where('ranking', 'array-contains', new Date(Date.now()).getMonth().toString() + '/' + new Date(Date.now()).getFullYear().toString())
+    .where('level', '>', 1)
+    // .where('ranking', 'array-contains', new Date(Date.now()).getMonth().toString() + '/' + new Date(Date.now()).getFullYear().toString())
     .limit(20)
     .get().then(querySnapshot => {
       let userResult = [];
 
       querySnapshot.forEach(doc => {
         let user = doc.data();
+        let currentDate = new Date().getMonth();
         let userRank = user.userRank || 0;
+        let userShareBonus = user.shareBonus || null;
+
+        if(userShareBonus) {
+          userShareBonus.map(bonus=> {
+            let date = new Date(bonus.shareBonusDate).getMonth();
+            if(date === currentDate) {
+              userRank += bonus.shareBonusPoints
+            }
+          })
+        }
 
         user.achievements.map(achievement => {
           if(achievement.timestamp) {
             let date = new Date(achievement.timestamp).getMonth();
-            let currentDate = new Date().getMonth();
 
             if(date === currentDate) {
               userRank += achievement.landmarkPoints;
@@ -31,6 +43,10 @@ export const getLeaderboard = () => {
         user = { ...user, userRank: userRank++ }
         userResult.push(user);
       });
+
+      if(isEmpty(userResult)) {
+        return dispatch({ type: LEADERBOARD_FETCH_FAIL, payload: {} });
+      }
 
       userResult.sort((a,b) => {
         return b.userRank - a.userRank

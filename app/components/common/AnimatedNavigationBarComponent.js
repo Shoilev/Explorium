@@ -188,7 +188,7 @@ class AnimatedCircleBarComponent extends React.Component {
             ],
           }}
         >
-          <Path d={line(this.data)} stroke={'#f2f2f2'} strokeWidth={1} fill="white" />
+          <Path d={line(this.data)} stroke={'#f2f2f2'} strokeWidth={1} fill={"white"} />
         </Svg>
       </Animated.View>
     );

@@ -27,7 +27,7 @@ export default class LandmarkDetails extends Component {
               <View style={styles.landmarksDetailsPointsWrap}><Text style={styles.landmarkDetailsPoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + landmark.landmarkPoints} points</Text></View>
 
               { isAchieved ?
-                <View style={styles.landmarkExploredLabelWrapper}>
+                <View style={[styles.landmarkExploredLabelWrapper, styles.landmarkDetailedExploredWrapper]}>
                   <Image style={[styles.landmarkExploredImage, styles.landmarkExploredImageLarge]} source={require('../assets/images/checked-icon-large.png')} />
                   <Text style={[styles.landmarkExploredLabel, styles.landmarkExploredLabelLarge]}>
                     {Screens.Countries.Landmarks.exploredLabel}
