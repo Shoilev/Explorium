@@ -1,18 +1,9 @@
 import React from 'react';
-import {
-  View,
-  Dimensions,
-  Text,
-  Image,
-  ActivityIndicator
-} from 'react-native';
-
-import {
-  Animated as AnimatedMap,
-  Marker,
-} from 'react-native-maps';
+import { View, Dimensions, Text, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Animated as AnimatedMap, Marker} from 'react-native-maps';
 import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { isUserAchieved, isEmpty } from '../helpers';
 import { Button } from './common';
 import { getLandmarksByLocation, getAchievementsPerUser } from '../actions';
@@ -21,8 +12,6 @@ import { ExploreStyle } from '../assets/styles/explore';
 import { Screens } from '../resources/labels.json';
 
 const styles = createStyles(ExploreStyle);
-const markerImage =  require('../assets/images/pin-full.png');
-const markerShadowImage =  require('../assets/images/pin-full-shadow.png');
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
@@ -82,14 +71,11 @@ class ExploreMap extends React.Component {
     }
 
     return (
-      <View style={styles.exploreItemWrapper}>
-        <Image style={styles.exploreMapItemImage} source={{uri:marker.landmarkImage}}/>
-        <View style={styles.exploreMapTitle}>
-          <Text style={[styles.exploreMapTitleText, marker.isShadowLandmark ? styles.exploreMapTexShadow : '']}>{i+1 + '. ' + marker.landmarkName || ''}</Text>
-        </View>
-        <Text style={styles.exploreMapPoints}>{marker.landmarkPoints ? marker.landmarkPoints + ' points' : 'Loading...'}</Text>
+      <TouchableOpacity onPress={this.goToLandmark.bind(this, marker, isAchieved)} style={styles.exploreItemWrapper}>
+        <View style={styles.exploreMapImageWrappper}>
+          <Image style={styles.exploreMapItemImage} borderRadius={12} source={{uri:marker.landmarkImage}}/>
 
-        { isAchieved ?
+          {isAchieved ? 
           <View style={styles.exploreExploredLabelWrapper}>
             <Image style={styles.exploreExploredImage} source={require('../assets/images/checked-icon.png')} />
             <Text style={styles.exploreExploredLabel}>
@@ -97,11 +83,18 @@ class ExploreMap extends React.Component {
             </Text>
           </View>
           : null
-        }
-        <Button onPress={this.goToLandmark.bind(this, marker, isAchieved)} buttonStyle={[styles.exploreMapLandmarkButton, marker.isShadowLandmark ? styles.exploreMapLandmarkShadowButton : '']}>
-          <Text style={styles.exploreMapButtonTitle}>{'Explore'}</Text>
-        </Button>
-      </View>
+          }
+
+          <Text style={[styles.explorePoints, styles.exploreMapPoints]}>
+            <Icon style={styles.explorePointsIcon} name="star"/> {marker.landmarkPoints + ' points'}
+          </Text>
+        </View>
+
+        <View style={styles.exploreMapTitle}>
+          <Text style={[styles.exploreMapTitleText, marker.isShadowLandmark ? styles.exploreMapTexShadow : '']}>{i+1 + '. ' + marker.landmarkName || ''}</Text>
+        </View>
+
+      </TouchableOpacity>
     )
   }
 
@@ -127,6 +120,11 @@ class ExploreMap extends React.Component {
     } else {
       return (
         <View style={[styles.container, styles.exploreMapContainer]}>
+          <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreMapBackBtn}>
+            <Icon style={styles.exploreMapBackBtnIcon} name="arrow-circle-left"/>
+            {"\n"}
+            <Text style={styles.exploreMapBackBtnText}>{'Back'}</Text>
+          </Button>
           <AnimatedMap
             style={styles.exploreMap}
             initialRegion={

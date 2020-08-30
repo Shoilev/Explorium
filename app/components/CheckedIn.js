@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ShareDialog } from 'react-native-fbsdk';
 import { Button } from './common';
+import { images } from '../assets/images';
 import { createStyles } from '../assets/styles';
 import { CheckedInStyle } from '../assets/styles/checkedIn';
 
@@ -57,6 +58,7 @@ export default class CheckedIn extends Component {
     const user = this.props.navigation.getParam('user', {});
     const landmark = this.props.navigation.getParam('landmark', {});
     const levelData = this.props.navigation.getParam('levelData', false);
+    const achievementsData = this.props.navigation.getParam('achievementsData', false);
     // const discountData = this.props.navigation.getParam('discountData', false);
 
     return (
@@ -79,6 +81,27 @@ export default class CheckedIn extends Component {
           <Text style={styles.checkedInLandmark}>{landmark.landmarkName}</Text>
           <Text style={styles.checkedInTitle}>Congratulations!</Text>
           <Text style={styles.checkedInDescription}>You have successfully checked in.</Text>
+
+          {achievementsData.achievements.length == 9 ?
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', marginBottom: 15, marginTop: -10}}>
+                <Image style={{width: 75, height: 65, marginRight: 10}} source={images.touristBadgeEnabled} />
+                <Text style={{color:'#007E25', textAlign: 'center'}}>You won a {'\n'}TOURIST badge</Text>
+            </View> : null
+          }
+
+          {(achievementsData.achievements.length == 49 ) ?
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', marginBottom: 15, marginTop: -10}}>
+                <Image style={{width: 80, height: 65, marginRight: 10}} source={images.explorerBadgeEnabled} />
+                <Text style={{color:'#007E25', textAlign: 'center'}}>You won a {'\n'}EXPLORER badge</Text>
+            </View> : null
+          }
+
+          {(achievementsData.achievements.length == 99) ?
+            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems:'center', marginBottom: 15, marginTop: -10}}>
+                <Image style={{width: 60, height: 65, marginRight: 10}} source={images.adventurerBadgeEnabled} />
+                <Text style={{color:'#007E25', textAlign: 'center'}}>You won a {'\n'}ADVENTURER badge</Text>
+            </View> : null
+          }
 
           {/* {discountData && discountData.render ? <Text>{discountData.userExplorePercent ? discountData.userExplorePercent + '/75': discountData.discountInfo[0].name}</Text> : null} */}
 

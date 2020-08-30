@@ -16,12 +16,12 @@
   "Authentication": {
     "LogIn": {
       "buttonTitle": "Log in",
-      "additionalLinkTitle": "Don't have an account? Sign Up"
+      "additionalLinkTitle": "Don't have an account?"
     },
     "SignIn": {
       "title": "Create Your Account",
       "buttonTittle": "Sign Up",
-      "additionalLinkTitle": "Already have an account? Login"
+      "additionalLinkTitle": "Already have an account?"
     },
     "LogOut": {
       "buttonTitle": "Log out"
@@ -44,7 +44,7 @@
     },
     "Achievements": {
       "title": "Leaderboard",
-      "headerTitle": "Your Achievements"
+      "headerTitle": "My Achievements"
     },
     "Leaderboard": {
       "title": "Leaderboard"
@@ -56,7 +56,8 @@
       "errorFetchMessage": "Not found contacts in your phone."
     },
     "Profile": {
-      "title": "Profile"
+      "title": "Profile",
+      "badgesTitle": "Exploreum Badges"
     }
   },
   "Components": {

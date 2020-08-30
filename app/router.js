@@ -30,6 +30,7 @@ import UserInfo from './components/UserInfo';
 import FriendsShareGame from './components/FriendsShareGame';
 import BoostSuccess from './components/BoostSuccess';
 import AvatarList from './components/AvatarList';
+import Settings from './components/Settings';
 import { colors } from './assets/styles/base';
 
 const styles = createStyles();
@@ -198,6 +199,21 @@ const ProfileStack = createStackNavigator(
       screen: FriendList,
       navigationOptions: ({navigation}) => ({
         title: 'Friends',
+        headerStyle: {
+          borderBottomColor: '#1a4e6c',
+          borderBottomWidth: 1,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTintColor: '#1a4e6c',
+        headerTitleStyle: { color: '#1a4e6c' },
+      }),
+      headerMode: 'screen',
+    },
+    Settings: {
+      screen: Settings,
+      navigationOptions: ({navigation}) => ({
+        title: 'Settings',
         headerStyle: {
           borderBottomColor: '#1a4e6c',
           borderBottomWidth: 1,

@@ -49,7 +49,7 @@ class BaseMap extends Component {
           this.setState({
             checkInLoader: false
           });
-          this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark, levelData});
+          this.props.navigation.navigate('CheckedIn', {user: firebase.auth().currentUser, landmark, levelData, achievementsData});
 
         // The first parameter decides whether or not to store the discount data in the database
         // getDiscount(false, userUID, achievementsData, userCountryAndCity.userCity, landmarksCount).then((discountData)=>{

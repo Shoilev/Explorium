@@ -9,7 +9,7 @@ const HeaderCloseBar = ({children, headerBarStyle, headerBarBackIconStyle, heade
   return (
     <View style={[styles.headerBar, headerBarStyle]}>
         <Text style={styles.headerBarTitle}>{children}</Text>
-        <TouchableOpacity activeOpacity={0.5} onPress={()=>{headerBarNav.goBack(null)}} style={[styles.headerBarCloseIconWrapper, headerBarBackIconStyle]}>
+        <TouchableOpacity activeOpacity={0.5} onPress={()=>{headerBarNav.redirect ? headerBarNav.navigation.navigate('Explore') : headerBarNav.navigation.goBack(null)}} style={[styles.headerBarCloseIconWrapper, headerBarBackIconStyle]}>
             <Icon style={styles.headerBarCloseIcon} name="times"/>
         </TouchableOpacity>
     </View>

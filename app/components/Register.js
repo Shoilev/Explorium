@@ -1,20 +1,18 @@
 import React from 'react';
-import { Text, TextInput, View, ImageBackground, ActivityIndicator } from 'react-native';
+import { Text, TextInput, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { emailChanged, passwordChanged, confirmPasswordChanged, signUpUser, emptyUserOrPassword, passwordNotMatch, FBLoginOrRegister } from '../actions';
 import { createStyles } from '../assets/styles';
-import { images } from '../assets/images';
 import { Auth } from '../assets/styles/auth';
 import { Section, Button } from './common';
 import { Authentication } from '../resources/labels.json';
 
 const styles = createStyles(Auth);
-const registerBackgroundSrc = images.registerBackground;
 
 class Register extends React.Component {
   onButtonPress() {
-    const { email, password, confirmPassword } = this.props;
+    const { email, password, confirmPassword, errorMessage } = this.props;
     if(!email || !password || !confirmPassword) {
       this.props.emptyUserOrPassword();
       return;
@@ -22,6 +20,10 @@ class Register extends React.Component {
 
     if (password !== confirmPassword) {
       this.props.passwordNotMatch();
+      return;
+    }
+
+    if (errorMessage) {
       return;
     }
 
@@ -48,28 +50,35 @@ class Register extends React.Component {
   render() {
     if(this.props.loading) {
       return (
-        <ImageBackground source={registerBackgroundSrc} style={styles.backgroundImage}>
-          <Section style={styles.register}>
-            <ActivityIndicator />
+          <Section style={styles.loginBackground}>
+            <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
           </Section>
-        </ImageBackground>
       );
     } else {
       return (
-        <ImageBackground source={registerBackgroundSrc} style={styles.backgroundImage}>
-          <Section style={styles.register}>
-            <Text style={styles.registerTitle}>{Authentication.SignIn.title}</Text>
+        <Section style={styles.loginBackground}>
+          <View style={styles.backgroundCirle}></View>
+          <View style={styles.backgroundCirleTwo}></View>
 
-            {this.props.errorMessage &&
-            <Text style={{ color: 'red' }}>
-              {this.props.errorMessage}
-            </Text>}
+          <Text style={styles.registerTitle}>{Authentication.SignIn.title}</Text>
 
+          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
+            <FontAwesome5 style={styles.loginTextIcon} name={'facebook-f'} solid />  {'CONTINUE WITH FACEBOOK'}
+          </Button>
+
+          <Text style={styles.loginOrText}>or</Text>
+
+          {this.props.errorMessage &&
+          <Text style={{ color: 'red' }}>
+            {this.props.errorMessage}
+          </Text>}
+
+          <View style={styles.loginInputWrapper}>
             <View style={styles.loginInput}>
-              <Icon style={styles.emailIcon} name="ios-mail"/>
+              <FontAwesome5 style={styles.lockIcon} name={'envelope'} solid />
               <TextInput
                 placeholder="Email"
-                placeholderTextColor="#ffffff"
+                placeholderTextColor="#78849E"
                 autoCapitalize="none"
                 style={styles.textInput}
                 onChangeText={this.onEmailChange.bind(this)}
@@ -78,11 +87,11 @@ class Register extends React.Component {
             </View>
 
             <View style={styles.loginInput}>
-              <Icon style={styles.lockIcon} name="md-lock"/>
+              <FontAwesome5 style={styles.lockIcon} name={'lock'} solid />
               <TextInput
                 secureTextEntry
                 placeholder="Password"
-                placeholderTextColor="#ffffff"
+                placeholderTextColor="#78849E"
                 autoCapitalize="none"
                 style={styles.textInput}
                 onChangeText={this.onPasswordChange.bind(this)}
@@ -91,11 +100,11 @@ class Register extends React.Component {
             </View>
 
             <View style={styles.loginInput}>
-              <Icon style={styles.lockIcon} name="md-lock"/>
+              <FontAwesome5 style={styles.lockIcon} name={'lock'} solid />
               <TextInput
                 secureTextEntry
                 placeholder="Confirm Password"
-                placeholderTextColor="#ffffff"
+                placeholderTextColor="#78849E"
                 autoCapitalize="none"
                 style={styles.textInput}
                 onChangeText={this.onConfirmPasswordChange.bind(this)}
@@ -103,19 +112,15 @@ class Register extends React.Component {
               />
             </View>
 
-            <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
+            <Button textStyle={styles.loginTextBtn} buttonStyle={[styles.loginBtnStyle, styles.loginBtn]} onPress={this.onButtonPress.bind(this)}>
               {Authentication.SignIn.buttonTittle}
             </Button>
+          </View>
 
-            <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
-              {'FB LOGIN'}
-            </Button>
-
-            <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Login')}>
-              {Authentication.SignIn.additionalLinkTitle}
-            </Button>
-          </Section>
-        </ImageBackground>
+          <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Login')}>
+            {Authentication.SignIn.additionalLinkTitle} <Text style={styles.logingSignUpBtn}>Login</Text>
+          </Button>
+        </Section>
       )
     }
   }

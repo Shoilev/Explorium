@@ -1,17 +1,14 @@
 import React from 'react';
-import { Text, TextInput, View, ImageBackground } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 import { connect } from 'react-redux';
 import firebase, { auth } from 'react-native-firebase';
-import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createStyles } from '../assets/styles';
 import { localCityChange, nicknameChange } from '../actions';
-import { images } from '../assets/images';
 import { Auth } from '../assets/styles/auth';
 import { Section, Button } from './common';
-import { Authentication } from '../resources/labels.json';
 
 const styles = createStyles(Auth);
-const registerBackgroundSrc = images.registerBackground;
 
 class UserInfo extends React.Component {
   onButtonPress() {
@@ -34,45 +31,46 @@ class UserInfo extends React.Component {
 
   render() {
     return (
-      <ImageBackground source={registerBackgroundSrc} style={styles.backgroundImage}>
-        <Section style={styles.register}>
-          <Text style={styles.registerTitle}>Additional User Info</Text>
-          <Text style={{color:'#fff'}}>*Local City: is a place where you feel local.</Text>
+      <Section style={styles.loginBackground}>
+        <View style={styles.backgroundCirle}></View>
+        <View style={styles.backgroundCirleTwo}></View>
 
-          {this.props.errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {this.props.errorMessage}
-          </Text>}
+        <Text style={styles.registerTitle}>Additional User Info</Text>
+        <Text style={{color:'#fff'}}>*Local City: is a place where you feel local.</Text>
 
-          <View style={styles.loginInput}>
-            <Icon style={styles.emailIcon} name="ios-locate"/>
-            <TextInput
-              placeholder="Local City"
-              placeholderTextColor="#ffffff"
-              autoCapitalize="none"
-              style={styles.textInput}
-              onChangeText={this.onLocalCityChange.bind(this)}
-              value={this.props.localCity}
-            />
-          </View>
+        {this.props.errorMessage &&
+        <Text style={{ color: 'red' }}>
+          {this.props.errorMessage}
+        </Text>}
 
-          <View style={styles.loginInput}>
-            <Icon style={styles.lockIcon} name="md-contact"/>
-            <TextInput
-              placeholder="Nickname or Name"
-              placeholderTextColor="#ffffff"
-              autoCapitalize="none"
-              style={styles.textInput}
-              onChangeText={this.onNicknameChange.bind(this)}
-              value={this.props.nickname}
-            />
-          </View>
+        <View style={styles.loginInput}>
+          <FontAwesome5 style={styles.lockIcon} name="street-view" solid/>
+          <TextInput
+            placeholder="Local City"
+            placeholderTextColor="#78849E"
+            autoCapitalize="none"
+            style={styles.textInput}
+            onChangeText={this.onLocalCityChange.bind(this)}
+            value={this.props.localCity}
+          />
+        </View>
 
-          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
-            Submit
-          </Button>
-        </Section>
-      </ImageBackground>
+        <View style={styles.loginInput}>
+          <FontAwesome5 style={styles.lockIcon} name="user-circle" solid/>
+          <TextInput
+            placeholder="Nickname or Name"
+            placeholderTextColor="#78849E"
+            autoCapitalize="none"
+            style={styles.textInput}
+            onChangeText={this.onNicknameChange.bind(this)}
+            value={this.props.nickname}
+          />
+        </View>
+
+        <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
+          Submit
+        </Button>
+      </Section>
     )
   }
 }

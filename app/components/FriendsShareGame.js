@@ -71,7 +71,7 @@ class FriendsShareGame extends Component {
     if(!isEmpty(friendsData) && allowBoost) {
       return (
       <View style={styles.friendsContainer}>
-        <HeaderCloseBar headerBarNav={navigation}>{'Boost Your XP'}</HeaderCloseBar>
+        <HeaderCloseBar headerBarNav={{navigation, redirect: true }}>{'Boost Your XP'}</HeaderCloseBar>
         <Text style={styles.friendsShareText}>Invite 5 of your friends and boost your experience x2 for one month.</Text>
         <View style={styles.friendsShareWrapper}>
           {this.renderShareBoostFriends(userBoostShareNumber)}
@@ -93,7 +93,7 @@ class FriendsShareGame extends Component {
     else if(!allowBoost) {
       return (
         <View style={styles.container}>
-          <HeaderCloseBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={navigation}>{'Boost Your XP'}</HeaderCloseBar>
+          <HeaderCloseBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={{navigation, redirect: false }}>{'Boost Your XP'}</HeaderCloseBar>
           <Text style={styles.friendErrroMessage}>{'You have already boost your XP'}</Text>
         </View>
       )
@@ -101,7 +101,7 @@ class FriendsShareGame extends Component {
     else if(!isEmpty(errorMessage)) {
       return (
         <View style={styles.container}>
-          <HeaderCloseBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={navigation}>{'Boost Your XP'}</HeaderCloseBar>
+          <HeaderCloseBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={{navigation, redirect: false }}>{'Boost Your XP'}</HeaderCloseBar>
           <Text style={styles.friendErrroMessage}>{errorMessage}</Text>
         </View>
       )
@@ -109,7 +109,7 @@ class FriendsShareGame extends Component {
     else {
       return (
         <View style={styles.container}>
-          <HeaderCloseBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={navigation}>{'Boost Your XP'}</HeaderCloseBar>
+          <HeaderCloseBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={{navigation, redirect: false }}>{'Boost Your XP'}</HeaderCloseBar>
           <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
         </View>
       )

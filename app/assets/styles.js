@@ -66,11 +66,7 @@ const baseStyles = {
   textInput: {
     height: 40,
     borderWidth: 0,
-    marginTop: spacing.medium,
-    paddingLeft: spacing.medium,
-    paddingTop: spacing.small,
-    paddingBottom: spacing.small,
-    color: colors.white,
+    color: '#78849E',
     fontSize: fonts.baseSize * 3
   },
   searchInput: {

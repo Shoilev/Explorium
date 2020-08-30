@@ -167,39 +167,57 @@ export const ExploreStyle = {
     height: '100%'
   },
   exploreMapContainer: {
-    position: 'relative'
+    position: 'relative',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   exploreItemWrapper: {
-    position: 'absolute',
-    overflow: 'hidden',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     zIndex: 100,
-    height: 150,
-    bottom: 0,
-    left: 20,
-    width: dimensions.screenWidth - 40,
-    backgroundColor: colors.black,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20
+    height: 160,
+    overflow: 'hidden',
+    elevation: 6,
+    marginBottom: spacing.extraLarge * 2,
+    width: dimensions.screenWidth - 80,
+    backgroundColor: colors.white,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12
+  },
+  exploreMapImageWrappper: {
+    position: 'relative',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    elevation: 6,
+    width: '100%',
+    height: 110,
+    borderRadius: 12,
   },
   exploreMapItemImage: {
     width: '100%',
-    height: 150,
+    height: 110,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
     backgroundColor: colors.yellow
   },
   exploreMapTitle: {
     width: '100%',
-    color: colors.white,
+    backgroundColor: colors.white,
     textAlign: 'center',
-    position:'absolute',
-    bottom:0,
-    left: 0
+    marginTop: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12
   },
   exploreMapTitleText: {
     padding: 5,
-    color: '#123c55',
-    backgroundColor: 'rgba(205, 209, 213, 0.8);',
+    color: colors.primeryBlue,
+    backgroundColor: colors.white,
     textAlign: 'center'
   },
   exploreMapTexShadow: {
@@ -207,27 +225,19 @@ export const ExploreStyle = {
     color: colors.white
   },
   exploreMapPoints: {
-    position: 'absolute',
-    bottom: 35,
-    alignSelf: 'center',
-    backgroundColor: colors.yellow,
-    borderRadius: 30,
-    paddingTop: 1,
-    paddingBottom: 1,
-    paddingLeft: 8,
-    paddingRight: 8,
-    fontSize: fonts.baseSize * 2
+    marginTop: -9
   },
   exploreExploredLabelWrapper: {
-    position:'absolute',
-    flex:1,
-    flexDirection: 'row',
-    justifyContent:'center',
-    alignItems: 'center',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+    width: '100%',
+    height: 110,
+    borderRadius: 12,
+    justifyContent:'center',
+    alignItems: 'center',
     backgroundColor: colors.exploredBlueOpacity
   },
   exploreExploredLabelImage: {
@@ -267,23 +277,35 @@ export const ExploreStyle = {
     paddingLeft: spacing.medium,
     paddingRight: spacing.medium
   },
-  exploreMapLandmarkShadowButton: {
-    backgroundColor: colors.black
-  },
-  exploreMapButtonTitle: {
-    color: colors.white
-  },
   exploreErrorMessage: {
     padding: spacing.extraLarge,
     textAlign: 'center'
   },
   exploreBackBtn: {
-    backgroundColor: '#50ced3',
-    borderRadius: 30,
+    backgroundColor: colors.orange,
+    borderRadius: 12,
     paddingTop: 6,
     paddingBottom: 6,
     paddingLeft: spacing.large,
     paddingRight: spacing.large
+  },
+  exploreBackBtnText: {
+    color: colors.white,
+  },
+  exploreMapBackBtn: {
+    position: 'absolute',
+    top: 30,
+    left: 10,
+    zIndex: 20,
+    backgroundColor: 'transparent'
+  },
+  exploreMapBackBtnIcon: {
+    fontSize: fonts.baseSize * 8,
+    color: colors.blue
+  },
+  exploreMapBackBtnText: {
+    color: colors.blue,
+    textAlign: 'center'
   },
   exploreMarker: {
     flex: 1,

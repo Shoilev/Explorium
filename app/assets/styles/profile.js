@@ -1,61 +1,142 @@
-import { colors, spacing, fonts } from './base';
+import { colors, spacing, fonts, dimensions } from './base';
 
 export const ProfileStyle = {
   profileWrapper: {
     justifyContent: 'flex-start',
     alignItems: 'center',
+    minHeight: dimensions.fullHeight
   },
   profileBtn: {
-    backgroundColor: colors.primeryBlue,
+    // position: 'absolute',
+    // bottom: 50,
+    // left: '50%',
+    backgroundColor: colors.orange,
     borderRadius: 20,
     marginTop: spacing.extraLarge
   },
   profileBtnText: {
     color: colors.white,
   },
-  profileBackgroundImage: {
-    height: 150,
+  backgroundCover: {
+    height: 280,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 90,
+    backgroundColor: colors.yellow,
+    borderBottomLeftRadius: 44,
+    borderBottomRightRadius: 44,
   },
-  profileImageFb: {
+  backgroundCirle: {
+    position: 'absolute',
+    top: -45,
+    left: -45,
     width: 180,
     height: 180,
-    borderRadius: 100,
-    marginTop: 150,
-    borderWidth: 1,
-    borderColor: colors.white
+    borderRadius: 180/2,
+    borderWidth: 30,
+    borderColor: '#FECF39'
+  },
+  backgroundCirleTwo: {
+    position: 'absolute',
+    top: 15,
+    left: 200,
+    width: 60,
+    height: 60,
+    borderRadius: 60/2,
+    borderWidth: 15,
+    borderColor: '#FECF39'
+  },
+  backgroundCirleThree: {
+    position: 'absolute',
+    top: 70,
+    right: -50,
+    width: 120,
+    height: 120,
+    borderRadius: 120/2,
+    borderWidth: 30,
+    borderColor: '#FECF39'
+  },
+  profileInnerContainer: {
+    backgroundColor: colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    marginTop: -150,
+    width: dimensions.screenWidth - 80,
+    elevation: 6
+  },
+  profileSettingsButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 0,
+    top: 70,
+    width: 70,
+    height: 45,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
+    backgroundColor: colors.orange
+  },
+  profileSettingsIcon: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 4
+  },
+  profileSettingsLabel: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 2
   },
   profileImage: {
-    width: 200,
-    height: 200,
-    marginTop: 150,
+    width: 90,
+    height: 90,
+    marginTop: -45,
+  },
+  profileEditIcon: {
+    color: colors.orange,
+    fontSize: fonts.baseSize * 3
+  },
+  profileEditTitle: {
+    fontSize: fonts.baseSize
+  },
+  profileWelcomeTitle: {
+    color: colors.primeryBlue,
+    fontSize: fonts.baseSize * 3,
+    marginBottom: 0
   },
   profileTitle: {
     color: colors.primeryBlue,
-    marginBottom: spacing.extraLarge
+    marginBottom: spacing.extraLarge,
+    fontSize: fonts.baseSize * 5,
+    marginTop: -5,
+    marginBottom: spacing.medium
   },
-  profileIcon: {
-    width: 25,
-    height: 25,
-    marginRight: 5
+  profileTotalPoints: {
+    marginBottom: spacing.medium
   },
-  profileScore: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+  profilePointsInfo: {
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 5,
-    width: 200,
-    backgroundColor: '#65c7d4',
-    borderRadius: 20,
-    padding: spacing.small
+    flexDirection: 'row',
+    marginBottom: spacing.medium
   },
-  profileRightScore: {
-    position: 'absolute',
-    right: 20,
-    fontWeight: '700'
+  profilePointsInfoIcon: {
+    fontSize: fonts.baseSize * 6,
+    color: colors.orange,
+    textAlign: 'center'
+  },
+  profilePointsInfoLabel: {
+    color: colors.orange,
+    fontSize: fonts.baseSize * 2.5,
+    fontWeight: '700',
+    textAlign: 'center'
+  },
+  profilePointsInfoLeft: {
+    marginRight: spacing.extraLarge * 3
+  },
+  profilePointsLabel: {
+    textAlign: 'center',
+    marginBottom: 3,
+    color: colors.navGray,
+    fontSize: fonts.baseSize * 2.5
   },
   profileXPWrapper: {
     flex: 1,
@@ -68,7 +149,7 @@ export const ProfileStyle = {
     flexDirection: 'row',
     backgroundColor: colors.orange,
     borderRadius: 10,
-    marginBottom: spacing.extraLarge * 2,
+    marginBottom: spacing.small,
   },
   profileXPProgress: {
     backgroundColor: colors.yellow,
@@ -87,5 +168,65 @@ export const ProfileStyle = {
   profileXPTargetText: {
     textAlign: 'center',
     color: colors.white
+  },
+  profileBadgesWrapper: {
+    flex: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: dimensions.screenWidth,
+    marginTop: spacing.extraLarge * 1.5,
+    paddingLeft: spacing.extraLarge,
+    paddingRight: spacing.extraLarge,
+    marginBottom: spacing.extraLarge * 1.5
+  },
+  profileBadgesTitle: {
+    textAlign: 'left',
+    width: '100%',
+    fontSize: fonts.baseSize * 3.5,
+    color: colors.primeryBlue
+  },
+  profileBadges: {
+    flex: 1,
+    width: dimensions.screenWidth,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: spacing.medium
+  },
+  profileBadgeLabel: {
+    textAlign: 'center',
+    color: colors.primeryBlue,
+    marginTop: spacing.small
+  },
+  settingsWrapper: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
+  },
+  settingsList: {
+    width: dimensions.screenWidth,
+    marginTop: 80,
+    justifyContent: 'flex-start'
+  },
+  settingsListItem: {
+    fontSize: fonts.baseSize * 3,
+    padding: spacing.medium,
+    paddingLeft: spacing.extraLarge,
+    borderBottomWidth: 2,
+    borderBottomColor: colors.gray
+  },
+  settingsLogoutButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: dimensions.screenWidth
+  },
+  settingsInfoWrapper: {
+    position: 'absolute',
+    width: dimensions.screenWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 40
+  },
+  settingsInfo: {
+    textAlign: 'center',
   }
 }

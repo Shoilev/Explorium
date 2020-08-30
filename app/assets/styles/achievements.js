@@ -3,50 +3,54 @@ import { colors, spacing, fonts } from './base';
 export const AchievementsStyle = {
   achievementsListCard: {
     flex: 1,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: spacing.small,
-    marginBottom: spacing.medium,
+    marginBottom: spacing.large,
     marginLeft: spacing.medium,
     marginRight: spacing.medium,
-    height: 80,
-    borderRadius: 15,
+    backgroundColor: colors.lightGray,
+    height: 100,
     overflow: 'hidden',
     textAlign: 'center'
   },
-  achievementsIndexText: {
-    color: colors.white,
-    opacity: 0.6,
-    fontWeight: 'bold'
-  },
   achievementsListTitle: {
-    color: colors.white,
-    textAlign: 'center',
+    marginTop: spacing.medium,
+    marginLeft: spacing.large,
+    color: colors.primeryBlue,
+    textAlign: 'left',
     fontSize: fonts.baseSize * 3,
     fontWeight: 'bold'
   },
-  achievementsListPoints: {
-    paddingLeft: spacing.medium,
-    paddingRight: spacing.medium,
-    paddingTop: spacing.small / 1.5,
-    paddingBottom: spacing.small / 1.5,
-    marginTop: spacing.small / 1.5,
-    fontSize: fonts.baseSize * 2,
-    color: colors.white,
-    borderRadius: 10
+  achievementsItemRank: {
+    color: colors.orange,
+    fontSize: fonts.baseSize * 2.5,
+    paddingRight: spacing.small
   },
-  achievementsHeader: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: spacing.large,
-    borderBottomWidth: 1,
-    borderColor: colors.primeryBlue,
-    marginBottom: spacing.small
+  achievementsItemIcon: {
+    textAlign: 'center',
+    color: colors.orange,
+    fontSize: fonts.baseSize * 4,
+    paddingRight: spacing.small
+  },
+  achievementsItemPointsWrapper: {
+    justifyContent: 'center'
+  },
+  achievementsDate: {
+    marginLeft: spacing.large
+  },
+  achievementsDateIcon: {
+    fontSize: fonts.baseSize * 2.5,
+    color: colors.primeryBlue
   },
   achievementsHeaderText: {
-    color: colors.primeryBlue,
-    textTransform: 'uppercase',
-    fontWeight: 'bold'
+    color: colors.primeryDarkBlue,
+    fontSize: fonts.baseSize * 5,
+    textAlign: 'center',
+    fontWeight: '700',
+    marginTop: spacing.large,
+    marginBottom: spacing.large
   },
   tabHeaderView: {
     height: 80,
@@ -60,5 +64,26 @@ export const AchievementsStyle = {
   tabBarIndicator: {
     backgroundColor: colors.yellow,
     height: 4
+  },
+  achievementUserWrapper: {
+    flex: 1,
+    margin: spacing.medium,
+    padding: spacing.large,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection:'row',
+    backgroundColor: '#FFF4CF'
+  },
+  achievementsUserInfo: {
+    marginLeft: spacing.extraLarge
+  },
+  achievementsUserName: {
+    color: colors.primeryDarkBlue,
+    fontSize: fonts.baseSize * 4,
+    fontWeight: '700'
+  },
+  achievementsUserPoints: {
+    marginTop: spacing.medium
   }
 }

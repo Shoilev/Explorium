@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, ImageBackground, Image, ActivityIndicator } from 'react-native';
+import { Text, TextInput, View, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SplashScreen from 'react-native-splash-screen';
 import { emailChanged, passwordChanged, loginUser, emptyUserOrPassword, FBLoginOrRegister } from '../actions';
 import { Section, Button } from './common';
 import { createStyles } from '../assets/styles';
 import { images } from '../assets/images';
 import { Auth } from '../assets/styles/auth';
-import { App, Authentication } from '../resources/labels.json';
+import { Authentication } from '../resources/labels.json';
 
 const styles = createStyles(Auth);
-const loginBackgroundSrc = images.loginBackground;
 const logoSrc = images.logo;
 
 class Login extends Component {
@@ -46,63 +45,66 @@ class Login extends Component {
   render() {
     if(this.props.loading) {
       return (
-        <ImageBackground source={loginBackgroundSrc} style={styles.backgroundImage}>
-          <Section style={styles.login}>
-            <ActivityIndicator />
-          </Section>
-        </ImageBackground>
+        <Section style={styles.loginBackground}>
+          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
+        </Section>
       );
     } else {
       return (
-        <ImageBackground source={loginBackgroundSrc} style={styles.backgroundImage}>
-          <Section style={styles.login}>
+        <Section style={styles.loginBackground}>
+          <View style={styles.backgroundCirle}></View>
+          <View style={styles.backgroundCirleTwo}></View>
+
+          <View style={styles.loginLogoCircle}>
             <Image source={logoSrc} style={styles.loginLogo}/>
-            <Text style={styles.introText}>{App.description}</Text>
+          </View>
 
+          <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
+            <FontAwesome5 style={styles.loginTextIcon} name={'facebook-f'} solid />  {'CONTINUE WITH FACEBOOK'}
+          </Button>
 
-            {this.props.errorMessage &&
-            <Text style={{ color: 'red' }}>
-              {this.props.errorMessage}
-            </Text>}
+          <Text style={styles.loginOrText}>or</Text>
 
+          {this.props.errorMessage &&
+          <Text style={{ color: 'red' }}>
+            {this.props.errorMessage}
+          </Text>}
+
+          <View style={styles.loginInputWrapper}>
             <View style={styles.loginInput}>
-              <Icon style={styles.emailIcon} name="ios-mail"/>
+              <FontAwesome5 style={styles.lockIcon} name={'envelope'} solid />
               <TextInput
                 style={styles.textInput}
                 autoCapitalize="none"
                 placeholder="Email"
-                placeholderTextColor="#ffffff"
+                placeholderTextColor="#78849E"
                 onChangeText={this.onEmailChange.bind(this)}
                 value={this.props.email}
                 />
             </View>
 
             <View style={styles.loginInput}>
-              <Icon style={styles.lockIcon} name="md-lock"/>
+              <FontAwesome5 style={styles.lockIcon} name={'lock'} solid />
               <TextInput
                 secureTextEntry
                 style={styles.textInput}
                 autoCapitalize="none"
                 placeholder="Password"
-                placeholderTextColor="#ffffff"
+                placeholderTextColor="#78849E"
                 onChangeText={this.onPasswordChange.bind(this)}
                 value={this.props.password}
               />
             </View>
 
-            <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onButtonPress.bind(this)}>
+            <Button textStyle={styles.loginTextBtn} buttonStyle={[styles.loginBtnStyle, styles.loginBtn]} onPress={this.onButtonPress.bind(this)}>
               {Authentication.LogIn.buttonTitle}
             </Button>
+          </View>
 
-            <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
-              {'FB LOGIN'}
-            </Button>
-
-            <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Register')}>
-              {Authentication.LogIn.additionalLinkTitle}
-            </Button>
-          </Section>
-        </ImageBackground>
+          <Button textStyle={styles.signTextBtn} buttonStyle={styles.signBtnStyle} onPress={() => this.props.navigation.navigate('Register')}>
+            {Authentication.LogIn.additionalLinkTitle} <Text style={styles.logingSignUpBtn}>Sign up</Text>
+          </Button>
+        </Section>
       );
     }
   }

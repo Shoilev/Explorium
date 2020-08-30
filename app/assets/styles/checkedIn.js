@@ -4,7 +4,8 @@ export const CheckedInStyle = {
   checkedInContainer: {
     paddingLeft: spacing.extraLarge,
     paddingRight: spacing.extraLarge,
-    backgroundColor: colors.yellow
+    backgroundColor: colors.yellow,
+    paddingTop: spacing.large * 1.4
   },
   checkedInCircleTop: {
     backgroundColor: colors.yellow,
