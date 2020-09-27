@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, Image } from 'react-native';
 import { Button } from './common';
 import { createStyles } from '../assets/styles';
-import { FriendsStyle } from '../assets/styles/friends';
+import { CheckedInStyle } from '../assets/styles/checkedIn';
 
-const styles = createStyles(FriendsStyle);
+const styles = createStyles(CheckedInStyle);
 
 export default class BoostSuccess extends Component {
 
@@ -22,22 +22,36 @@ export default class BoostSuccess extends Component {
       let parsedExpireDate = expireDate.getDate() + '/' + (expireDate.getMonth() + 1) + '/' + expireDate.getFullYear();
 
       return (
-      <View style={[styles.container]}>
-        <Image style={{width: 250, height: 250}} source={require('../assets/images/congratulations.png')} />
-        <Text>Congratulations!</Text>
-        <Text>We boost your XP x2 until {parsedExpireDate}</Text>
+      <View style={[styles.container, styles.checkedInContainer]}>
+        <View style={styles.checkedInCircleTop}></View>
+        <View style={styles.checkedInCircleBottom}></View>
 
-        <Button onPress={()=>this.props.navigation.navigate('Explore')} >Continue Exploring</Button>
+        <View style={styles.checkedInContent}>
+          <View style={{marginTop: -40}}>
+            <Image style={{width: 150, height: 145}} source={require('../assets/images/congratulations.png')} />
+          </View>
+          <Text style={styles.checkedInTitle}>Congratulations!</Text>
+          <Text style={[styles.checkedInDescription, {color: '#007E25'}]}>We boost your XPx2 until {parsedExpireDate}</Text>
+        </View>
+
+        <Button textStyle={styles.checkedInButtonText} buttonStyle={styles.checkedInButton} onPress={()=>this.props.navigation.navigate('Explore')} >Continue Exploring</Button>
       </View>
       );
     } else {
       return (
-        <View style={[styles.container]}>
-          <Image style={{width: 250, height: 250}} source={require('../assets/images/congratulations.png')} />
-          <Text>Thank you!</Text>
-          <Text>You are closer to get XP Boost for 1 month!</Text>
+        <View style={[styles.container, styles.checkedInContainer]}>
+          <View style={styles.checkedInCircleTop}></View>
+          <View style={styles.checkedInCircleBottom}></View>
 
-          <Button onPress={()=>this.props.navigation.navigate('FriendsShareGame')} >OK</Button>
+          <View style={styles.checkedInContent}>
+            <View style={{marginTop: -40}}>
+              <Image style={{width: 150, height: 145}} source={require('../assets/images/congratulations.png')} />
+            </View>
+            <Text style={styles.checkedInTitle}>Thank you!</Text>
+            <Text style={styles.checkedInDescription}>You are closer to get XP Boost for 1 month!</Text>
+          </View>
+
+          <Button textStyle={styles.checkedInButtonText} buttonStyle={styles.checkedInButton} onPress={()=>this.props.navigation.navigate('FriendsShareGame')} >OK</Button>
         </View>
       );
     }

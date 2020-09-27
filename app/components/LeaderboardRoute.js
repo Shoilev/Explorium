@@ -5,10 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { SvgUri } from 'react-native-svg';
 import { getLeaderboard } from '../actions';
 import { createStyles } from '../assets/styles';
-import { Section } from '../components/common';
 import { isEmpty } from '../helpers';
 import { LeaderboardStyle } from '../assets/styles/leaderboard';
-import { Screens } from '../resources/labels.json';
 import { images } from '../assets/images';
 
 const styles = createStyles(LeaderboardStyle);

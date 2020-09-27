@@ -38,7 +38,7 @@ class BaseMap extends Component {
 
     const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
 
-    if( true || isNearBy && !isAchieved) {
+    if(isNearBy && !isAchieved) {
       // assign points to the customer
       const userUID = this.props.userUID;
       this.setState({
@@ -149,6 +149,7 @@ class BaseMap extends Component {
               apikey={GOOGLE_MAPS_APIKEY}
               strokeWidth={5}
               strokeColor="#FF7E29"
+              resetOnChange={false} // remove the line glitching
               mode='walking'
             />
           </MapView>

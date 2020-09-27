@@ -10,14 +10,13 @@ export const getLeaderboard = () => {
 
     return firebase.firestore().collection("users")
     .where('level', '>', 1)
-    // .where('ranking', 'array-contains', new Date(Date.now()).getMonth().toString() + '/' + new Date(Date.now()).getFullYear().toString())
-    .limit(20)
+    .where('ranking', 'array-contains', new Date(Date.now()).getMonth().toString() + '/' + new Date(Date.now()).getFullYear().toString())
     .get().then(querySnapshot => {
       let userResult = [];
 
       querySnapshot.forEach(doc => {
         let user = doc.data();
-        let currentDate = new Date().getMonth();
+        let currentDate = new Date().getMonth()-1;
         let userRank = user.userRank || 0;
         let userShareBonus = user.shareBonus || null;
 
@@ -52,7 +51,7 @@ export const getLeaderboard = () => {
         return b.userRank - a.userRank
       })
 
-      return dispatch({ type: LEADERBOARD_FETCH_SUCCESS, payload: userResult })
+      return dispatch({ type: LEADERBOARD_FETCH_SUCCESS, payload: userResult.slice(0, 20) })
     }, (err) => {
       console.log('document not found');
       return dispatch({ type: LEADERBOARD_FETCH_FAIL, payload: {} })

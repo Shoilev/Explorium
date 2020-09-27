@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { TabView, TabBar } from 'react-native-tab-view';
+import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import AchievementsRoute from '../components/AchievementsRoute';
 import LeaderboardRoute from '../components/LeaderboardRoute';
 import Friends from './Friends';
@@ -19,14 +19,20 @@ export default Achievements = () => {
     { key: 'friends', title: 'Friends' }
   ]);
 
+  // const renderScene = SceneMap({
+  //   leaderboard: LeaderboardRoute,
+  //   achievements: AchievementsRoute,
+  //   friends: Friends
+  // });
+
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 'leaderboard':
-        return <LeaderboardRoute/>;
+        return <LeaderboardRoute />;
       case 'achievements':
         return <AchievementsRoute />;
         case 'friends':
-          return <Friends />;
+          return <Friends friendsIndex={index} />;
     }
   };
 

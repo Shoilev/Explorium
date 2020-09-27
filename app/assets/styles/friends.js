@@ -108,5 +108,18 @@ export const FriendsStyle = {
   },
   friendErrroMessage: {
     fontSize: fonts.baseSize * 4
-  }
+  },
+  friendsBtnCountryWrapper: {
+    backgroundColor: colors.orange,
+    borderRadius: 10,
+    paddingLeft: spacing.large,
+    paddingRight: spacing.large,
+    paddingTop: 7,
+    paddingBottom: 7,
+    marginTop: spacing.medium
+  },
+  friendsBtnCountryTextStyle: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 3
+  },
 }

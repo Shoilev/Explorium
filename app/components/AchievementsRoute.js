@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator, Image, FlatList } from 'react-native';
+import { Text, View, ActivityIndicator, Image, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { SvgUri } from 'react-native-svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getAchievementsPerUser } from '../actions';
+import { getFirstAchievementsPerUser } from '../actions';
 import { createStyles } from '../assets/styles';
 import { Section } from '../components/common';
 import { isEmpty } from '../helpers';
@@ -17,7 +17,7 @@ const styles = createStyles(AchievementsStyle);
 class AchievementsRoute extends Component {
 
   componentWillMount() {
-    this.props.getAchievementsPerUser();
+    this.props.getFirstAchievementsPerUser();
   }
 
   renderItem(item, index) {
@@ -76,11 +76,13 @@ class AchievementsRoute extends Component {
       return (
         <View style={{flex:1}}>
           <Text style={styles.achievementsHeaderText}>{Screens.Achievements.headerTitle}</Text>
+          <Text style={styles.achievementsSubTitle}>{'(Last 50 achievements)'}</Text>
           <FlatList
             data={userAchievements}
             renderItem={({item, index}) => this.renderItem(item,index)}
             keyExtractor={index => { return 'achievements' + index.toString() + new Date().getTime().toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString()}}
             style={styles.achievementsList}
+            initialNumToRender={userAchievements.length}
             ListHeaderComponent={
               <View style={styles.achievementUserWrapper}>
                 <SvgUri
@@ -119,4 +121,4 @@ const mapStateToProps = ({achievements}) => {
   return { achievements };
 };
 
-export default connect(mapStateToProps, { getAchievementsPerUser })(AchievementsRoute);
+export default connect(mapStateToProps, { getFirstAchievementsPerUser })(AchievementsRoute);

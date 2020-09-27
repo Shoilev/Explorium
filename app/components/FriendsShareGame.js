@@ -16,25 +16,29 @@ const styles = createStyles(FriendsStyle);
 
 class FriendsShareGame extends Component {
   componentWillMount() {
-    const userUID = firebase.auth().currentUser.uid;
-
     this.setState({
       userBoostShare: -1,
-      allowBoost: true
+      allowBoost: true,
+      loading: true
     });
+  }
 
+  componentDidMount() {
+    const userUID = firebase.auth().currentUser.uid;
     firebase.firestore().collection('users').doc(userUID)
     .get().then(doc => {
       if(doc.exists) {
         const boostShare = doc.data().boostShare;
         if(boostShare > 4) {
           this.setState({
+            loading: false,
             allowBoost: false
           });
           return;
         }
 
         this.setState({
+          loading: false,
           userBoostShare: boostShare || 0
         });
       }
@@ -68,7 +72,15 @@ class FriendsShareGame extends Component {
     const userBoostShareNumber = this.state.userBoostShare;
     const allowBoost = this.state.allowBoost;
 
-    if(!isEmpty(friendsData) && allowBoost) {
+    if (this.state.loading) {
+      return (
+       <View style={styles.container}>
+          <HeaderCloseBar headerBarStyle={{position:'absolute', top: 0, left: 0, right: 0}} headerBarNav={{navigation, redirect: false }}>{'Boost Your XP'}</HeaderCloseBar>
+          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
+        </View>
+      )
+    }
+    else if(!isEmpty(friendsData) && allowBoost) {
       return (
       <View style={styles.friendsContainer}>
         <HeaderCloseBar headerBarNav={{navigation, redirect: true }}>{'Boost Your XP'}</HeaderCloseBar>

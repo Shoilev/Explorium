@@ -111,7 +111,7 @@ export default class CheckedIn extends Component {
           </TouchableHighlight>
         </View>
 
-        {true || levelData.isLevelUp ?
+        {levelData.isLevelUp ?
           <Button textStyle={styles.checkedInButtonText} buttonStyle={styles.checkedInButton} onPress={()=>this.props.navigation.navigate('LevelUp',{levelData, user})} >Continue</Button>
           :
           <Button textStyle={styles.checkedInButtonText} buttonStyle={styles.checkedInButton} onPress={()=>this.props.navigation.navigate('Explore')} >Continue</Button>

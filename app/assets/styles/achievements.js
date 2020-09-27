@@ -38,7 +38,9 @@ export const AchievementsStyle = {
     justifyContent: 'center'
   },
   achievementsDate: {
-    marginLeft: spacing.large
+    marginTop: spacing.medium,
+    marginLeft: spacing.large,
+    fontSize: fonts.baseSize * 2
   },
   achievementsDateIcon: {
     fontSize: fonts.baseSize * 2.5,
@@ -50,16 +52,21 @@ export const AchievementsStyle = {
     textAlign: 'center',
     fontWeight: '700',
     marginTop: spacing.large,
+  },
+  achievementsSubTitle: {
+    color: colors.darkGray,
+    fontSize: fonts.baseSize * 2.5,
+    textAlign: 'center',
     marginBottom: spacing.large
   },
   tabHeaderView: {
-    height: 80,
+    height: 100,
     justifyContent: 'flex-end',
     backgroundColor: colors.orange,
   },
   tabBarLabel: {
     textTransform: 'capitalize',
-    fontSize: fonts.baseSize * 3.2,
+    fontSize: fonts.baseSize * 2.8,
   },
   tabBarIndicator: {
     backgroundColor: colors.yellow,

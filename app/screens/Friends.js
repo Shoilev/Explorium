@@ -14,6 +14,16 @@ const INVITE_MESSAGE = 'Join us and download our app!';
 
 class Friends extends Component {
   componentWillMount() {
+    this.setState({
+      contactLoading: false
+    });
+  }
+  
+  loadContacts() {
+    this.setState({
+      contactLoading: true
+    });
+
     this.props.getFriends();
   }
 
@@ -46,8 +56,16 @@ class Friends extends Component {
   }
 
   render() {
+    const { friendsIndex } = this.props;
     const { friendsData, activeFriends, errorMessage } = this.props.friends;
     const { navigation } = this.props;
+
+    if(friendsIndex == 2 && isEmpty(activeFriends)){
+      this.props.getFriends();
+    }
+
+    console.log(friendsData)
+    console.log('=======asdasdasdsadasdasdasdasdas')
 
     if(!isEmpty(friendsData)) {
       return (
@@ -76,10 +94,22 @@ class Friends extends Component {
         </View>
       )
     }
+    else if(!this.state.contactLoading) {
+      return(
+        <View style={styles.container}>
+          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
+          <Text>Please wait</Text>
+        </View>
+      )
+    }
     else {
       return (
         <View style={styles.container}>
-          <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
+           <TouchableOpacity activeOpacity={0.5} onPress={()=>{this.loadContacts()}} style={styles.friendsBtnCountryWrapper}>
+              <Text style={styles.friendsBtnCountryTextStyle}>
+                Load Contacts
+              </Text>
+            </TouchableOpacity>
         </View>
       )
     }

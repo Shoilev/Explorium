@@ -18,8 +18,8 @@ const styles = createStyles(ExploreStyle);
 
 class Explore extends Component {
   state = {
-    animateButton: new Animated.Value(1),
-    animatedMessageBox: new Animated.Value(40) //-20
+    animateButton: new Animated.Value(0),
+    animatedMessageBox: new Animated.Value(-20) //-20
   }
 
   goToLandmark(landmarkData, isAchieved) {

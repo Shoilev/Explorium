@@ -47,6 +47,17 @@ class Profile extends Component {
       }
     }
 
+    console.log(achievementsData);
+    console.log('====================================');
+    if(achievementsData.shareBonus) {
+      achievementsData.shareBonus.map(bonus=> {
+        let date = new Date(bonus.shareBonusDate).getMonth();
+        if(date === currentDate) {
+          monthPoints += bonus.shareBonusPoints
+        }
+      })
+    }
+
     achievementsData.achievements.map(achievement => {
       if(achievement.timestamp) {
         let date = new Date(achievement.timestamp).getMonth();
@@ -85,12 +96,16 @@ class Profile extends Component {
           </View>
 
           <View style={styles.profileInnerContainer}>
-            <SvgUri
-              width="90"
-              height="90"
-              uri={userAvatar}
-              style={styles.profileImage}
-            />
+              <View style={[styles.profileImageWrapper, {width:90,height: 90}]}>
+                <SvgUri
+                  width="90"
+                  height="90"
+                  uri={userAvatar}
+                  style={styles.profileImage}
+                />
+                <Image style={[styles.profileAvatarDefault, {width: 76, height: 78, left: 8, top: 8 }]} source={images.avatarDefault} />
+              </View>
+            
             <View style={{marginTop: -16, marginLeft: 150}}>
               <Text styles={styles.profileEditTitle} onPress={()=>{this.props.navigation.navigate('AvatarList')}}><FontAwesome5 style={styles.profileEditIcon} name={'pen-square'} solid /> Edit Profile</Text>
             </View>

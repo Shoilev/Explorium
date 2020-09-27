@@ -27,25 +27,36 @@ export const checkInLeveling = (landmark, userUID, userAchievements, boostShare)
 
   if(isLevelUp) {
     let xp = currentExperience - getExperience(currentLevel + 1);
-    return db.update({
+    let dbStoreData = {
       achievements: firebase.firestore.FieldValue.arrayUnion(landmarkData),
       allPoints: firebase.firestore.FieldValue.increment(comingPoints),
       level: firebase.firestore.FieldValue.increment(1),
       ranking: firebase.firestore.FieldValue.arrayUnion(rankingDate),
       experience: xp
-    }).then(()=>{
+    };
+
+    if(boostShare) {
+      dbStoreData.shareBonus = firebase.firestore.FieldValue.arrayUnion({shareBonusDate: Date.now(), shareBonusPoints:landmark.landmarkPoints})
+    }
+
+    return db.update(dbStoreData).then(()=>{
       return {
         allPoints: comingPoints + userAchievements.allPoints,
         isLevelUp
       }
     });
   } else {
-    return db.update({
+    let dbStoreData = {
       achievements: firebase.firestore.FieldValue.arrayUnion(landmarkData),
-      allPoints: firebase.firestore.FieldValue.increment(comingPoints),
-      experience: firebase.firestore.FieldValue.increment(comingPoints),
+      allPoints: firebase.firestore.FieldValue.increment(boostShare ? comingPoints * 2 : comingPoints),
+      experience: firebase.firestore.FieldValue.increment(boostShare ? comingPoints * 2 : comingPoints),
       ranking: firebase.firestore.FieldValue.arrayUnion(rankingDate)
-    }).then(()=>{
+    }
+
+    if(boostShare) {
+      dbStoreData.shareBonus = firebase.firestore.FieldValue.arrayUnion({shareBonusDate: Date.now(), shareBonusPoints:landmark.landmarkPoints})
+    }
+    return db.update(dbStoreData).then(()=>{
       return {
         allPoints: comingPoints + userAchievements.allPoints,
         isLevelUp

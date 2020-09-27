@@ -85,11 +85,6 @@ export const ProfileStyle = {
     color: colors.white,
     fontSize: fonts.baseSize * 2
   },
-  profileImage: {
-    width: 90,
-    height: 90,
-    marginTop: -45,
-  },
   profileEditIcon: {
     color: colors.orange,
     fontSize: fonts.baseSize * 3
@@ -228,5 +223,30 @@ export const ProfileStyle = {
   },
   settingsInfo: {
     textAlign: 'center',
-  }
+  },
+  profileImage: {
+    width: 90,
+    height: 90,
+    position: 'relative',
+    zIndex: 20
+  },
+  profileImageWrapper: {
+    position:'relative',
+    width: 90,
+    height: 90,
+    marginTop: -45,
+  },
+  profileAvatarDefault: {
+    position: 'absolute',
+    top: 40,
+    left: 40,
+    width: 80,
+    height: 80,
+    zIndex: 10
+  },
+  profileAvatar: {
+    position: 'relative',
+    zIndex: 20,
+    backgroundColor: colors.white
+  },
 }
