@@ -10,12 +10,10 @@ export const getAchievementsPerUser = () => {
 
     firebase.firestore().collection('users').doc(userUID)
     .onSnapshot(documentSnapshot => {
-      console.log('achievements');
       const userAchievements = documentSnapshot.data();
 
       return dispatch({ type: ACHIEVEMENTS_FETCH_SUCCESS, payload: userAchievements })
     }, (err) => {
-      console.log('document not found');
       return dispatch({ type: ACHIEVEMENTS_FETCH_FAIL, payload: {} })
     })
   }

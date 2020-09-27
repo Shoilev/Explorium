@@ -20,13 +20,11 @@ export const getLandmarks = (country, city, cityPoints) => {
   return (dispatch) => {
     return firebase.firestore().collection('countries').doc(country).collection('cities').doc(city).collection('landmarks')
     .get().then(querySnapshot => {
-        console.log('firebase');
         const landmarks = [];
         const shadowLandmarks = [];
         let allLandmarks = [];
 
         querySnapshot.forEach(doc => {
-          console.log(doc)
           const dataDoc = doc.data();
           const isShadowLandmark = dataDoc.isShadow || false;
           const landmarkData = {
@@ -53,9 +51,6 @@ export const getLandmarks = (country, city, cityPoints) => {
 
         allLandmarks = landmarks.concat(shadowLandmarks);
 
-        console.log('===========')
-        console.log(landmarks)
-        console.log(allLandmarks)
         if(isEmpty(landmarks) || isEmpty(allLandmarks)) {
           dispatch({ type: LANDMARKS_FETCH_FAIL, payload: {errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
         }

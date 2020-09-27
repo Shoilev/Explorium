@@ -63,19 +63,12 @@ export const requestLocationPermission = (requestCountry = false) => {
         }
       }
     }).then(granted => {
-      console.log(granted);
       const defaultImageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2FBulgaria.jpg?alt=media';
       if(granted) {
           if(requestCountry) {
-            console.log('Request country');
             Geolocation.getLatestLocation({ timeout: 6000 }).then(location => {
-              console.log(location)
               return dispatch(getLocationCountryAndCity(location.latitude, location.longitude)).then(result=>{
-                console.log(result.userCity)
-                console.log('result.userCity')
                 let imageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2F'+ result.userCountry + '.jpg?alt=media';
-                console.log('image')
-                console.log(imageURI)
 
                 let imageData = {
                   imageURI,
@@ -102,14 +95,10 @@ export const requestLocationPermission = (requestCountry = false) => {
 
           let isLoaded = false;
           Geolocation.subscribeToLocationUpdates(location => {
-            console.log(location);
-            console.log('You can use the Location');
             dispatch({ type: GEO_LOCATION_FETCH_SUCCESS, payload: location[0]});
 
             if(!isLoaded) {
               dispatch(getLocationCountryAndCity(location[0].latitude, location[0].longitude)).then(result=>{
-                console.log(result.userCity)
-                console.log('result.userCity')
                 let imageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2F'+ result.userCountry + '.jpg?alt=media';
   
                 let imageData = {
@@ -137,8 +126,6 @@ export const requestLocationPermission = (requestCountry = false) => {
 const getLocationDetails = (location) => {
   return (dispatch) => {
     return dispatch(getLocationCountryAndCity(location.latitude, location.longitude)).then(result=>{
-      console.log(result.userCity)
-      console.log('result.userCity')
       let imageURI = 'https://firebasestorage.googleapis.com/v0/b/explorium-3dde2.appspot.com/o/images%2F'+ result.userCity + '.jpg?alt=media';
 
       let imageData = {
@@ -191,8 +178,6 @@ export const getLocationCountryAndCity = ( lat, long ) => {
             return city && country ? {userCity: city, userCountry: country} : false
           }).find(data=> data && data.userCity && data.userCountry)
 
-          console.log(userDataAddress)
-
           dispatch({ type: GEO_LOCATION_COUNTRY_CITY_SUCCESS, payload: userDataAddress })
           return userDataAddress;
         } else {
@@ -201,7 +186,6 @@ export const getLocationCountryAndCity = ( lat, long ) => {
         }
     })
     .catch((error) =>{
-      console.error(error);
       dispatch({ type: GEO_LOCATION_COUNTRY_CITY_FAIL, payload: {} })
       return {};
     })

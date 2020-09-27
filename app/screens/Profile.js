@@ -47,8 +47,6 @@ class Profile extends Component {
       }
     }
 
-    console.log(achievementsData);
-    console.log('====================================');
     if(achievementsData.shareBonus) {
       achievementsData.shareBonus.map(bonus=> {
         let date = new Date(bonus.shareBonusDate).getMonth();

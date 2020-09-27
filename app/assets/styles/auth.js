@@ -14,10 +14,6 @@ export const Auth = {
     color: colors.white,
     marginBottom: spacing.large
   },
-  loginLogo: {
-    width: 86,
-    height: 93
-  },
   loginTextBtn: {
     textTransform: 'uppercase',
     fontSize: fonts.baseSize * 3,
@@ -101,16 +97,6 @@ export const Auth = {
     fontSize: fonts.baseSize * 3.2,
     borderBottomColor: colors.blue,
     borderWidth: 1
-  },
-  loginLogoCircle: {
-    width: 190,
-    height: 190,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.white,
-    borderWidth: 25,
-    borderColor: '#FECF39',
-    borderRadius: 95
   },
   backgroundCirle: {
     position: 'absolute',

@@ -15,6 +15,7 @@
   },
   "Authentication": {
     "LogIn": {
+      "title": "Welcome And Sign In",
       "buttonTitle": "Log in",
       "additionalLinkTitle": "Don't have an account?"
     },

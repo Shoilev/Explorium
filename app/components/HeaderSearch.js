@@ -19,7 +19,6 @@ class HeaderSearch extends Component {
         const friendsData = totalResults.filter(resultItem => {
           let friendName = '';
 
-            console.log(resultItem)
           if(resultItem.givenName) {
             friendName += resultItem.givenName;
           }

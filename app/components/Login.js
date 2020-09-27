@@ -6,12 +6,10 @@ import SplashScreen from 'react-native-splash-screen';
 import { emailChanged, passwordChanged, loginUser, emptyUserOrPassword, FBLoginOrRegister } from '../actions';
 import { Section, Button } from './common';
 import { createStyles } from '../assets/styles';
-import { images } from '../assets/images';
 import { Auth } from '../assets/styles/auth';
 import { Authentication } from '../resources/labels.json';
 
 const styles = createStyles(Auth);
-const logoSrc = images.logo;
 
 class Login extends Component {
   onButtonPress() {
@@ -55,9 +53,7 @@ class Login extends Component {
           <View style={styles.backgroundCirle}></View>
           <View style={styles.backgroundCirleTwo}></View>
 
-          <View style={styles.loginLogoCircle}>
-            <Image source={logoSrc} style={styles.loginLogo}/>
-          </View>
+          <Text style={styles.registerTitle}>{Authentication.LogIn.title}</Text>
 
           <Button textStyle={styles.loginTextBtn} buttonStyle={styles.loginBtnStyle} onPress={this.onFbLogin.bind(this)}>
             <FontAwesome5 style={styles.loginTextIcon} name={'facebook-f'} solid />  {'CONTINUE WITH FACEBOOK'}

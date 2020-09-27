@@ -8,10 +8,8 @@ export const getCountries = () => {
   return (dispatch) => {
     firebase.firestore().collection('countries')
     .get().then(querySnapshot => {
-        console.log('firebase');
         const countries = [];
         querySnapshot.forEach(doc => {
-          console.log(doc)
           countries.push({
             countryName: doc.data().name,
             countryImage: doc.data().image,
@@ -27,7 +25,6 @@ export const getCountries = () => {
           })
           return dispatch({ type: COUNTRIES_FETCH_SUCCESS, payload: dataWithPoints })
         }).catch(err=>{
-          console.log(err);
           countries.sort(function(a, b) {
             return a.countryName.localeCompare(b.countryName);
           });

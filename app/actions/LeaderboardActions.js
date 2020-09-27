@@ -53,7 +53,6 @@ export const getLeaderboard = () => {
 
       return dispatch({ type: LEADERBOARD_FETCH_SUCCESS, payload: userResult.slice(0, 20) })
     }, (err) => {
-      console.log('document not found');
       return dispatch({ type: LEADERBOARD_FETCH_FAIL, payload: {} })
     })
   }

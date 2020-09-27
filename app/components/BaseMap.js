@@ -31,10 +31,8 @@ class BaseMap extends Component {
 
   checkIn(landmark, userLocation, userCountryAndCity, landmarksCount, boostShare) {
     const { achievementsData } = this.props.achievements;
-    console.log("=====================================")
     // const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
     const isNearBy = checkBounds(landmark.viewport, userLocation);
-    console.log(isNearBy)
 
     const isAchieved = isUserAchieved(achievementsData.achievements, landmark);
 

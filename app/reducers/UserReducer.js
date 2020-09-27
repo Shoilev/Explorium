@@ -16,7 +16,6 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_USER:
-      console.log(action.payload);
       return { ...state, userEmail: action.payload.email, userUID: action.payload.uid, userPhoto: action.payload.photoURL ? action.payload.photoURL + '?type=large': null, userName:action.payload.displayName };
     case LOCAL_CITY_CHANGED:
       return {...state, userHomeLocale: action.payload}

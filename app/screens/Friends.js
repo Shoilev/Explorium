@@ -64,9 +64,6 @@ class Friends extends Component {
       this.props.getFriends();
     }
 
-    console.log(friendsData)
-    console.log('=======asdasdasdsadasdasdasdasdas')
-
     if(!isEmpty(friendsData)) {
       return (
       <View style={styles.friendsContainer}>

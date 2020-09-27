@@ -7,10 +7,8 @@ export const getCitiesPerCountry = (country, countryRate) => {
   return (dispatch) => {
     return firebase.firestore().collection('countries').doc(country).collection('cities')
     .get().then(querySnapshot => {
-      console.log('firebase');
       const citites = [];
       querySnapshot.forEach( doc => {
-        console.log(doc);
         citites.push({
           cityName: doc.data().name,
           cityImage: doc.data().image,

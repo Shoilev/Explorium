@@ -55,7 +55,6 @@ export default class LevelUp extends Component {
   render() {
     const levelData = this.props.navigation.getParam('levelData', {});
     const user = this.props.navigation.getParam('user', {});
-    console.log(user)
 
     return (
       <View style={[styles.container, styles.checkedInContainer]}>
