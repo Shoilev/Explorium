@@ -22,13 +22,14 @@ let LONGITUDE;
 
 class ExploreMap extends React.Component {
   componentWillMount() {
-    LATITUDE = this.props.navigation.getParam('latitude', 0);
-    LONGITUDE = this.props.navigation.getParam('longitude', 0);
+    LATITUDE = this.props.latitude ? parseFloat(this.props.latitude) : this.props.navigation.getParam('latitude', 0);
+    LONGITUDE = this.props.longitude ? parseFloat(this.props.longitude) : this.props.navigation.getParam('longitude', 0);
     this.props.getAchievementsPerUser();
 
     this.setState({
       selectedMarkerIndex: null,
       tracksViewChanges: true,
+      isIframe: this.props.latitude ? true : false,
       markers: []
     })
 
@@ -71,7 +72,7 @@ class ExploreMap extends React.Component {
     }
 
     return (
-      <TouchableOpacity onPress={this.goToLandmark.bind(this, marker, isAchieved)} style={styles.exploreItemWrapper}>
+      <TouchableOpacity onPress={this.goToLandmark.bind(this, marker, isAchieved)} style={[styles.exploreItemWrapper, marker.isShadowLandmark ? styles.exploreShadowItemWrapper : '']}>
         <View style={styles.exploreMapImageWrappper}>
           <Image style={styles.exploreMapItemImage} borderRadius={12} source={{uri:marker.landmarkImage}}/>
 
@@ -90,7 +91,7 @@ class ExploreMap extends React.Component {
           </Text>
         </View>
 
-        <View style={styles.exploreMapTitle}>
+        <View style={[styles.exploreMapTitle, marker.isShadowLandmark ? styles.exploreMapTexShadow : '']}>
           <Text style={[styles.exploreMapTitleText, marker.isShadowLandmark ? styles.exploreMapTexShadow : '']}>{i+1 + '. ' + marker.landmarkName || ''}</Text>
         </View>
 
@@ -100,15 +101,17 @@ class ExploreMap extends React.Component {
 
   render() {
     const { landmarksData, landmarksAllData, error } = this.props.landmarks;
-    const { markers, tracksViewChanges, selectedMarkerIndex } = this.state;
+    const { markers, tracksViewChanges, selectedMarkerIndex, isIframe } = this.state;
 
     if(error) {
       return (
         <View style={styles.container}>
           <Text style={styles.exploreErrorMessage}>{error.errorMessage}</Text>
-          <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreBackBtn}>
-            <Text style={styles.exploreBackBtnText}>{'Explore'}</Text>
-          </Button>
+          {!isIframe ?
+            <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreBackBtn}>
+              <Text style={styles.exploreBackBtnText}>{'Explore'}</Text>
+            </Button>
+          : null }
         </View>
       )
     } else if(isEmpty(landmarksData) || isEmpty(landmarksAllData) && isEmpty(markers)) {
@@ -120,11 +123,13 @@ class ExploreMap extends React.Component {
     } else {
       return (
         <View style={[styles.container, styles.exploreMapContainer]}>
-          <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreMapBackBtn}>
-            <Icon style={styles.exploreMapBackBtnIcon} name="arrow-circle-left"/>
-            {"\n"}
-            <Text style={styles.exploreMapBackBtnText}>{'Back'}</Text>
-          </Button>
+          {!isIframe ?
+            <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreMapBackBtn}>
+              <Icon style={styles.exploreMapBackBtnIcon} name="arrow-circle-left"/>
+              {"\n"}
+              <Text style={styles.exploreMapBackBtnText}>{'Back'}</Text>
+            </Button>
+          : null }
           <AnimatedMap
             style={styles.exploreMap}
             initialRegion={

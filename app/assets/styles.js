@@ -64,6 +64,7 @@ const baseStyles = {
     marginBottom: spacing.large
   },
   textInput: {
+    width: '90%',
     height: 40,
     borderWidth: 0,
     color: '#78849E',
@@ -108,6 +109,16 @@ const baseStyles = {
     position: 'absolute',
     top: '50%',
     left: 20
+  },
+  headerBarMapIconWrapper: {
+    position: 'absolute',
+    top: '50%',
+    right: 20,
+    alignItems: 'center'
+  },
+  headerBarMapText: {
+    color: colors.white,
+    fontSize: fonts.baseSize * 2.2
   },
   headerBarBackIcon: {
     color: colors.white,

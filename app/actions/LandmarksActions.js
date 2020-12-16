@@ -9,7 +9,8 @@ import {
   LANDMARKS_FETCH_FAIL,
   LANDMARKS_SHADOW_CITIES,
   LANDMARKS_SHADOW_FETCH_SUCCESS,
-  LANDMARKS_ALL_FETCH_SUCCESS
+  LANDMARKS_ALL_FETCH_SUCCESS,
+  HANDLE_LANDMARKS_MAP_VIEW
 } from './types';
 
 // SOFIA
@@ -117,6 +118,11 @@ export const getLandmarksByLocation = ( lat, long ) => {
       })
     })
   }
+}
+
+export const landmarksMapView = (enable) => {
+  console.log(enable)
+  return { type: HANDLE_LANDMARKS_MAP_VIEW, payload: enable };
 }
 
 export const switchToShadowCities = (value) => {

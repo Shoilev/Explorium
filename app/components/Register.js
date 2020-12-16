@@ -23,10 +23,6 @@ class Register extends React.Component {
       return;
     }
 
-    if (errorMessage) {
-      return;
-    }
-
     this.props.signUpUser({ email, password });
   }
 

@@ -19,6 +19,7 @@ export const LANDMARKS_SHADOW_FETCH_SUCCESS = 'landmarks_shadow_fetch_success';
 export const LANDMARKS_ALL_FETCH_SUCCESS = 'landmarks_all_fetch_success';
 export const LANDMARKS_FETCH_FAIL = 'landmarks_fetch_fail';
 export const LANDMARKS_SHADOW_CITIES = 'landmarks_shadow-cities';
+export const HANDLE_LANDMARKS_MAP_VIEW = 'landmarks_map-view';
 export const FRIENDS_FETCH_SUCCESS = 'friends_fetch_success';
 export const FRIENDS_UPDATE = 'friends_update';
 export const FRIENDS_FETCH_FAILED = 'friends_fetch_failed';

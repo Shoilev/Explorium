@@ -3,7 +3,8 @@ import {
   LANDMARKS_FETCH_FAIL,
   LANDMARKS_SHADOW_FETCH_SUCCESS,
   LANDMARKS_SHADOW_CITIES,
-  LANDMARKS_ALL_FETCH_SUCCESS
+  LANDMARKS_ALL_FETCH_SUCCESS,
+  HANDLE_LANDMARKS_MAP_VIEW
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -14,7 +15,8 @@ const INITIAL_STATE = {
   activeLandmarks: [],
   activeLandmarksShadowData: [],
   shadowCities: false,
-  error: false
+  error: false,
+  mapViewEnabled: false
 };
 
 export default (state= INITIAL_STATE, action) => {
@@ -33,6 +35,8 @@ export default (state= INITIAL_STATE, action) => {
 
     case LANDMARKS_SHADOW_CITIES:
       return { ...state, shadowCities: action.payload }
+    case HANDLE_LANDMARKS_MAP_VIEW:
+      return { ...state, mapViewEnabled: action.payload }
     default:
       return state;
   }

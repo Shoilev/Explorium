@@ -7,13 +7,12 @@ import { isEmpty } from '../helpers';
 
 export const getLeaderboard = () => {
   return (dispatch) => {
-
     return firebase.firestore().collection("users")
-    .where('level', '>', 1)
     .where('ranking', 'array-contains', new Date(Date.now()).getMonth().toString() + '/' + new Date(Date.now()).getFullYear().toString())
     .get().then(querySnapshot => {
       let userResult = [];
-
+      
+      console.log(querySnapshot)
       querySnapshot.forEach(doc => {
         let user = doc.data();
         let currentDate = new Date().getMonth()-1;

@@ -4,7 +4,6 @@ import {
   View,
   TouchableWithoutFeedback,
   StyleSheet,
-  ViewStyle,
   Animated,
   Dimensions,
   Easing, Platform,
@@ -221,6 +220,7 @@ class AnimatedCircleBarComponent extends React.Component {
 
     return (
       <Animated.View
+        pointerEvents="none"
         style={[
           styles.activeItem,
           {
@@ -296,7 +296,13 @@ class AnimatedCircleBarComponent extends React.Component {
           const focused = state.index === index;
 
           return (
-            <TouchableWithoutFeedback onPress={() => onTabPress({ route })} key={index.toString()}>
+            <TouchableWithoutFeedback onPress={() => {
+              if(focused && route.key === 'Explore') {
+                this.props.navigation.navigate('Explore');
+              } else {
+                return onTabPress({route})
+              }
+            }} key={index.toString()}>
               <View style={styles.item}>
                 {this.renderIcon({ index, route, focused })}
                 {this.renderLabel({ index, route, focused })}

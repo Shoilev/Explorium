@@ -186,6 +186,9 @@ export const ExploreStyle = {
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12
   },
+  exploreShadowItemWrapper: {
+    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+  },
   exploreMapImageWrappper: {
     position: 'relative',
     justifyContent: 'flex-start',
@@ -221,7 +224,7 @@ export const ExploreStyle = {
     textAlign: 'center'
   },
   exploreMapTexShadow: {
-    backgroundColor: 'rgba(0, 0, 0, 0.8);',
+    backgroundColor: 'transparent',
     color: colors.white
   },
   exploreMapPoints: {

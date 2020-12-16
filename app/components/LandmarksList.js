@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text, Switch, ImageBackground, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
+import { View, FlatList, Text, ImageBackground, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createStyles } from '../assets/styles';
 import { LandmarksStyles } from '../assets/styles/landmarks';
-import { getLandmarks, getAchievementsPerUser, switchToShadowCities } from '../actions';
+import { getLandmarks, getAchievementsPerUser, switchToShadowCities, landmarksMapView } from '../actions';
 import { HeaderBar } from './common';
 import { isUserAchieved, isEmpty } from '../helpers';
 import { Screens } from '../resources/labels.json';
-import { stopUpload } from 'react-native-fs';
+import ExploreMap from './ExploreMap';
 
 const styles = createStyles(LandmarksStyles);
 
-class LandmarksList extends Component {
 
+class LandmarksList extends Component {
+  handleLandmarksMapView(enable) {
+    if(enable) {
+      this.props.landmarksMapView(false);
+    } else {
+      this.props.landmarksMapView(true);
+    }
+  };
+  
   componentWillMount() {
     this.setState({
       loading: true
@@ -63,32 +71,42 @@ class LandmarksList extends Component {
 
   render() {
     //activeLandmarks is available if we decide to implement live search in the near future.
-    const { landmarksData, landmarksShadowData, shadowCities, landmarksAllData } = this.props.landmarks;
+    const { landmarksData, landmarksShadowData, shadowCities, landmarksAllData, mapViewEnabled } = this.props.landmarks;
     const { achievementsData } = this.props.achievements;
     const { navigation } = this.props;
     let headerTitle = navigation.getParam('city', 'Landmarks');
 
     if(!isEmpty(landmarksData) && !this.state.loading) {
+      let coordinate = landmarksData[0].coordinate;
+
       return (
         <View style={[{flex:1}, shadowCities ? styles.landmarkShadowActive : {}]}>
-          <HeaderBar headerBarStyle={shadowCities ? styles.landmarksHeaderBarActive: {}} headerBarNav={navigation}>{headerTitle}</HeaderBar>
-          <View style={styles.landmarksShadowCities}>
-            {!isEmpty(landmarksShadowData) ?
-                <TouchableOpacity activeOpacity={0.5} onPress={()=>this.handleShadowCities(!shadowCities)} style={[styles.landmarkShadowIconButton, shadowCities ? styles.landmarkShadowButtonActive : {}]}>
-                  <FontAwesome5 style={[styles.landmarkShadowIcon, shadowCities ? styles.landmarkShadowActiveIcon : {}]} name={'user-secret'} solid />
-                  <Text style={[styles.shadowCitiesLabel, shadowCities ? styles.landmarkShadowActiveIcon : {}]}>
-                    {'Turn '+ (shadowCities ? 'OFF ' : 'ON ') + Screens.Countries.Landmarks.shadowCities}
-                  </Text>
-                </TouchableOpacity>
-            :null}
-          </View>
-          <FlatList
-            data={shadowCities && !isEmpty(landmarksShadowData) ? landmarksShadowData : landmarksData}
-            style={styles.landmarksRow}
-            renderItem={({item, index}) => this.renderItem(item, index, navigation, achievementsData, landmarksAllData, shadowCities)}
-            keyExtractor={(item, index)=> 'landmarkKey' + index}
-            numColumns={2}
-            />
+          <HeaderBar mapViewListener={this.handleLandmarksMapView.bind(this, mapViewEnabled)} coordinate={coordinate} headarBarMapView={{headarBarMapView: true}} headerBarStyle={shadowCities ? styles.landmarksHeaderBarActive: {}} headerBarNav={navigation}>{headerTitle}</HeaderBar>
+
+          {!mapViewEnabled ?
+            <View style={styles.landmarksShadowCities}>
+              {!isEmpty(landmarksShadowData) ?
+                  <TouchableOpacity activeOpacity={0.5} onPress={()=>this.handleShadowCities(!shadowCities)} style={[styles.landmarkShadowIconButton, shadowCities ? styles.landmarkShadowButtonActive : {}]}>
+                    <FontAwesome5 style={[styles.landmarkShadowIcon, shadowCities ? styles.landmarkShadowActiveIcon : {}]} name={'user-secret'} solid />
+                    <Text style={[styles.shadowCitiesLabel, shadowCities ? styles.landmarkShadowActiveIcon : {}]}>
+                      {'Turn '+ (shadowCities ? 'OFF ' : 'ON ') + Screens.Countries.Landmarks.shadowCities}
+                    </Text>
+                  </TouchableOpacity>
+              :null}
+            </View>
+          : null }
+          {mapViewEnabled ?
+            //May be new map file is better idea. To skip api calls
+            <ExploreMap navigation={navigation} latitude={coordinate.latitude} longitude={coordinate.longitude} />
+            :
+            <FlatList
+              data={shadowCities && !isEmpty(landmarksShadowData) ? landmarksShadowData : landmarksData}
+              style={styles.landmarksRow}
+              renderItem={({item, index}) => this.renderItem(item, index, navigation, achievementsData, landmarksAllData, shadowCities)}
+              keyExtractor={(item, index)=> 'landmarkKey' + index}
+              numColumns={2}
+              />
+            }
         </View>
       );
     } else {
@@ -106,4 +124,4 @@ const mapStateToProps = ({landmarks, achievements}) => {
   return { landmarks, achievements };
 };
 
-export default connect(mapStateToProps, { getLandmarks, getAchievementsPerUser, switchToShadowCities })(LandmarksList);
+export default connect(mapStateToProps, { getLandmarks, getAchievementsPerUser, switchToShadowCities, landmarksMapView })(LandmarksList);

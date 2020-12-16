@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { createStackNavigator, createSwitchNavigator, createBottomTabNavigator, StackViewTransitionConfigs  } from 'react-navigation';
 import { createStyles } from './assets/styles';
 import { Screens } from './resources/labels.json';
@@ -248,7 +248,7 @@ export const Tabs = createBottomTabNavigator({
   },
   'Explore': {
     screen: ExploreStack,
-    navigationOptions: {
+    navigationOptions: ({navigation}) => ({
       tabBarLabel: Screens.Explore.title,
       tabBarIcon:({ focused }) => (
         focused ?
@@ -256,7 +256,7 @@ export const Tabs = createBottomTabNavigator({
         :
         <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('./assets/images/explore.png')} />
       ),
-    },
+    }),
     headerMode: 'none'
   },
   'Profile': {
@@ -300,76 +300,6 @@ const AppStack = createStackNavigator(
         gesturesEnabled: false,
         header: null
       }),
-    },
-    CitiesList: {
-      screen: CitiesList,
-      navigationOptions: ({navigation}) => ({
-        title: 'Cities',
-        headerStyle: {
-          borderBottomColor: '#1a4e6c',
-          borderBottomWidth: 1,
-          elevation: 0,
-          shadowOpacity: 0,
-        },
-        headerTintColor: '#1a4e6c',
-        headerTitleStyle: { color: '#1a4e6c' },
-      }),
-      headerMode: 'screen',
-    },
-    LandmarksList: {
-      screen: LandmarksList,
-      navigationOptions: ({navigation}) => ({
-        title: navigation.getParam('city', 'Landmarks'),
-        headerStyle: {
-          borderBottomColor: navigation.state.params.shadowCities ? '#fff' : '#1a4e6c',
-          borderBottomWidth: 1,
-          elevation: 0,
-          shadowOpacity: 0,
-          backgroundColor: navigation.state.params.shadowCities ? '#1f1f1f' : '#fff',
-        },
-        headerTintColor: navigation.state.params.shadowCities ? '#fff' : '#1a4e6c',
-        headerTitleStyle: { color: navigation.state.params.shadowCities ? '#fff' : '#1a4e6c' },
-      }),
-      headerMode: 'screen',
-    },
-    LandmarkDetails: {
-      screen: LandmarkDetails,
-      navigationOptions: ({navigation}) => ({
-        title: navigation.getParam('landmark') ? navigation.getParam('landmark').landmarkName : 'Landmark',
-        headerStyle: {
-          borderBottomColor: '#1a4e6c',
-          borderBottomWidth: 1,
-          elevation: 0,
-          shadowOpacity: 0,
-          backgroundColor: 'transparent'
-        },
-        headerTintColor: '#1a4e6c',
-        headerTitleStyle: { color: '#1a4e6c' },
-      }),
-      headerMode: 'screen'
-    },
-    CheckedIn: {
-      screen: CheckedIn,
-      navigationOptions: ({navigation}) => ({
-        title: 'Checked In',
-        headerStyle: {
-          borderBottomColor: '#1a4e6c',
-          borderBottomWidth: 1,
-          elevation: 0,
-          shadowOpacity: 0,
-        },
-      }),
-      headerMode: 'float',
-    },
-    BaseMap: {
-      screen: BaseMap,
-      navigationOptions: ({navigation}) => ({
-        title: '',
-        headerTransparent: true,
-        headerTintColor: '#1a4e6c',
-        headerTitleStyle: { color: '#1a4e6c' }
-      }),
-      headerMode: 'screen',
     },
     UserInfo: {
       screen: UserInfo,
