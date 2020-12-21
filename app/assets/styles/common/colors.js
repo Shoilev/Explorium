@@ -18,6 +18,8 @@ export const Colors = {
   lightBlue: 'rgb(3, 215, 219)',
   darkBlue: 'rgb(3, 146, 221)',
   exploredBlueOpacity: 'rgba(4, 130, 178, 0.6)',
+  exploredBlue: 'rgb(4, 130, 178)',
+  exploredBlueExplored: 'rgb(0, 42, 58)',
   primeryBlue: '#160442',
   primeryDarkBlue: '#0A106A',
   shadowBlue: '#15172E',

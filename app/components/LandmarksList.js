@@ -81,7 +81,7 @@ class LandmarksList extends Component {
 
       return (
         <View style={[{flex:1}, shadowCities ? styles.landmarkShadowActive : {}]}>
-          <HeaderBar mapViewListener={this.handleLandmarksMapView.bind(this, mapViewEnabled)} coordinate={coordinate} headarBarMapView={{headarBarMapView: true}} headerBarStyle={shadowCities ? styles.landmarksHeaderBarActive: {}} headerBarNav={navigation}>{headerTitle}</HeaderBar>
+          <HeaderBar mapViewListener={this.handleLandmarksMapView.bind(this, mapViewEnabled)} coordinate={coordinate} headarBarMapView={{headarBarMapView: true}} mapViewIsEnabled={{mapViewIsEnabled: mapViewEnabled}} headerBarStyle={shadowCities ? styles.landmarksHeaderBarActive: {}} headerBarNav={navigation}>{headerTitle}</HeaderBar>
 
           {!mapViewEnabled ?
             <View style={styles.landmarksShadowCities}>
@@ -89,7 +89,7 @@ class LandmarksList extends Component {
                   <TouchableOpacity activeOpacity={0.5} onPress={()=>this.handleShadowCities(!shadowCities)} style={[styles.landmarkShadowIconButton, shadowCities ? styles.landmarkShadowButtonActive : {}]}>
                     <FontAwesome5 style={[styles.landmarkShadowIcon, shadowCities ? styles.landmarkShadowActiveIcon : {}]} name={'user-secret'} solid />
                     <Text style={[styles.shadowCitiesLabel, shadowCities ? styles.landmarkShadowActiveIcon : {}]}>
-                      {'Turn '+ (shadowCities ? 'OFF ' : 'ON ') + Screens.Countries.Landmarks.shadowCities}
+                      {Screens.Countries.Landmarks.shadowCities}
                     </Text>
                   </TouchableOpacity>
               :null}

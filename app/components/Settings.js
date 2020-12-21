@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Linking } from 'react-native';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { logOutUser } from '../actions';
 import { HeaderCloseBar } from './common';
 import { createStyles } from '../assets/styles';
@@ -40,6 +41,9 @@ class Settings extends Component {
               <Text style={styles.settingsListItem} onPress={this.handleLink.bind(this, 'https://exploreum.app/FAQ')}>FAQ</Text>
               <Text style={styles.settingsListItem} onPress={this.handleLink.bind(this, 'https://exploreum.app/#contact')}>Contact Us</Text>
               <Text style={styles.settingsListItem} onPress={this.handleLink.bind(this, 'https://www.facebook.com/ExploreumApp/')}>Like us in Facebook</Text>
+              <Text style={styles.settingsListItem} onPress={this.handleLink.bind(this, 'https://exploreum.app/report_bug')}>
+                Report a bug and win <Text style={styles.settingsListHighlight}><Icon style={[styles.explorePointsIcon, styles.settingsListHighlight]} name="star"/>{' 100 points'}</Text>
+              </Text>
               <Text style={styles.settingsListItem} onPress={this.handleLink.bind(this, 'https://exploreum.app/privacy_policy')}>Privacy Policy</Text>
             </View>
 

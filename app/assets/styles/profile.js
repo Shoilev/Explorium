@@ -209,6 +209,11 @@ export const ProfileStyle = {
     borderBottomWidth: 2,
     borderBottomColor: colors.gray
   },
+  settingsListHighlight: {
+    color: colors.yellow,
+    fontSize: fonts.baseSize * 3,
+    fontWeight: '700'
+  },
   settingsLogoutButton: {
     justifyContent: 'center',
     alignItems: 'center',

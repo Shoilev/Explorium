@@ -310,6 +310,37 @@ export const ExploreStyle = {
     color: colors.blue,
     textAlign: 'center'
   },
+  exploreMapViewWrapper: {
+    position: 'absolute',
+    flex: 1,
+    justifyContent: 'center',
+    textAlign: 'center',
+    top: 40,
+    right: 25,
+    zIndex: 20,
+  },
+  exploreMapView: {
+    paddingLeft: spacing.medium,
+    paddingRight: spacing.medium,
+    paddingTop: spacing.medium,
+    paddingBottom: spacing.medium,
+    backgroundColor: colors.orange
+  },
+  exploreMapViewIcon: {
+    flex: 1,
+    width: '100%',
+    fontSize: fonts.baseSize * 5,
+    color: colors.white,
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
+  exploreMapViewTitle: {
+    flex: 1,
+    width: '100%',
+    fontSize: fonts.baseSize * 1.8,
+    color: colors.white,
+    textAlign: 'center'
+  },
   exploreMarker: {
     flex: 1,
     alignItems: 'center',
@@ -418,8 +449,28 @@ export const ExploreStyle = {
     fontSize: fonts.baseSize * 6,
     color: colors.primeryBlue
   },
+  exploreShadowMarkerExploreIcon: {
+    fontSize: fonts.baseSize * 6,
+    color: colors.exploredBlueExplored
+  },
   exploreMarkerIcon: {
     fontSize: fonts.baseSize * 6,
     color: colors.orange,
+  },
+  exploreMarkerExploredIcon: {
+    fontSize: fonts.baseSize * 6,
+    color: colors.exploredBlue
+  },
+  exploreMapListViewContent: {
+    position: 'absolute',
+    zIndex: 30,
+    top: 120,
+    left: '8%',
+    width: '84%',
+    height: '75%',
+    padding: spacing.medium,
+    paddingTop: spacing.medium,
+    paddingBottom: spacing.medium,
+    backgroundColor: 'white'
   }
 }

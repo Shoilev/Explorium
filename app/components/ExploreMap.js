@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Dimensions, Text, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Dimensions, Text, Image, ActivityIndicator, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
 import { Animated as AnimatedMap, Marker} from 'react-native-maps';
 import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -9,9 +9,11 @@ import { Button } from './common';
 import { getLandmarksByLocation, getAchievementsPerUser } from '../actions';
 import { createStyles } from '../assets/styles';
 import { ExploreStyle } from '../assets/styles/explore';
+import { LandmarksStyles } from '../assets/styles/landmarks';
 import { Screens } from '../resources/labels.json';
 
-const styles = createStyles(ExploreStyle);
+const combinedStyles = Object.assign(ExploreStyle, LandmarksStyles)
+const styles = createStyles(combinedStyles);
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE_DELTA = 0.0922;
@@ -30,6 +32,7 @@ class ExploreMap extends React.Component {
       selectedMarkerIndex: null,
       tracksViewChanges: true,
       isIframe: this.props.latitude ? true : false,
+      isListView: false,
       markers: []
     })
 
@@ -51,6 +54,12 @@ class ExploreMap extends React.Component {
     navigation.goBack();
   }
 
+  handleMapView(enable) {
+    this.setState({
+      isListView: enable,
+    })
+  }
+
   stopTrackingViewChanges = () => {
     this.setState(() => ({
       tracksViewChanges: false,
@@ -64,8 +73,34 @@ class ExploreMap extends React.Component {
     })
   }
 
-  renderItemCard(marker, i) {
-    const { achievementsData } = this.props.achievements;
+  renderItem(item, index, navigation, achievementsData) {
+    const { landmarks } = this.props;
+    let isAchieved = false;
+
+    if(!isEmpty(achievementsData) && achievementsData.achievements) {
+      isAchieved = isUserAchieved(achievementsData.achievements, item);
+    }
+
+    return (
+      <TouchableOpacity activeOpacity={0.8} style={styles.landmarksBox} onPress={()=>navigation.navigate('LandmarkDetails',{landmark: item, isAchieved, landmarksCount: landmarks.landmarksAllData.length})}>
+          <ImageBackground source={{uri: item.landmarkImage}} imageStyle={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20}} style={[styles.backgroundImage, styles.landmarkImage]}>
+            <View style={styles.landmarksPointsWrap}><Text style={styles.explorePoints}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.landmarkPoints} points</Text></View>
+            { isAchieved ?
+              <View style={styles.landmarkExploredLabelWrapper}>
+                <Image style={styles.landmarkExploredImage} source={require('../assets/images/checked-icon.png')} />
+                <Text style={styles.landmarkExploredLabel}>
+                  {Screens.Countries.Landmarks.exploredLabel}
+                </Text>
+              </View>
+              : null
+            }
+          </ImageBackground>
+          <Text style={styles.landmarksText}>{item.landmarkName}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderItemCard(marker, i, achievementsData) {
     let isAchieved = false;
     if(!isEmpty(achievementsData) && achievementsData.achievements) {
       isAchieved = isUserAchieved(achievementsData.achievements, marker);
@@ -101,7 +136,9 @@ class ExploreMap extends React.Component {
 
   render() {
     const { landmarksData, landmarksAllData, error } = this.props.landmarks;
-    const { markers, tracksViewChanges, selectedMarkerIndex, isIframe } = this.state;
+    const { achievementsData } = this.props.achievements;
+    const { navigation } = this.props;
+    const { markers, tracksViewChanges, selectedMarkerIndex, isIframe, isListView } = this.state;
 
     if(error) {
       return (
@@ -120,16 +157,45 @@ class ExploreMap extends React.Component {
           <ActivityIndicator color='rgb(255, 126, 41)' size='large'/>
         </View>
       )
-    } else {
+    }
+    else {
       return (
         <View style={[styles.container, styles.exploreMapContainer]}>
           {!isIframe ?
-            <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreMapBackBtn}>
-              <Icon style={styles.exploreMapBackBtnIcon} name="arrow-circle-left"/>
-              {"\n"}
-              <Text style={styles.exploreMapBackBtnText}>{'Back'}</Text>
-            </Button>
+              <Button onPress={this.gotBack.bind(this)} buttonStyle={styles.exploreMapBackBtn}>
+                <Icon style={styles.exploreMapBackBtnIcon} name="arrow-circle-left"/>
+                {"\n"}
+                <Text style={styles.exploreMapBackBtnText}>{'Back'}</Text>
+              </Button>
           : null }
+
+          {!isIframe ?
+            <View style={styles.exploreMapViewWrapper}>
+              <TouchableOpacity activeOpacity={0.5} onPress={this.handleMapView.bind(this, !isListView)} style={styles.exploreMapView}>
+                {isListView ?
+                  <Icon style={styles.exploreMapViewIcon} name="times"/>
+                :
+                  <Icon style={styles.exploreMapViewIcon} name="list"/>
+                }
+                <Text style={styles.exploreMapViewTitle}>List View</Text>
+              </TouchableOpacity>
+            </View>
+          : null }
+
+          {!isIframe && isListView ?
+            <View style={styles.exploreMapListViewContent}>
+              <FlatList
+                data={markers}
+                renderItem={({item, index}) => this.renderItem(item, index, navigation, achievementsData)}
+                keyExtractor={index=> 'exploreMapListView' + index.toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString()}
+                initialNumToRender={20}
+                // updateCellsBatchingPeriod={100}
+                // maxToRenderPerBatch = {friendsData.length}
+                // windowSize={Dimensions.get('window').height*2}
+              />
+            </View>
+          : null }
+
           <AnimatedMap
             style={styles.exploreMap}
             initialRegion={
@@ -165,7 +231,11 @@ class ExploreMap extends React.Component {
               >
                 <View style={styles.exploreMarker}>
                   {/* <Image  onLoad={this.stopTrackingViewChanges} style={styles.exploreMarkerImage} source={marker.isShadowLandmark ? markerShadowImage : markerImage}/> */}
-                  <FontAwesome5 onLoad={this.stopTrackingViewChanges} style={marker.isShadowLandmark ? styles.exploreShadowMarkerIcon : styles.exploreMarkerIcon} name={'map-marker'} solid />
+                  {isUserAchieved(achievementsData.achievements, marker) ?
+                    <FontAwesome5 onLoad={this.stopTrackingViewChanges} style={marker.isShadowLandmark ? styles.exploreShadowMarkerExploreIcon : styles.exploreMarkerExploredIcon} name={'map-marker'} solid />
+                    :
+                    <FontAwesome5 onLoad={this.stopTrackingViewChanges} style={marker.isShadowLandmark ? styles.exploreShadowMarkerIcon : styles.exploreMarkerIcon} name={'map-marker'} solid />
+                  }
                   <Text style={styles.exploreMarkerIndex}>{i+1}</Text>
                 </View>
               </Marker>
@@ -173,7 +243,7 @@ class ExploreMap extends React.Component {
           </AnimatedMap>
 
          { selectedMarkerIndex !== null  ?
-            this.renderItemCard( markers[selectedMarkerIndex], selectedMarkerIndex)
+            this.renderItemCard( markers[selectedMarkerIndex], selectedMarkerIndex, achievementsData)
           : null} 
         </View>
       );

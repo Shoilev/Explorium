@@ -6,7 +6,7 @@ import { createStyles } from '../../assets/styles';
 
 const styles = createStyles();
 
-const HeaderBar = ({children, mapViewListener, headerBarStyle, headerBarBackIconStyle, headerBarNav, headarBarMapView = {} }) => {
+const HeaderBar = ({children, mapViewListener, headerBarStyle, headerBarBackIconStyle, headerBarNav, headarBarMapView={}, mapViewIsEnabled={} }) => {
   return (
     <View style={[styles.headerBar, headerBarStyle]}>
         <TouchableOpacity activeOpacity={0.5} onPress={()=>{headerBarNav.goBack(null)}} style={[styles.headerBarBackIconWrapper, headerBarBackIconStyle]}>
@@ -15,8 +15,12 @@ const HeaderBar = ({children, mapViewListener, headerBarStyle, headerBarBackIcon
         <Text style={styles.headerBarTitle}>{children}</Text>
         {!isEmpty(headarBarMapView) ?
           <TouchableOpacity activeOpacity={0.5} onPress={mapViewListener} style={[styles.headerBarMapIconWrapper, headerBarBackIconStyle]}>
-            <Icon style={styles.headerBarBackIcon} name="map"/>
-            <Text style={styles.headerBarMapText}>Map View</Text>
+            {mapViewIsEnabled && mapViewIsEnabled.mapViewIsEnabled ?
+              <Icon style={styles.headerBarBackIcon} name="list"/>
+              :
+              <Icon style={styles.headerBarBackIcon} name="map"/>
+            }
+            <Text style={styles.headerBarMapText}>{mapViewIsEnabled && mapViewIsEnabled.mapViewIsEnabled ? 'List View' : 'Map View' }</Text>
           </TouchableOpacity>
           :null
         }
