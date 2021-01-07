@@ -11,11 +11,10 @@ export const getLeaderboard = () => {
     .where('ranking', 'array-contains', new Date(Date.now()).getMonth().toString() + '/' + new Date(Date.now()).getFullYear().toString())
     .get().then(querySnapshot => {
       let userResult = [];
-      
-      console.log(querySnapshot)
+
       querySnapshot.forEach(doc => {
         let user = doc.data();
-        let currentDate = new Date().getMonth()-1;
+        let currentDate = new Date().getMonth();
         let userRank = user.userRank || 0;
         let userShareBonus = user.shareBonus || null;
 

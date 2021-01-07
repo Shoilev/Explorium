@@ -9,6 +9,7 @@ import GeoLocationReducer from './GeoLocationReducer';
 import AchievementsReducer from './AchievementsReducer';
 import MessagesAlertReducer from './MessagesAlertReducer';
 import LeaderboardReducer from './LeaderboardReducer';
+import GameRulesReducer from './GameRulesReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   userGeoLocation: GeoLocationReducer,
   achievements: AchievementsReducer,
   messagesAlert: MessagesAlertReducer,
-  leaderboard: LeaderboardReducer
+  leaderboard: LeaderboardReducer,
+  gameRules: GameRulesReducer
 });

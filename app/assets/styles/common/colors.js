@@ -22,8 +22,8 @@ export const Colors = {
   exploredBlueExplored: 'rgb(0, 42, 58)',
   primeryBlue: '#160442',
   primeryDarkBlue: '#0A106A',
-  shadowBlue: '#15172E',
-  shadowDarkBlue: '#000122',
+  shadowBlue: '#171717',
+  shadowDarkBlue: '#000000',
   purple: 'rgb(95, 98, 159)',
   grassGreen: '#6aa406'
 };

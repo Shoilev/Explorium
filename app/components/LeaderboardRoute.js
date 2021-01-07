@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { Text, View, ActivityIndicator, Image, FlatList } from 'react-native';
+import React, { Component, useState } from 'react';
+import { Text, View, ActivityIndicator, Image, TouchableOpacity, TouchableHighlight, FlatList, Modal } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { SvgUri } from 'react-native-svg';
 import { getLeaderboard } from '../actions';
+import { getGameRules } from '../actions';
 import { createStyles } from '../assets/styles';
 import { isEmpty } from '../helpers';
 import { LeaderboardStyle } from '../assets/styles/leaderboard';
@@ -14,6 +15,10 @@ const styles = createStyles(LeaderboardStyle);
 class LeaderboardRoute extends Component {
   componentWillMount() {
     this.props.getLeaderboard();
+    this.props.getGameRules();
+    this.setState({
+      modalVisible: false
+    });
   }
 
   renderItem(item, index) {
@@ -106,6 +111,9 @@ class LeaderboardRoute extends Component {
   
   render() {
     const { leaderboardData, error, errorMessage } = this.props.leaderboard;
+    const { rules, winners } = this.props.gameRules;
+    const winnerData = winners.replaceAll("\\n", "\n");
+    const rulesData = rules.replaceAll("\\n", "\n");
 
     if(!isEmpty(leaderboardData)) {
       return (
@@ -118,6 +126,37 @@ class LeaderboardRoute extends Component {
             style={styles.leaderboardCard}
             // stickyHeaderIndices={[0]}
           />
+
+          <TouchableOpacity activeOpacity={0.5} style={styles.leaderboardInfoBtn} onPress={()=>{ this.setState({ modalVisible: true }) }}>
+            <Icon style={styles.leaderboarInfoIcon} name="info"/>
+          </TouchableOpacity>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+            }}
+          >
+            <View style={styles.exploreModalCenteredView}>
+              <View style={styles.exploreModalView}>
+                <Text style={[styles.exploreModalText, styles.leaderboardModalText]}>GAME RULES</Text>
+                <Text>The winners for the last month are:</Text><Text style={styles.leaderboardWinner}>{winnerData}</Text>
+                <Text style={styles.leaederboardModalInfo}>{rulesData}</Text>
+                <Text style={styles.leaderboardModalMessage}>Good luck!!!</Text>
+
+                <TouchableHighlight
+                  style={styles.leaderboardModalOpenButton}
+                  onPress={() => {
+                    this.setState({ modalVisible: false })
+                  }}
+                >
+                  <Icon style={styles.leaderboarCloseIcon} name="close"/>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </Modal>
         </View>
        )
     } else if (error) {
@@ -136,8 +175,8 @@ class LeaderboardRoute extends Component {
   }
 }
 
-const mapStateToProps = ({leaderboard}) => {
-  return { leaderboard };
+const mapStateToProps = ({leaderboard, gameRules}) => {
+  return { leaderboard, gameRules };
 };
 
-export default connect(mapStateToProps, { getLeaderboard })(LeaderboardRoute);
+export default connect(mapStateToProps, { getLeaderboard, getGameRules })(LeaderboardRoute);

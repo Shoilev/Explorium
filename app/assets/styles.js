@@ -108,7 +108,9 @@ const baseStyles = {
   headerBarBackIconWrapper: {
     position: 'absolute',
     top: '50%',
-    left: 20
+    left: 20,
+    width: 40,
+    height: 30
   },
   headerBarMapIconWrapper: {
     position: 'absolute',
@@ -159,6 +161,42 @@ const baseStyles = {
   exploreBoostIcon: {
     fontSize: fonts.baseSize * 4,
     color: colors.orange
+  },
+  exploreCenteredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  exploreModalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
+  exploreModalOpenButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  exploreModalTextStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  exploreModalText: {
+    marginBottom: 15,
+    textAlign: "center"
   }
 }
 

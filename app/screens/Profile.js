@@ -130,7 +130,7 @@ class Profile extends Component {
               <View>
                 <Text style={[styles.profilePointsLabel, {marginBottom: 16}]}>Level</Text>
                 <Icon style={styles.profilePointsInfoIcon} name="trophy"/>
-                <Text style={styles.profilePointsInfoLabel}>{achievementsData.level + ' Level'}</Text>
+                <Text style={styles.profilePointsInfoLabel}>{(achievementsData.level + 1) + ' Level'}</Text>
               </View>
             </View>
 
@@ -156,7 +156,7 @@ class Profile extends Component {
             <Text style={styles.profileBadgesTitle}>{Screens.Profile.badgesTitle}</Text>
             <View style={styles.profileBadges}>
               <View>
-                {(achievementsData.achievements.length > 10 ) ?
+                {(achievementsData.achievements.length > 9 ) ?
                 <TouchableOpacity onPress={this.handleModal.bind(this, 'Tourist Badge', 'To win a Tourist badge you need to explore 10 landmarks.')}>
                   <Image style={{width: 105, height: 90, marginLeft: 20}} source={images.touristBadgeEnabled} />
                 </TouchableOpacity>
@@ -169,7 +169,7 @@ class Profile extends Component {
               </View>
 
               <View>
-                {(achievementsData.achievements.length > 50 ) ?
+                {(achievementsData.achievements.length > 49 ) ?
                 <TouchableOpacity onPress={this.handleModal.bind(this, 'Explorer Badge', 'To win a Explorer badge you need to explore 50 landmarks.')}>
                   <Image style={{width: 107, height: 90}} source={images.explorerBadgeEnabled} />
                 </TouchableOpacity>
@@ -182,7 +182,7 @@ class Profile extends Component {
               </View>
 
               <View>
-                {(achievementsData.achievements.length > 100 ) ?
+                {(achievementsData.achievements.length > 99 ) ?
                 <TouchableOpacity onPress={this.handleModal.bind(this, 'Adventurer Badge', 'To win a Adventurer badge you need to explore 100 landmarks.')}>
                   <Image style={{width: 78, height: 90, marginRight: 20}} source={images.adventurerBadgeEnabled} />
                 </TouchableOpacity>

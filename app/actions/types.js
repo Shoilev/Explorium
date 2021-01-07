@@ -32,6 +32,8 @@ export const ACHIEVEMENTS_FETCH_SUCCESS = 'achievements_fetch_success';
 export const ACHIEVEMENTS_FETCH_FAIL = 'achievements_fetch_fail';
 export const MESSAGES_FETCH = 'messages_fetch';
 export const MESSAGES_FETCH_FAIL = 'messages_fech_fail';
+export const GAME_RULES_FETCH = 'gamerules_fetch';
+export const GAME_RULES_FETCH_FAIL = 'gamerules_fech_fail';
 export const LEADERBOARD_FETCH_SUCCESS = 'leaderboard_fech_success';
 export const LEADERBOARD_FETCH_FAIL = 'leaderboard_fech_fail';
 

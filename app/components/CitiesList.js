@@ -33,21 +33,25 @@ class CitiesList extends Component {
   renderItem (item, index, navigation) {
     return (
       <Section style={styles.citiesSlide}>
-        <TouchableOpacity onPress={()=>{navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName, cityPoints: item.cityPoints})}} style={styles.citiesSlideWrapper}>
-          <ImageBackground source={{uri: item.cityImage}} imageStyle={{ borderBottomLeftRadius: 40, borderBottomRightRadius: 40, height: '100%' }} style={styles.citiesImage}>
-            <Text style={[styles.explorePoints, styles.citiesPoints]}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.cityPoints + ' points'}</Text>
-          </ImageBackground>
+        <View style={styles.citiesSlideWrapper}>
+          <TouchableOpacity onPress={()=>{navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName, cityPoints: item.cityPoints})}} style={styles.citiesBackgroundImg}>
+            <ImageBackground source={{uri: item.cityImage}} imageStyle={{ borderBottomLeftRadius: 40, borderBottomRightRadius: 40, height: '100%' }} style={styles.citiesImage}>
+              <Text style={[styles.explorePoints, styles.citiesPoints]}><Icon style={styles.explorePointsIcon} name="star"/>{' ' + item.cityPoints + ' points'}</Text>
+            </ImageBackground>
+          </TouchableOpacity>
           <View style={styles.citiesDetails}>
             <Text style={styles.cititesTitle}>{ item.cityName }</Text>
-            <ScrollView style={styles.citiesScrollableDescritpion}>
-              <Text style={styles.citiesDescriptions}>{ item.cityShortDescription }</Text>
+            <ScrollView keyboardShouldPersistTaps={'handled'} style={styles.citiesScrollableDescritpion}>
+              <TouchableOpacity onPress={()=>{navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName, cityPoints: item.cityPoints})}}>
+                <Text style={styles.citiesDescriptions}>{ item.cityShortDescription }</Text>
+              </TouchableOpacity>
             </ScrollView>
 
             <Button textStyle={styles.citiesTextBtn} onPress={()=>navigation.navigate('LandmarksList',{country:navigation.getParam('country', ''), city: item.cityName, cityPoints: item.cityPoints})} buttonStyle={styles.citiesBtnStyle}>
               {App.explore}
             </Button>
           </View>
-        </TouchableOpacity>
+        </View>
       </Section>
     );
   }

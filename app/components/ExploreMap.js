@@ -140,7 +140,7 @@ class ExploreMap extends React.Component {
     const { navigation } = this.props;
     const { markers, tracksViewChanges, selectedMarkerIndex, isIframe, isListView } = this.state;
 
-    if(error) {
+    if(error && !isIframe) {
       return (
         <View style={styles.container}>
           <Text style={styles.exploreErrorMessage}>{error.errorMessage}</Text>

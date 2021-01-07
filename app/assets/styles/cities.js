@@ -17,14 +17,20 @@ export const CitiesStyles = {
     alignItems: 'center',
     width: dimensions.fullWidth
   },
-  citiesImage: {
+  citiesBackgroundImg: {
+    height: '40%',
+    width: dimensions.fullWidth,
+    alignItems: 'center',
     zIndex: 10,
+    flex: 1,
+  },
+  citiesImage: {
     alignItems: 'center',
     backgroundColor: colors.orange,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
     width: '100%',
-    height: '40%'
+    height: '100%'
   },
   citiesPoints: {
     position: 'absolute',

@@ -144,5 +144,64 @@ export const LeaderboardStyle = {
   },
   leaderboardItemPointsWrapper: {
     justifyContent: 'center'
+  },
+  leaderboardInfoBtn: {
+    position: 'absolute',
+    backgroundColor: colors.blue,
+    borderWidth: 1,
+    borderColor: colors.gray,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    right: 20,
+    bottom: 30,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
+  },
+  leaderboarInfoIcon: {
+    textAlign: 'center',
+    color: colors.white,
+    fontSize: fonts.baseSize * 7
+  },
+  leaderboardModalText: {
+    backgroundColor: colors.blue,
+    color: colors.white,
+    borderRadius: 12,
+    paddingTop: spacing.small,
+    paddingBottom: spacing.small,
+    paddingRight: spacing.medium,
+    paddingLeft: spacing.medium,
+    fontSize: fonts.baseSize * 3,
+    marginBottom: spacing.extraLarge * 1.5
+  },
+  leaderboarCloseIcon: {
+    fontSize: fonts.baseSize * 8,
+    color: colors.orange,
+    fontWeight: '800'
+  },
+  leaderboardModalOpenButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20
+  },
+  leaderboardWinner: {
+    fontSize: fonts.baseSize * 3,
+    color: colors.orange,
+    marginBottom: spacing.extraLarge
+  },
+  leaderboardModalMessage: {
+    marginTop: spacing.medium,
+    color: colors.orange,
+    fontSize: fonts.baseSize * 3.5
+  },
+  leaederboardModalInfo: {
   }
 }
