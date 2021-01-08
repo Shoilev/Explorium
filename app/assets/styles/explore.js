@@ -359,7 +359,7 @@ export const ExploreStyle = {
   },
   exploreMainImage: {
     alignItems: 'center',
-    height: 260,
+    height: dimensions.screenHeight / 2.5,
     width:'100%',
     backgroundColor: colors.orange,
     borderBottomLeftRadius: 44,
@@ -469,8 +469,8 @@ export const ExploreStyle = {
     width: '84%',
     height: '75%',
     padding: spacing.medium,
-    paddingTop: spacing.medium,
-    paddingBottom: spacing.medium,
+    paddingTop: spacing.extraLarge,
+    paddingBottom: spacing.extraLarge,
     backgroundColor: 'white'
   }
 }

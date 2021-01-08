@@ -18,7 +18,7 @@ export const ProfileStyle = {
     color: colors.white,
   },
   backgroundCover: {
-    height: 280,
+    height: dimensions.screenHeight / 2.5,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -168,7 +168,7 @@ export const ProfileStyle = {
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    width: dimensions.screenWidth,
+    width: dimensions.screenWidth - 40,
     marginTop: spacing.extraLarge * 1.5,
     paddingLeft: spacing.extraLarge,
     paddingRight: spacing.extraLarge,
@@ -184,7 +184,7 @@ export const ProfileStyle = {
     flex: 1,
     width: dimensions.screenWidth,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: spacing.medium
   },

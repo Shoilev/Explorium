@@ -189,6 +189,7 @@ class ExploreMap extends React.Component {
                 renderItem={({item, index}) => this.renderItem(item, index, navigation, achievementsData)}
                 keyExtractor={index=> 'exploreMapListView' + index.toString() + (Math.floor(Math.random() * Math.floor(new Date().getTime()))).toString()}
                 initialNumToRender={20}
+                numColumns={2}
                 // updateCellsBatchingPeriod={100}
                 // maxToRenderPerBatch = {friendsData.length}
                 // windowSize={Dimensions.get('window').height*2}

@@ -2,6 +2,7 @@ import { Dimensions } from 'react-native';
 
 const DIMENSIONS = {
   screenWidth: Dimensions.get('window').width,
+  screenHeight: Dimensions.get('window').height,
   fullWidth: '100%',
   width75: '75%',
   width70: '70%',
