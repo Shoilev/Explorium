@@ -17,3 +17,5 @@ adb uninstall "com.exploriumapp"
 cd android && ./gradlew build --warning-mode=all --stacktrace
 cd android && ./gradlew clean
 cd android && ./gradlew bundleRelease
+
+npx jetify //for androidx problems

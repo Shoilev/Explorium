@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { requestLocationPermission, getUser, getAchievementsPerUser } from '../actions';
+import { AdMobInterstitial } from 'react-native-admob';
+import { requestLocationPermission, getUser, getAchievementsPerUser, getAds } from '../actions';
 import { isUserAchieved, checkHaversineDistance, checkBounds } from '../helpers';
 import { checkInLeveling } from '../controllers/LevelingController';
 import { getDiscount  } from '../controllers/DiscountController';
@@ -27,10 +28,12 @@ class BaseMap extends Component {
     this.props.requestLocationPermission(true);
     this.props.getUser();
     this.props.getAchievementsPerUser();
+    this.props.getAds();
   }
 
   checkIn(landmark, userLocation, userCountryAndCity, landmarksCount, boostShare) {
     const { achievementsData } = this.props.achievements;
+    const { interstitial } = this.props.ads;
     // const isNearBy = checkHaversineDistance(userLocation, landmark.coordinate, landmark.distance);
     const isNearBy = checkBounds(landmark.viewport, userLocation);
 
@@ -42,6 +45,10 @@ class BaseMap extends Component {
       this.setState({
         checkInLoader: true
       });
+
+      AdMobInterstitial.setAdUnitID(__DEV__ ? 'ca-app-pub-3940256099942544/8691691433' : 'ca-app-pub-9912243885718998/3372705973');
+      AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId, 'CDD619DF16959BCA33F20BC01107A676']);
+      AdMobInterstitial.requestAd().then(() => { if(interstitial) { AdMobInterstitial.showAd()}});
 
       checkInLeveling(landmark, userUID, achievementsData, boostShare).then((levelData) => {
           this.setState({
@@ -195,10 +202,10 @@ class BaseMap extends Component {
   }
 }
 
-const mapStateToProps = ({userGeoLocation, user, achievements}) => {
+const mapStateToProps = ({userGeoLocation, user, achievements, ads}) => {
   const { userUID } = user;
 
-  return { userGeoLocation, userUID, achievements };
+  return { userGeoLocation, userUID, achievements, ads };
 };
 
-export default connect(mapStateToProps, { requestLocationPermission, getUser, getAchievementsPerUser })(BaseMap);
+export default connect(mapStateToProps, { requestLocationPermission, getUser, getAchievementsPerUser, getAds })(BaseMap);

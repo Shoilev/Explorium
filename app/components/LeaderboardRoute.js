@@ -112,8 +112,6 @@ class LeaderboardRoute extends Component {
   render() {
     const { leaderboardData, error, errorMessage } = this.props.leaderboard;
     const { rules, winners } = this.props.gameRules;
-    // const winnerData = winners.replaceAll("\\n", "\n");
-    // const rulesData = rules.replaceAll("\\n", "\n");
     const winnerData = winners.replace(/\\n/g, '\n');
     const rulesData = rules.replace(/\\n/g, '\n');
     

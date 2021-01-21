@@ -27,6 +27,7 @@
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
       <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAm4PPzAHVY94pF7D2H_XuTJSjiQYnsAdo"/>
       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+      <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-9912243885718998~5892710490"/>
       <activity android:name="com.facebook.FacebookActivity"
         android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

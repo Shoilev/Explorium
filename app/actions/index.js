@@ -9,3 +9,4 @@ export * from './AchievementsActions';
 export * from './MessagesAlertAction';
 export * from './LeaderboardActions';
 export * from './GameRulesActions';
+export * from './GetAdsActions';

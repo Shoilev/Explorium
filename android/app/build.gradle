@@ -149,6 +149,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-admob')
     implementation project(':react-native-gesture-handler')
     implementation project(':react-native-reanimated')
     implementation project(':react-native-fs')
@@ -158,16 +159,16 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     // Firebase dependencies
-    implementation "com.google.android.gms:play-services-base:16.1.0"
-    implementation "com.google.android.gms:play-services-location:16.0.0"
-    implementation "com.google.firebase:firebase-core:16.0.8"
-    implementation "com.google.firebase:firebase-auth:16.2.1"
-    implementation "com.google.firebase:firebase-firestore:18.2.0"
+    implementation "com.google.android.gms:play-services-base:17.0.0"
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+    implementation "com.google.firebase:firebase-core:17.5.0"
+    implementation "com.google.firebase:firebase-auth:19.3.2"
+    implementation "com.google.firebase:firebase-firestore:21.6.0"
     implementation(project(':react-native-maps')){
         exclude group: 'com.google.android.gms', module: 'play-services-base'
         exclude group: 'com.google.android.gms', module: 'play-services-maps'
     }
-    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation project(':react-native-contacts')
     implementation project(':react-native-location')
     implementation 'com.facebook.android:facebook-android-sdk:4.34.0'

@@ -34,6 +34,8 @@ export const MESSAGES_FETCH = 'messages_fetch';
 export const MESSAGES_FETCH_FAIL = 'messages_fech_fail';
 export const GAME_RULES_FETCH = 'gamerules_fetch';
 export const GAME_RULES_FETCH_FAIL = 'gamerules_fech_fail';
+export const GET_ADS_FETCH = 'getads_fetch';
+export const GET_ADS_FETCH_FAIL = 'getads_fech_fail';
 export const LEADERBOARD_FETCH_SUCCESS = 'leaderboard_fech_success';
 export const LEADERBOARD_FETCH_FAIL = 'leaderboard_fech_fail';
 

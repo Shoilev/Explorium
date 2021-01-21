@@ -10,6 +10,7 @@ import AchievementsReducer from './AchievementsReducer';
 import MessagesAlertReducer from './MessagesAlertReducer';
 import LeaderboardReducer from './LeaderboardReducer';
 import GameRulesReducer from './GameRulesReducer';
+import AdsReducer from './AdsReducer';
 
 export default combineReducers({
   auth: AuthReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   achievements: AchievementsReducer,
   messagesAlert: MessagesAlertReducer,
   leaderboard: LeaderboardReducer,
-  gameRules: GameRulesReducer
+  gameRules: GameRulesReducer,
+  ads: AdsReducer
 });
