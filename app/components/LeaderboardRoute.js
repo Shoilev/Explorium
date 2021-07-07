@@ -22,10 +22,14 @@ class LeaderboardRoute extends Component {
   }
 
   renderItem(item, index) {
-    if(this.props.leaderboard.leaderboardData.length < 2) {
-      return  <View style={styles.container}>
+    if(this.props.leaderboard.leaderboardData.length < 3) {
+      if(index === 0) {
+        return  <View style={styles.container}>
                 <Text>Leaderboard is inactive. Please try again later.</Text>
               </View>
+      } else {
+        return;
+      }
     }
     else if( index === 0 ) {
       const landmarkData = this.props.leaderboard.leaderboardData;

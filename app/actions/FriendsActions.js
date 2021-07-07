@@ -14,15 +14,11 @@ export const getFriends = () => {
       PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
       {
         'title': 'Contacts',
-        'message': Screens.Friends.premissionMessage
+        'message': Screens.Friends.premissionMessage,
+        'buttonPositive': 'Allow'
       }
-    ).then(() => {
-      Contacts.getAll((err, contacts) => {
-        if (err === 'denied'){
-          // error
-          console.log('Contacts premission denied: ' +  err);
-          dispatch({ type: FRIENDS_FETCH_FAILED, payload: Screens.Friends.errorPremissionMessage });
-        } else {
+    ).then(() => Contacts.getAll())
+      .then((contacts) => {
           console.log('Contact premission approved!')
           
           if(isEmpty(contacts)) {
@@ -44,9 +40,12 @@ export const getFriends = () => {
           contactResult.sort((a,b) => a.givenName.toLocaleLowerCase().localeCompare(b.givenName.toLocaleLowerCase()))
 
           dispatch({ type: FRIENDS_FETCH_SUCCESS, payload: contactResult })
-        }
       })
-    });
+      .catch((e) => { 
+        // error
+        console.log('Contacts premission denied: ' +  e);
+        dispatch({ type: FRIENDS_FETCH_FAILED, payload: Screens.Friends.errorPremissionMessage });
+      })
   }
 }
 

@@ -40,7 +40,8 @@ export const getLandmarks = (country, city, cityPoints) => {
               longitude: dataDoc.longitude || LONGITUDE
             },
             viewport: dataDoc.viewport,
-            distance: dataDoc.distance || false
+            distance: dataDoc.distance || false,
+            city
           };
 
           if(isShadowLandmark) {

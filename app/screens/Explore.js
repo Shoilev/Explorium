@@ -94,6 +94,8 @@ class Explore extends Component {
     const { landmarksData, landmarksAllData, error } = this.props.landmarks;
     const exploreBackgroundImage = this.state.exploreBackgroundImageFailed ? userLocatioImageUri.defaultImageURI: userLocatioImageUri.imageURI;
     let { animateButton, animatedMessageBox } = this.state;
+    let cityDefault = !isEmpty(landmarksAllData) ? landmarksAllData[0].city : DefaultLocationData.city;
+    let cityMain = !isEmpty(landmarksAllData) ? landmarksAllData[0].city : userLocatioImageUri.imageCity;
 
     if(!isEmpty(userLocation) && !isEmpty(userLocatioImageUri)) {
       Animated.timing(
@@ -162,7 +164,7 @@ class Explore extends Component {
                 });
               }}
             >
-              <Text style={styles.exploreAttractionTitle}>{error.errorMessage ? 'We recommend you to visit ' + DefaultLocationData.city : 'Top attractions in ' + userLocatioImageUri.imageCity}</Text>
+              <Text style={styles.exploreAttractionTitle}>{error.errorMessage ? 'We recommend you to visit ' + cityDefault : 'Top attractions in ' + cityMain}</Text>
               <Carousel
                 ref={(c) => { this._carousel = c; }}
                 data={landmarksAllData}

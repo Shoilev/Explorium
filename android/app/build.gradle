@@ -187,6 +187,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply plugin: 'com.google.gms.google-services'
+googleServices.disableVersionCheck = true
 
 project.ext.vectoricons = [
     iconFontNames: [ 'MaterialIcons.ttf', 'Ionicons.ttf', 'FontAwesome.ttf', 'FontAwesome5_Regular.ttf' , 'FontAwesome5_Solid.ttf', 'FontAwesome5_Brands.ttf' ]
