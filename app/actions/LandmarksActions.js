@@ -89,7 +89,7 @@ export const getLandmarksByLocation = ( lat, long ) => {
             return firebase.firestore().collection('countries').doc(DefaultLocationData.country).collection('cities').doc(DefaultLocationData.city).get()
             .then(doc => {
               let cityPoints = doc.data().points * countryRate || 0;
-              return dispatch(getLandmarks(DefaultLocationData.country, DefaultLocationData.city, cityPoints)).then((landmarkResult)=>{    
+              return dispatch(getLandmarks(DefaultLocationData.country, DefaultLocationData.city, cityPoints)).then((landmarkResult) => {
                 return dispatch({ type: LANDMARKS_FETCH_FAIL, payload: { errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
               })
             }).catch(e=>{
@@ -101,20 +101,30 @@ export const getLandmarksByLocation = ( lat, long ) => {
         
         return firebase.firestore().collection('countries').doc(result.userCountry).collection('cities').doc(result.userCity)
         .get().then(doc => {
-          let cityPoints = doc.data().points * countryRate || 0;
-
-          return dispatch(getLandmarks(result.userCountry, result.userCity, cityPoints)).then((landmarkResult)=>{
-            landmarkResult.sort((a,b) => {
-              let distanceA = checkHaversineDistance({latitude: lat, longitude: long}, a.coordinate, false, true);
-              let distanceB = checkHaversineDistance({latitude: lat, longitude: long}, b.coordinate, false, true);
-              
-              if (distanceA < distanceB) {return -1;}
-              if (distanceA > distanceB) {return 1;}
-              return 0;
+          if(!doc.data()) {
+            return firebase.firestore().collection('countries').doc(DefaultLocationData.country).collection('cities').doc(DefaultLocationData.city).get()
+            .then(doc => {
+              let cityPoints = doc.data().points * countryRate || 0;
+              return dispatch(getLandmarks(DefaultLocationData.country, DefaultLocationData.city, cityPoints)).then((landmarkResult) => {
+                return dispatch({ type: LANDMARKS_FETCH_FAIL, payload: { errorMessage: 'Explore functionality is not available for your location. Go back and explore.'} });
+              })
+            })
+          } else {
+            let cityPoints = doc.data().points * countryRate || 0;
+  
+            return dispatch(getLandmarks(result.userCountry, result.userCity, cityPoints)).then((landmarkResult)=>{
+              landmarkResult.sort((a,b) => {
+                let distanceA = checkHaversineDistance({latitude: lat, longitude: long}, a.coordinate, false, true);
+                let distanceB = checkHaversineDistance({latitude: lat, longitude: long}, b.coordinate, false, true);
+                
+                if (distanceA < distanceB) {return -1;}
+                if (distanceA > distanceB) {return 1;}
+                return 0;
+              });
+  
+              return landmarkResult;
             });
-
-            return landmarkResult;
-          });
+          }
         })
       })
     })
